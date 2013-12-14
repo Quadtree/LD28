@@ -3,9 +3,16 @@ pack.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+arm
+  rotate: false
+  xy: 2, 46
+  size: 128, 80
+  orig: 128, 80
+  offset: 0, 0
+  index: -1
 att_pt
   rotate: false
-  xy: 392, 94
+  xy: 522, 68
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -19,7 +26,7 @@ connector
   index: -1
 cpu
   rotate: false
-  xy: 2, 46
+  xy: 132, 46
   size: 128, 80
   orig: 128, 80
   offset: 0, 0
@@ -33,28 +40,28 @@ piston_base
   index: -1
 piston_rod
   rotate: false
-  xy: 132, 20
+  xy: 522, 102
   size: 128, 24
   orig: 128, 24
   offset: 0, 0
   index: -1
 plate
   rotate: false
-  xy: 132, 46
+  xy: 262, 46
   size: 128, 80
   orig: 128, 80
   offset: 0, 0
   index: -1
 tracks
   rotate: false
-  xy: 262, 46
+  xy: 392, 46
   size: 128, 80
   orig: 128, 80
   offset: 0, 0
   index: -1
 wheel
   rotate: false
-  xy: 392, 60
+  xy: 556, 68
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

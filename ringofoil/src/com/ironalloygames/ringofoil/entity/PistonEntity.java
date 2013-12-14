@@ -101,8 +101,6 @@ public class PistonEntity extends ComponentEntity {
 	public void update() {
 		super.update();
 
-		System.out.println(body.getAngle());
-
 		if (commandExtend) {
 			if (joint.getJointTranslation() < component.getBoundingBox().x * .8f)
 				joint.setMotorSpeed(10);

@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.ironalloygames.ringofoil.component.Arm;
 import com.ironalloygames.ringofoil.component.Attachment.AttachmentPoint;
 import com.ironalloygames.ringofoil.component.CPU;
 import com.ironalloygames.ringofoil.component.Piston;
@@ -49,6 +50,7 @@ public class RG implements ApplicationListener {
 		CPU cpu = new CPU();
 		Structure structure = new Structure();
 		Piston p1 = new Piston();
+		Arm a1 = new Arm();
 		Structure structure2 = new Structure();
 		Tracks tracks = new Tracks();
 		Tracks tracks2 = new Tracks();
@@ -59,7 +61,8 @@ public class RG implements ApplicationListener {
 		cpu.addChildComponent(structure, AttachmentPoint.BOTTOM);
 		structure.addChildComponent(tracks, AttachmentPoint.BOTTOM);
 		structure.addChildComponent(structure2, AttachmentPoint.RIGHT);
-		structure2.addChildComponent(p1, AttachmentPoint.RIGHT);
+		structure2.addChildComponent(a1, AttachmentPoint.RIGHT);
+		a1.addChildComponent(p1, AttachmentPoint.ARM);
 		structure2.addChildComponent(tracks2, AttachmentPoint.BOTTOM);
 
 		return robot;
