@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Attachment {
 	public enum AttachmentPoint {
-		BOTTOM, LEFT, RIGHT, TOP
+		ARM, BOTTOM, LEFT, RIGHT, TOP
 	}
 
 	Component child;
@@ -19,7 +19,7 @@ public class Attachment {
 	}
 
 	public Vector2 getCenterPoint() {
-		return this.getChildRelativePosition().scl(.5f);
+		return this.getChildRelativePosition().scl(child != null ? .5f : 1);
 	}
 
 	public Component getChild() {
@@ -42,16 +42,20 @@ public class Attachment {
 		case RIGHT:
 			delta = new Vector2(1, 0);
 			break;
+		case ARM:
+			delta = new Vector2(.7f, 0);
+			break;
 		default:
-			throw new RuntimeException("Att pt not fnd");
+			throw new RuntimeException("Att pt " + point + "not fnd");
 		}
 
 		Vector2 accum = delta.cpy().scl(parent.getBoundingBox().x / 2,
 				parent.getBoundingBox().y / 2);
 
-		accum.add(delta.cpy().scl(child.getBoundingBox().x / 2,
-				child.getBoundingBox().y / 2));
-
+		if (child != null) {
+			accum.add(delta.cpy().scl(child.getBoundingBox().x / 2,
+					child.getBoundingBox().y / 2));
+		}
 		return accum;
 	}
 

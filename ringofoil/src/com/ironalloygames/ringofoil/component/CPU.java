@@ -9,10 +9,10 @@ public class CPU extends Component {
 	public void render(Vector2 position, float rotation) {
 		super.render(position, rotation);
 
-		RG.batch.draw(RG.am.get("plate"), position.x, position.y, -.5f, -.5f,
-				1, 1, getBoundingBox().x, getBoundingBox().y, rotation);
-		RG.batch.draw(RG.am.get("cpu"), position.x, position.y, -.5f, -.5f, 1,
+		RG.batch.draw(RG.am.get("plate"), position.x, position.y, .5f, .5f, 1,
 				1, getBoundingBox().x, getBoundingBox().y, rotation);
+		RG.batch.draw(RG.am.get("cpu"), position.x, position.y, .5f, .5f, 1, 1,
+				getBoundingBox().x, getBoundingBox().y, rotation);
 
 	}
 

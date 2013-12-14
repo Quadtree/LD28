@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.math.Vector2;
+import com.ironalloygames.ringofoil.RG;
 import com.ironalloygames.ringofoil.component.Attachment.AttachmentPoint;
 
 public class Component {
@@ -40,8 +41,35 @@ public class Component {
 				.add(parent.getChildRelativePosition()).cpy();
 	}
 
+	public boolean isAttachmentPointConnected(AttachmentPoint point) {
+		if (parent != null
+				&& ((parent.point.equals(AttachmentPoint.TOP) && point
+						.equals(AttachmentPoint.BOTTOM))
+						|| (parent.point.equals(AttachmentPoint.BOTTOM) && point
+								.equals(AttachmentPoint.TOP))
+						|| (parent.point.equals(AttachmentPoint.LEFT) && point
+								.equals(AttachmentPoint.RIGHT))
+						|| (parent.point.equals(AttachmentPoint.RIGHT) && point
+								.equals(AttachmentPoint.LEFT))
+						|| (parent.point.equals(AttachmentPoint.ARM) && point
+								.equals(AttachmentPoint.LEFT)) || (parent.point
+						.equals(AttachmentPoint.LEFT) && point
+						.equals(AttachmentPoint.ARM))))
+			return true;
+
+		for (Attachment ap : children) {
+			if (ap.point.equals(point))
+				return true;
+		}
+
+		return false;
+	}
+
 	public boolean isAttachmentPointValid(AttachmentPoint point) {
-		return true;
+		if (point != AttachmentPoint.ARM)
+			return true;
+		else
+			return false;
 	}
 
 	public void render(Vector2 position, float rotation) {
@@ -49,6 +77,15 @@ public class Component {
 	}
 
 	public void renderAttachmentPoints() {
+		for (AttachmentPoint ap : AttachmentPoint.values()) {
+			if (isAttachmentPointValid(ap) && !isAttachmentPointConnected(ap)) {
+				Attachment a = new Attachment(null, this, ap);
 
+				Vector2 pt = a.getCenterPoint().add(this.getRelativePosition());
+
+				RG.batch.draw(RG.am.get("att_pt"), pt.x, pt.y, .5f, .5f, 1, 1,
+						.1f, .1f, 0);
+			}
+		}
 	}
 }
