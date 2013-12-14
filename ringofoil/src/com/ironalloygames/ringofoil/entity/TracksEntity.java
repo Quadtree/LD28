@@ -69,4 +69,16 @@ public class TracksEntity extends ComponentEntity {
 	protected float getDensity() {
 		return 4;
 	}
+
+	@Override
+	public void render() {
+		tracks.renderWithWheels(body.getPosition(), body.getAngle(), flipped,
+				new Vector2[] { wheels.get(0).getPosition(),
+						wheels.get(1).getPosition(),
+						wheels.get(2).getPosition() }, new float[] {
+						wheels.get(0).getAngle(), wheels.get(1).getAngle(),
+						wheels.get(2).getAngle() });
+
+		renderConnector();
+	}
 }
