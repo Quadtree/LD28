@@ -15,6 +15,8 @@ import com.ironalloygames.ringofoil.component.Component;
 
 public class ArmEntity extends ComponentEntity {
 
+	Vector2 aimPoint;
+
 	RevoluteJoint joint;
 
 	Body rodBody;
@@ -32,6 +34,7 @@ public class ArmEntity extends ComponentEntity {
 		bd.type = BodyType.DynamicBody;
 		bd.position.x = body.getPosition().x;
 		bd.position.y = body.getPosition().y;
+		bd.angularDamping = .8f;
 
 		System.out.println("Creating rod body at " + bd.position);
 
@@ -50,7 +53,7 @@ public class ArmEntity extends ComponentEntity {
 		jd.initialize(body, rodBody, body.getPosition());
 		jd.enableMotor = true;
 		jd.maxMotorTorque = 20;
-		jd.motorSpeed = 5;
+		jd.motorSpeed = 0;
 
 		joint = (RevoluteJoint) ((ArenaState) RG.currentState).world
 				.createJoint(jd);
@@ -67,5 +70,40 @@ public class ArmEntity extends ComponentEntity {
 				rodBody.getAngle(), flipped);
 
 		renderConnector();
+	}
+
+	public void setAimPoint(Vector2 aimPoint) {
+		this.aimPoint = aimPoint.cpy();
+	}
+
+	@Override
+	public void update() {
+		super.update();
+
+		// System.out.println("Aiming at " + aimPoint);
+
+		Vector2 leftPoint = rodBody.getWorldPoint(new Vector2(.1f, -.02f))
+				.cpy();
+		Vector2 centerPoint = rodBody.getWorldPoint(new Vector2(.101f, 0))
+				.cpy();
+		Vector2 rightPoint = rodBody.getWorldPoint(new Vector2(.1f, .02f))
+				.cpy();
+
+		float leftDist = leftPoint.sub(aimPoint).len2();
+		float centerDist = centerPoint.sub(aimPoint).len2();
+		float rightDist = rightPoint.sub(aimPoint).len2();
+
+		// System.out.println(leftPoint + " " + centerPoint + " " + rightPoint);
+		// System.out.println(leftDist + " " + centerDist + " " + rightDist);
+
+		if (leftDist < centerDist && leftDist < rightDist) {
+			joint.setMotorSpeed(-3);
+		} else if (rightDist < centerDist && rightDist < leftDist) {
+			joint.setMotorSpeed(3);
+		} else {
+			joint.setMotorSpeed(0);
+		}
+
+		System.out.println("TEST " + joint.getMotorSpeed());
 	}
 }

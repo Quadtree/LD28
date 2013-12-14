@@ -1,8 +1,14 @@
 package com.ironalloygames.ringofoil;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.math.Vector2;
 
 public class GameState implements InputProcessor {
+	public Vector2 mouseScreenPosition = new Vector2(0, 0);
+
+	public Vector2 mouseWorldPosition = new Vector2(0, 0);
+
 	@Override
 	public boolean keyDown(int keycode) {
 		// TODO Auto-generated method stub
@@ -23,7 +29,14 @@ public class GameState implements InputProcessor {
 
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
-		// TODO Auto-generated method stub
+		mouseScreenPosition.x = (screenX * 800 / Gdx.graphics.getWidth()) - 400;
+		mouseScreenPosition.y = -(screenY * 600 / Gdx.graphics.getHeight() - 300);
+
+		mouseWorldPosition.x = mouseScreenPosition.x / 128.f;
+		mouseWorldPosition.y = mouseScreenPosition.y / 128.f;
+
+		System.out.println(mouseScreenPosition + " " + mouseWorldPosition);
+
 		return false;
 	}
 

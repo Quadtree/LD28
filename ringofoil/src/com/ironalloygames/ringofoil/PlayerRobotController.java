@@ -58,5 +58,7 @@ public class PlayerRobotController extends RobotController {
 				((TracksEntity) e).commandMove(move);
 			}
 		}
+
+		aimPoint = RG.currentState.mouseWorldPosition;
 	}
 }

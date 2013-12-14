@@ -98,6 +98,8 @@ public class RG implements ApplicationListener {
 		sr.setColor(Color.BLACK);
 		sr.line(0, -20, 0, 20);
 		sr.line(-20, -2f, 20, -2f);
+		// sr.circle(currentState.mouseWorldPosition.x,
+		// currentState.mouseWorldPosition.y, .1f);
 		sr.end();
 
 		if (ticks < System.currentTimeMillis()) {

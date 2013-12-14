@@ -3,10 +3,14 @@ package com.ironalloygames.ringofoil;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.math.Vector2;
+import com.ironalloygames.ringofoil.entity.ArmEntity;
 import com.ironalloygames.ringofoil.entity.ComponentEntity;
 import com.ironalloygames.ringofoil.entity.Entity;
 
 public class RobotController implements InputProcessor {
+	public Vector2 aimPoint = new Vector2(0, 0);
+
 	protected ArrayList<ComponentEntity> entities = new ArrayList<ComponentEntity>();
 
 	public void addEntity(Entity e) {
@@ -62,6 +66,10 @@ public class RobotController implements InputProcessor {
 	}
 
 	public void update() {
-
+		for (ComponentEntity e : entities) {
+			if (e instanceof ArmEntity) {
+				((ArmEntity) e).setAimPoint(aimPoint);
+			}
+		}
 	}
 }
