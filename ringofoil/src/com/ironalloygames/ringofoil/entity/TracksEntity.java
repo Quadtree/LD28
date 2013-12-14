@@ -45,7 +45,7 @@ public class TracksEntity extends ComponentEntity {
 				.getBoundingBox().y / 2 * .7f,
 				new Vector2(0, component.getBoundingBox().y / 2 * .4f), 0);
 
-		body.createFixture(shape, getDensity());
+		body.createFixture(shape, getDensity()).setFilterData(getFilter());
 
 		wheels = new ArrayList<Body>();
 		wheelJoints = new ArrayList<RevoluteJoint>();
@@ -71,7 +71,7 @@ public class TracksEntity extends ComponentEntity {
 
 		CircleShape cs = new CircleShape();
 		cs.setRadius(component.getBoundingBox().x * .125f);
-		wheel.createFixture(cs, 1);
+		wheel.createFixture(cs, 1).setFilterData(getFilter());
 
 		wheels.add(wheel);
 

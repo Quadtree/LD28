@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
@@ -71,7 +72,7 @@ public abstract class ComponentEntity extends Entity {
 		shape.setAsBox(component.getBoundingBox().x / 2,
 				component.getBoundingBox().y / 2);
 
-		body.createFixture(shape, getDensity());
+		body.createFixture(shape, getDensity()).setFilterData(getFilter());
 	}
 
 	public void createJointToChild(Attachment att, ComponentEntity child) {
@@ -107,6 +108,13 @@ public abstract class ComponentEntity extends Entity {
 
 	protected float getDensity() {
 		return 1;
+	}
+
+	protected Filter getFilter() {
+		Filter fd = new Filter();
+		fd.groupIndex = ((ArenaState) RG.currentState).currentGroup;
+
+		return fd;
 	}
 
 	public Joint getParentConnector() {

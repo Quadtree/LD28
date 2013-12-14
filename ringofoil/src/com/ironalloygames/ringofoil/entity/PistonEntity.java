@@ -61,9 +61,11 @@ public class PistonEntity extends ComponentEntity {
 		shape.setAsBox(component.getBoundingBox().x / 2,
 				component.getBoundingBox().y / 2);
 
-		rodBody.createFixture(shape, getDensity());
+		rodBody.createFixture(shape, getDensity()).setFilterData(getFilter());
 
-		// if (commandExtend) {
+		System.out.println("GI "
+				+ rodBody.getFixtureList().get(0).getFilterData().groupIndex);
+
 		PrismaticJointDef jd = new PrismaticJointDef();
 		jd.initialize(body, rodBody, body.getPosition(), new Vector2(1, 0));
 		jd.enableMotor = true;
@@ -74,9 +76,6 @@ public class PistonEntity extends ComponentEntity {
 
 		joint = (PrismaticJoint) ((ArenaState) RG.currentState).world
 				.createJoint(jd);
-
-		// joint.setMotorSpeed(-10);
-		// }
 	}
 
 	@Override

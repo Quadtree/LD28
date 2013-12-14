@@ -14,6 +14,8 @@ public class ArenaState extends GameState {
 
 	ArrayList<RobotController> controllers = new ArrayList<RobotController>();
 
+	public short currentGroup = 0;
+
 	ArrayList<Entity> entities = new ArrayList<Entity>();
 
 	ArrayList<Entity> entityAddQueue = new ArrayList<Entity>();
@@ -93,6 +95,7 @@ public class ArenaState extends GameState {
 	}
 
 	public void setRobots(Robot robot0, Robot robot1) {
+		currentGroup = -1;
 		robot0.generate(new Vector2(-2, 0), false);
 
 		int endPos = entityAddQueue.size();
@@ -101,6 +104,7 @@ public class ArenaState extends GameState {
 			controllers.get(0).addEntity(entityAddQueue.get(i));
 		}
 
+		currentGroup = -2;
 		robot1.generate(new Vector2(2, 0), true);
 
 		for (int i = endPos; i < entityAddQueue.size(); i++) {
