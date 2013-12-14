@@ -33,6 +33,7 @@ public class RG implements ApplicationListener {
 		currentState = new ArenaState();
 		((ArenaState) currentState).setRobots(createFakeRobot(),
 				createFakeRobot());
+		Gdx.input.setInputProcessor(currentState);
 		// currentState = new EditorState();
 
 		am = new AssetManager();

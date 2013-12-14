@@ -9,19 +9,33 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.ironalloygames.ringofoil.ArenaState;
 import com.ironalloygames.ringofoil.RG;
 import com.ironalloygames.ringofoil.component.Tracks;
 
 public class TracksEntity extends ComponentEntity {
+	float moveCommand = 0;
+
 	Tracks tracks;
 
+	List<RevoluteJoint> wheelJoints;
 	List<Body> wheels;
 
 	public TracksEntity(Tracks tracks, Vector2 robotCenter, boolean flipped) {
 		super(tracks, robotCenter, flipped);
 		this.tracks = tracks;
+	}
+
+	public void commandMove(float dir) {
+		moveCommand = dir;
+
+		for (RevoluteJoint rj : wheelJoints) {
+			rj.setMaxMotorTorque(100);
+			rj.setMotorSpeed(-dir * 10);
+			rj.enableMotor(true);
+		}
 	}
 
 	@Override
@@ -34,6 +48,7 @@ public class TracksEntity extends ComponentEntity {
 		body.createFixture(shape, getDensity());
 
 		wheels = new ArrayList<Body>();
+		wheelJoints = new ArrayList<RevoluteJoint>();
 
 		createWheel(new Vector2(-component.getBoundingBox().x / 2 * .6f,
 				-component.getBoundingBox().y / 2 * .4f));
@@ -62,7 +77,8 @@ public class TracksEntity extends ComponentEntity {
 
 		RevoluteJointDef jd = new RevoluteJointDef();
 		jd.initialize(body, wheel, wheel.getWorldCenter());
-		((ArenaState) RG.currentState).world.createJoint(jd);
+		wheelJoints.add((RevoluteJoint) ((ArenaState) RG.currentState).world
+				.createJoint(jd));
 	}
 
 	@Override

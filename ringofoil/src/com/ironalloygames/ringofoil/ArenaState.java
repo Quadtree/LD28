@@ -12,6 +12,8 @@ import com.ironalloygames.ringofoil.entity.Entity;
 
 public class ArenaState extends GameState {
 
+	ArrayList<RobotController> controllers = new ArrayList<RobotController>();
+
 	ArrayList<Entity> entities = new ArrayList<Entity>();
 
 	ArrayList<Entity> entityAddQueue = new ArrayList<Entity>();
@@ -44,10 +46,32 @@ public class ArenaState extends GameState {
 		rightWallShape.setAsBox(1, 40, new Vector2(3.5f, 0), 0);
 
 		groundBody.createFixture(rightWallShape, 0);
+
+		controllers.add(new PlayerRobotController());
+		controllers.add(new AiRobotController());
 	}
 
 	public void addEntity(Entity e) {
 		entityAddQueue.add(e);
+	}
+
+	@Override
+	public boolean keyDown(int keycode) {
+		for (RobotController c : controllers) {
+			c.keyDown(keycode);
+		}
+
+		return super.keyDown(keycode);
+	}
+
+	@Override
+	public boolean keyUp(int keycode) {
+
+		for (RobotController c : controllers) {
+			c.keyUp(keycode);
+		}
+
+		return super.keyUp(keycode);
 	}
 
 	@Override
@@ -70,7 +94,18 @@ public class ArenaState extends GameState {
 
 	public void setRobots(Robot robot0, Robot robot1) {
 		robot0.generate(new Vector2(-2, 0), false);
+
+		int endPos = entityAddQueue.size();
+
+		for (int i = 0; i < endPos; i++) {
+			controllers.get(0).addEntity(entityAddQueue.get(i));
+		}
+
 		robot1.generate(new Vector2(2, 0), true);
+
+		for (int i = endPos; i < entityAddQueue.size(); i++) {
+			controllers.get(0).addEntity(entityAddQueue.get(i));
+		}
 	}
 
 	@Override
@@ -79,6 +114,10 @@ public class ArenaState extends GameState {
 
 		while (entityAddQueue.size() > 0) {
 			entities.add(entityAddQueue.remove(0));
+		}
+
+		for (RobotController c : controllers) {
+			c.update();
 		}
 
 		world.step(0.016f, 2, 2);

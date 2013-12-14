@@ -1,8 +1,17 @@
 package com.ironalloygames.ringofoil;
 
-import com.badlogic.gdx.InputProcessor;
+import java.util.ArrayList;
 
-public class GameState implements InputProcessor {
+import com.badlogic.gdx.InputProcessor;
+import com.ironalloygames.ringofoil.entity.Entity;
+
+public class RobotController implements InputProcessor {
+	protected ArrayList<Entity> entities = new ArrayList<Entity>();
+
+	public void addEntity(Entity e) {
+		entities.add(e);
+	}
+
 	@Override
 	public boolean keyDown(int keycode) {
 		// TODO Auto-generated method stub
@@ -25,12 +34,6 @@ public class GameState implements InputProcessor {
 	public boolean mouseMoved(int screenX, int screenY) {
 		// TODO Auto-generated method stub
 		return false;
-	}
-
-	public void render() {
-	}
-
-	public void renderUi() {
 	}
 
 	@Override
@@ -58,5 +61,6 @@ public class GameState implements InputProcessor {
 	}
 
 	public void update() {
+
 	}
 }
