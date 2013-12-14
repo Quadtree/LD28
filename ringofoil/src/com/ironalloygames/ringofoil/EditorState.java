@@ -1,7 +1,9 @@
 package com.ironalloygames.ringofoil;
 
+import com.ironalloygames.ringofoil.component.Attachment.AttachmentPoint;
 import com.ironalloygames.ringofoil.component.CPU;
 import com.ironalloygames.ringofoil.component.Component;
+import com.ironalloygames.ringofoil.component.Structure;
 
 public class EditorState extends GameState {
 
@@ -9,7 +11,12 @@ public class EditorState extends GameState {
 
 	public EditorState() {
 		robot = new Robot();
-		robot.setRootComponent(new CPU());
+
+		CPU cpu = new CPU();
+		Structure structure = new Structure();
+
+		robot.setRootComponent(cpu);
+		cpu.addChildComponent(structure, AttachmentPoint.BOTTOM);
 	}
 
 	@Override

@@ -15,10 +15,16 @@ public class Component {
 
 	public void addChildComponent(Component childComponent,
 			AttachmentPoint point) {
-
+		Attachment att = new Attachment(childComponent, this, point);
+		childComponent.parent = att;
+		children.add(att);
 	}
 
 	public void addChildComponentsToList(ArrayList<Component> components) {
+		for (Attachment att : children) {
+			components.add(att.getChild());
+			att.getChild().addChildComponentsToList(components);
+		}
 	}
 
 	public Vector2 getBoundingBox() {
