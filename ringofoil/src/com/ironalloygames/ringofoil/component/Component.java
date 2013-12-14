@@ -3,6 +3,7 @@ package com.ironalloygames.ringofoil.component;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.ironalloygames.ringofoil.RG;
 import com.ironalloygames.ringofoil.component.Attachment.AttachmentPoint;
@@ -88,7 +89,7 @@ public abstract class Component {
 			return false;
 	}
 
-	public void render(Vector2 position, float rotation) {
+	public void render(Vector2 position, float rotation, boolean flipped) {
 
 	}
 
@@ -103,5 +104,15 @@ public abstract class Component {
 						.1f, .1f, 0);
 			}
 		}
+	}
+
+	protected void renderSized(Vector2 position, float rotation,
+			boolean flipped, String graphic) {
+		if (RG.am.get(graphic).isFlipX() != flipped)
+			RG.am.get(graphic).flip(true, false);
+
+		RG.batch.draw(RG.am.get(graphic), position.x, position.y, .5f, .5f, 1,
+				1, getBoundingBox().x, getBoundingBox().y, rotation
+						* (180f / MathUtils.PI));
 	}
 }

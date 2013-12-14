@@ -87,7 +87,7 @@ public abstract class ComponentEntity extends Entity {
 	public void render() {
 		super.render();
 
-		component.render(body.getPosition(), body.getAngle());
+		component.render(body.getPosition(), body.getAngle(), flipped);
 
 		if (component.getParent() != null) {
 			Vector2 pt = component.getParent().getCenterPoint().scl(-1);
