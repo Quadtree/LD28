@@ -2,6 +2,7 @@ package com.ironalloygames.ringofoil.entity;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Joint;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
 import com.ironalloygames.ringofoil.ArenaState;
 import com.ironalloygames.ringofoil.RG;
 import com.ironalloygames.ringofoil.component.Attachment;
+import com.ironalloygames.ringofoil.component.Attachment.AttachmentPoint;
 import com.ironalloygames.ringofoil.component.Component;
 
 public abstract class ComponentEntity extends Entity {
@@ -74,7 +76,7 @@ public abstract class ComponentEntity extends Entity {
 
 	public void createJointToChild(Attachment att, ComponentEntity child) {
 		WeldJointDef jd = new WeldJointDef();
-		jd.bodyA = body;
+		jd.bodyA = getBodyForChildConnection(att.getPoint());
 		jd.bodyB = child.body;
 
 		Vector2 delta = jd.bodyB.getPosition().cpy()
@@ -93,6 +95,10 @@ public abstract class ComponentEntity extends Entity {
 
 		child.setParentConnector(((ArenaState) RG.currentState).world
 				.createJoint(jd));
+	}
+
+	protected Body getBodyForChildConnection(AttachmentPoint ap) {
+		return body;
 	}
 
 	public int getCommandKey() {

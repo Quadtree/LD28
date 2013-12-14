@@ -13,6 +13,11 @@ public class Piston extends Component {
 	}
 
 	@Override
+	public Vector2 getBoundingBox() {
+		return super.getBoundingBox().scl(1, .3f);
+	}
+
+	@Override
 	public boolean isAttachmentPointValid(AttachmentPoint point) {
 		return point == AttachmentPoint.LEFT || point == AttachmentPoint.RIGHT;
 	}
@@ -21,13 +26,13 @@ public class Piston extends Component {
 	public void render(Vector2 position, float rotation, boolean flipped) {
 		super.render(position, rotation, flipped);
 
-		render(position, position, rotation, flipped);
+		render(position, position, rotation, rotation, flipped);
 	}
 
 	public void render(Vector2 position, Vector2 rodPosition, float rotation,
-			boolean flipped) {
+			float rodRotation, boolean flipped) {
 
-		renderSized(rodPosition, rotation, flipped, "piston_rod");
+		renderSized(rodPosition, rodRotation, flipped, "piston_rod");
 		renderSized(position, rotation, flipped, "piston_base");
 
 	}
