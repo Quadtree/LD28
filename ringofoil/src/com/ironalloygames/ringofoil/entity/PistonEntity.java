@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.joints.PrismaticJointDef;
 import com.ironalloygames.ringofoil.ArenaState;
 import com.ironalloygames.ringofoil.RG;
 import com.ironalloygames.ringofoil.component.Attachment.AttachmentPoint;
@@ -49,6 +50,11 @@ public class PistonEntity extends ComponentEntity {
 		System.out.println("Creating rod body at " + bd.position);
 
 		rodBody = ((ArenaState) RG.currentState).world.createBody(bd);
+
+		PrismaticJointDef jd = new PrismaticJointDef();
+		jd.initialize(body, rodBody, body.getPosition(), new Vector2(1, 0));
+
+		((ArenaState) RG.currentState).world.createJoint(jd);
 	}
 
 	@Override

@@ -5,56 +5,56 @@ filter: Nearest,Nearest
 repeat: none
 att_pt
   rotate: false
-  xy: 2, 2
+  xy: 392, 94
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 connector
   rotate: false
-  xy: 36, 18
+  xy: 2, 2
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 cpu
   rotate: false
-  xy: 2, 36
+  xy: 2, 46
   size: 128, 80
   orig: 128, 80
   offset: 0, 0
   index: -1
 piston_base
   rotate: false
-  xy: 132, 36
-  size: 128, 80
-  orig: 128, 80
+  xy: 2, 20
+  size: 128, 24
+  orig: 128, 24
   offset: 0, 0
   index: -1
 piston_rod
   rotate: false
-  xy: 262, 36
-  size: 128, 80
-  orig: 128, 80
+  xy: 132, 20
+  size: 128, 24
+  orig: 128, 24
   offset: 0, 0
   index: -1
 plate
   rotate: false
-  xy: 392, 36
+  xy: 132, 46
   size: 128, 80
   orig: 128, 80
   offset: 0, 0
   index: -1
 tracks
   rotate: false
-  xy: 522, 36
+  xy: 262, 46
   size: 128, 80
   orig: 128, 80
   offset: 0, 0
   index: -1
 wheel
   rotate: false
-  xy: 652, 84
+  xy: 392, 60
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
