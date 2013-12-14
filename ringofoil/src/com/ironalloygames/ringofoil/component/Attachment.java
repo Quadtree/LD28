@@ -18,6 +18,10 @@ public class Attachment {
 		this.point = point;
 	}
 
+	public Vector2 getCenterPoint() {
+		return this.getChildRelativePosition().scl(.5f);
+	}
+
 	public Component getChild() {
 		return child;
 	}

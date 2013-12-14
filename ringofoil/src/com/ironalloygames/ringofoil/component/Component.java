@@ -21,6 +21,10 @@ public class Component {
 	public void addChildComponentsToList(ArrayList<Component> components) {
 	}
 
+	public Vector2 getBoundingBox() {
+		return new Vector2(1 * SCALE, 1 * SCALE * STANDARD_ASPECT_RATIO);
+	}
+
 	public Vector2 getRelativePosition() {
 		if (parent == null) {
 			return new Vector2(0, 0);
@@ -35,6 +39,10 @@ public class Component {
 	}
 
 	public void render(Vector2 position, float rotation) {
+
+	}
+
+	public void renderAttachmentPoints() {
 
 	}
 }

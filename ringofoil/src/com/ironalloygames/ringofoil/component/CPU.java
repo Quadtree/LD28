@@ -10,9 +10,9 @@ public class CPU extends Component {
 		super.render(position, rotation);
 
 		RG.batch.draw(RG.am.get("plate"), position.x, position.y, -.5f, -.5f,
-				1, 1, 1 * SCALE, 1 * SCALE * STANDARD_ASPECT_RATIO, rotation);
+				1, 1, getBoundingBox().x, getBoundingBox().y, rotation);
 		RG.batch.draw(RG.am.get("cpu"), position.x, position.y, -.5f, -.5f, 1,
-				1, 1 * SCALE, 1 * SCALE * STANDARD_ASPECT_RATIO, rotation);
+				1, getBoundingBox().x, getBoundingBox().y, rotation);
 
 	}
 
