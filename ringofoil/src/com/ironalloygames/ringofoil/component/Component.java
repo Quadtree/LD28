@@ -31,6 +31,10 @@ public abstract class Component {
 
 	public abstract ComponentEntity createEntity();
 
+	public List<Attachment> getAllAttachmentsExceptParent() {
+		return children;
+	}
+
 	public Vector2 getBoundingBox() {
 		return new Vector2(1 * SCALE, 1 * SCALE * STANDARD_ASPECT_RATIO);
 	}

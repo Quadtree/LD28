@@ -31,7 +31,9 @@ public abstract class ComponentEntity extends Entity {
 	}
 
 	public void generateAttachments(Map<Component, ComponentEntity> entityMap) {
+		for (Attachment att : component.getAllAttachmentsExceptParent()) {
 
+		}
 	}
 
 	@Override
