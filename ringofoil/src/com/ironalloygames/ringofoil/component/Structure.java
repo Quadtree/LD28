@@ -7,8 +7,8 @@ import com.ironalloygames.ringofoil.entity.StructureEntity;
 
 public class Structure extends Component {
 	@Override
-	public ComponentEntity createEntity(Vector2 robotCenter) {
-		return new StructureEntity(this, robotCenter);
+	public ComponentEntity createEntity(Vector2 robotCenter, boolean flipped) {
+		return new StructureEntity(this, robotCenter, flipped);
 	}
 
 	@Override

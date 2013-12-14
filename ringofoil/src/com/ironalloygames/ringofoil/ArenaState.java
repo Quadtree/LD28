@@ -14,6 +14,8 @@ public class ArenaState extends GameState {
 
 	ArrayList<Entity> entities = new ArrayList<Entity>();
 
+	ArrayList<Entity> entityAddQueue = new ArrayList<Entity>();
+
 	ArrayList<Robot> robots = new ArrayList<Robot>();
 
 	public World world;
@@ -32,6 +34,10 @@ public class ArenaState extends GameState {
 		groundShape.setAsBox(40, 1, new Vector2(0, -3), 0);
 
 		groundBody.createFixture(groundShape, 0);
+	}
+
+	public void addEntity(Entity e) {
+		entityAddQueue.add(e);
 	}
 
 	@Override
@@ -57,6 +63,10 @@ public class ArenaState extends GameState {
 	@Override
 	public void update() {
 		super.update();
+
+		while (entityAddQueue.size() > 0) {
+			entities.add(entityAddQueue.remove(0));
+		}
 
 		world.step(0.016f, 2, 2);
 
