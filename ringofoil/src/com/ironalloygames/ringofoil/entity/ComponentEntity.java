@@ -1,45 +1,41 @@
 package com.ironalloygames.ringofoil.entity;
 
-import java.util.Map;
-
-import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.ironalloygames.ringofoil.ArenaState;
-import com.ironalloygames.ringofoil.RG;
+import com.badlogic.gdx.physics.box2d.Shape;
 import com.ironalloygames.ringofoil.component.Component;
 
 public abstract class ComponentEntity extends Entity {
 	Component component;
 
-	public ComponentEntity(Component component) {
+	Vector2 relativePosition;
+
+	public ComponentEntity(SuperEntity superEntity, Component component) {
+		super(superEntity);
 		this.component = component;
+		this.relativePosition = component.getRelativePosition();
+	}
 
-		ArenaState as = ((ArenaState) RG.currentState);
+	public float getDensity() {
+		return 1;
+	}
 
-		BodyDef bd = new BodyDef();
-		bd.position.x = 0;
-		bd.position.y = 0;
-		bd.type = BodyDef.BodyType.DynamicBody;
+	public Vector2 getRelativePosition() {
+		return component.getRelativePosition();
+	}
 
-		body = as.world.createBody(bd);
-
+	public Shape getShape() {
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(component.getBoundingBox().x / 2,
 				component.getBoundingBox().y / 2);
-
-		body.createFixture(shape, 1);
-	}
-
-	public void generateAttachments(Map<Component, ComponentEntity> entityMap) {
-		for (Attachment att : component.getAllAttachmentsExceptParent()) {
-
-		}
+		return shape;
 	}
 
 	@Override
 	public void render() {
 		super.render();
 
-		component.render(body.getPosition(), body.getAngle());
+		component.render(superEntity.body.getWorldPoint(relativePosition),
+				superEntity.body.getAngle());
 	}
 }

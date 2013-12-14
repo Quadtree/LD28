@@ -1,12 +1,11 @@
 package com.ironalloygames.ringofoil;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import com.badlogic.gdx.math.Vector2;
 import com.ironalloygames.ringofoil.component.Component;
-import com.ironalloygames.ringofoil.entity.ComponentEntity;
+import com.ironalloygames.ringofoil.entity.SuperEntity;
 
 public class Robot {
 	Component rootComponent;
@@ -15,22 +14,35 @@ public class Robot {
 
 	}
 
-	public void generate(Vector2 position, boolean flipped) {
+	public SuperEntity generate(Vector2 position, boolean flipped) {
 		System.out.println("Initiating generation.");
 
-		HashMap<Component, ComponentEntity> entityMap = new HashMap<Component, ComponentEntity>();
+		SuperEntity se = new SuperEntity(position);
 
 		for (Component c : getComponents()) {
 			System.out.println("Generating " + c);
-			ComponentEntity e = c.createEntity();
-			e.setPosition(c.getRelativePosition().add(position));
-			entityMap.put(c, e);
-			((ArenaState) RG.currentState).entities.add(e);
+
+			se.addEntity(c.createEntity(se));
 		}
 
-		for (Component c : getComponents()) {
-			entityMap.get(c).generateAttachments(entityMap);
-		}
+		se.rebake();
+
+		return se;
+
+		/*
+		 * HashMap<Component, ComponentEntity> entityMap = new
+		 * HashMap<Component, ComponentEntity>();
+		 * 
+		 * for (Component c : getComponents()) {
+		 * System.out.println("Generating " + c); ComponentEntity e =
+		 * c.createEntity();
+		 * e.setPosition(c.getRelativePosition().add(position));
+		 * entityMap.put(c, e); ((ArenaState) RG.currentState).entities.add(e);
+		 * }
+		 * 
+		 * for (Component c : getComponents()) {
+		 * entityMap.get(c).generateAttachments(entityMap); }
+		 */
 	}
 
 	public List<Component> getComponents() {

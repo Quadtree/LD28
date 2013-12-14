@@ -5,8 +5,8 @@ import com.ironalloygames.ringofoil.component.Structure;
 public class StructureEntity extends ComponentEntity {
 	Structure structure;
 
-	public StructureEntity(Structure structure) {
-		super(structure);
+	public StructureEntity(SuperEntity superEntity, Structure structure) {
+		super(superEntity, structure);
 		this.structure = structure;
 	}
 }

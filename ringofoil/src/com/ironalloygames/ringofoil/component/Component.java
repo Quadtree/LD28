@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.ironalloygames.ringofoil.RG;
 import com.ironalloygames.ringofoil.component.Attachment.AttachmentPoint;
 import com.ironalloygames.ringofoil.entity.ComponentEntity;
+import com.ironalloygames.ringofoil.entity.SuperEntity;
 
 public abstract class Component {
 	public static float SCALE = .5f;
@@ -29,7 +30,7 @@ public abstract class Component {
 		}
 	}
 
-	public abstract ComponentEntity createEntity();
+	public abstract ComponentEntity createEntity(SuperEntity superEntity);
 
 	public List<Attachment> getAllAttachmentsExceptParent() {
 		return children;

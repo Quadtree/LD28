@@ -4,12 +4,13 @@ import com.badlogic.gdx.math.Vector2;
 import com.ironalloygames.ringofoil.RG;
 import com.ironalloygames.ringofoil.entity.CPUEntity;
 import com.ironalloygames.ringofoil.entity.ComponentEntity;
+import com.ironalloygames.ringofoil.entity.SuperEntity;
 
 public class CPU extends Component {
 
 	@Override
-	public ComponentEntity createEntity() {
-		return new CPUEntity(this);
+	public ComponentEntity createEntity(SuperEntity superEntity) {
+		return new CPUEntity(superEntity, this);
 	}
 
 	@Override
