@@ -1,10 +1,22 @@
 package com.ironalloygames.ringofoil;
 
+import com.ironalloygames.ringofoil.component.CPU;
+import com.ironalloygames.ringofoil.component.Component;
+
 public class EditorState extends GameState {
+
+	Robot robot;
+
+	public EditorState() {
+		robot = new Robot();
+		robot.setRootComponent(new CPU());
+	}
 
 	@Override
 	public void render() {
-		RG.batch.draw(RG.am.get("tracks"), 0, 0, .5f, .5f * .625f);
+		for (Component c : robot.getComponents()) {
+			c.render();
+		}
 		super.render();
 	}
 

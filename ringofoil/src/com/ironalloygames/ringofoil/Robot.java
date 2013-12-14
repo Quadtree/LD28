@@ -20,7 +20,7 @@ public class Robot {
 
 		components.add(rootComponent);
 
-		rootComponent.addChildComponents(components);
+		rootComponent.addChildComponentsToList(components);
 
 		return components;
 	}
