@@ -45,6 +45,20 @@ public abstract class ComponentEntity extends Entity {
 				jd.bodyA = body;
 				jd.bodyB = child.body;
 
+				Vector2 delta = jd.bodyB.getPosition().cpy()
+						.sub(jd.bodyA.getPosition());
+
+				// Vector2 centerPoint =
+				// jd.bodyA.getPosition().cpy().add(delta.cpy().scl(.5f));
+
+				Vector2 localAnchorA = delta.cpy().scl(.5f);
+				Vector2 localAnchorB = delta.cpy().scl(-.5f);
+
+				jd.localAnchorA.x = localAnchorA.x;
+				jd.localAnchorA.y = localAnchorA.y;
+				jd.localAnchorB.x = localAnchorB.x;
+				jd.localAnchorB.y = localAnchorB.y;
+
 				System.out.println("Welding " + jd.bodyA.getPosition() + " to "
 						+ jd.bodyB.getPosition());
 
