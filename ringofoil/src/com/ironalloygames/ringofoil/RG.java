@@ -42,11 +42,15 @@ public class RG implements ApplicationListener {
 
 		CPU cpu = new CPU();
 		Structure structure = new Structure();
+		Structure structure2 = new Structure();
 		Tracks tracks = new Tracks();
+		Tracks tracks2 = new Tracks();
 
 		robot.setRootComponent(cpu);
 		cpu.addChildComponent(structure, AttachmentPoint.BOTTOM);
 		structure.addChildComponent(tracks, AttachmentPoint.BOTTOM);
+		structure.addChildComponent(structure2, AttachmentPoint.RIGHT);
+		structure2.addChildComponent(tracks2, AttachmentPoint.BOTTOM);
 
 		return robot;
 	}

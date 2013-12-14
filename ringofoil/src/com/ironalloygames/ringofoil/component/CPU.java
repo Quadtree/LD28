@@ -1,5 +1,6 @@
 package com.ironalloygames.ringofoil.component;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.ironalloygames.ringofoil.RG;
 import com.ironalloygames.ringofoil.entity.CPUEntity;
@@ -22,9 +23,11 @@ public class CPU extends Component {
 		super.render(position, rotation);
 
 		RG.batch.draw(RG.am.get("plate"), position.x, position.y, .5f, .5f, 1,
-				1, getBoundingBox().x, getBoundingBox().y, rotation);
+				1, getBoundingBox().x, getBoundingBox().y, rotation
+						* (180f / MathUtils.PI));
 		RG.batch.draw(RG.am.get("cpu"), position.x, position.y, .5f, .5f, 1, 1,
-				getBoundingBox().x, getBoundingBox().y, rotation);
+				getBoundingBox().x, getBoundingBox().y, rotation
+						* (180f / MathUtils.PI));
 
 	}
 

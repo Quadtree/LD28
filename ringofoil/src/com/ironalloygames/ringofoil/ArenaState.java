@@ -57,7 +57,7 @@ public class ArenaState extends GameState {
 
 	public void setRobots(Robot robot0, Robot robot1) {
 		robot0.generate(new Vector2(-1, 0), false);
-		robot1.generate(new Vector2(1, 0), false);
+		robot1.generate(new Vector2(1, 0), true);
 	}
 
 	@Override
