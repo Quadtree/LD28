@@ -12,8 +12,8 @@ public class Main {
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "Ring of Oil";
 		cfg.useGL20 = true;
-		cfg.width = 1024;
-		cfg.height = 768;
+		cfg.width = 1366;
+		cfg.height = 1024;
 
 		new LwjglApplication(new RG(), cfg);
 	}
