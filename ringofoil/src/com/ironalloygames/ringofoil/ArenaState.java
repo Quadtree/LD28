@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.ironalloygames.ringofoil.entity.Entity;
@@ -83,8 +82,8 @@ public class ArenaState extends GameState {
 			entities.get(i).render();
 		}
 
-		Box2DDebugRenderer db = new Box2DDebugRenderer();
-		db.render(world, RG.gameCamera.combined);
+		// Box2DDebugRenderer db = new Box2DDebugRenderer();
+		// db.render(world, RG.gameCamera.combined);
 	}
 
 	@Override
