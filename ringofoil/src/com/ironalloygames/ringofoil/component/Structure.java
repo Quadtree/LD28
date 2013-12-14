@@ -4,12 +4,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.ironalloygames.ringofoil.RG;
 import com.ironalloygames.ringofoil.entity.ComponentEntity;
 import com.ironalloygames.ringofoil.entity.StructureEntity;
-import com.ironalloygames.ringofoil.entity.SuperEntity;
 
 public class Structure extends Component {
 	@Override
-	public ComponentEntity createEntity(SuperEntity superEntity) {
-		return new StructureEntity(superEntity, this);
+	public ComponentEntity createEntity(Vector2 robotCenter) {
+		return new StructureEntity(this, robotCenter);
 	}
 
 	@Override

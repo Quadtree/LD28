@@ -3,13 +3,12 @@ package com.ironalloygames.ringofoil.component;
 import com.badlogic.gdx.math.Vector2;
 import com.ironalloygames.ringofoil.RG;
 import com.ironalloygames.ringofoil.entity.ComponentEntity;
-import com.ironalloygames.ringofoil.entity.SuperEntity;
 import com.ironalloygames.ringofoil.entity.TracksEntity;
 
 public class Tracks extends Component {
 	@Override
-	public ComponentEntity createEntity(SuperEntity superEntity) {
-		return new TracksEntity(superEntity, this);
+	public ComponentEntity createEntity(Vector2 robotCenter, boolean flipped) {
+		return new TracksEntity(this, robotCenter, flipped);
 	}
 
 	@Override

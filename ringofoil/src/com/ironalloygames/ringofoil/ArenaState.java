@@ -8,11 +8,11 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.ironalloygames.ringofoil.entity.SuperEntity;
+import com.ironalloygames.ringofoil.entity.Entity;
 
 public class ArenaState extends GameState {
 
-	ArrayList<SuperEntity> entities = new ArrayList<SuperEntity>();
+	ArrayList<Entity> entities = new ArrayList<Entity>();
 
 	ArrayList<Robot> robots = new ArrayList<Robot>();
 
@@ -50,8 +50,8 @@ public class ArenaState extends GameState {
 	}
 
 	public void setRobots(Robot robot0, Robot robot1) {
-		entities.add(robot0.generate(new Vector2(-1, 0), false));
-		entities.add(robot1.generate(new Vector2(1, 0), false));
+		robot0.generate(new Vector2(-1, 0), false);
+		robot1.generate(new Vector2(1, 0), false);
 	}
 
 	@Override

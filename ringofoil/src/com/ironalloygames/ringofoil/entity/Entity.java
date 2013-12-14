@@ -1,19 +1,12 @@
 package com.ironalloygames.ringofoil.entity;
 
-import com.badlogic.gdx.physics.box2d.Shape;
+import com.badlogic.gdx.physics.box2d.Body;
 
 public abstract class Entity {
-	SuperEntity superEntity;
+	Body body;
 
-	public Entity(SuperEntity superEntity) {
-		this.superEntity = superEntity;
+	public Entity() {
 	}
-
-	public float getDensity() {
-		return 1;
-	}
-
-	public abstract Shape getShape();
 
 	public void render() {
 
