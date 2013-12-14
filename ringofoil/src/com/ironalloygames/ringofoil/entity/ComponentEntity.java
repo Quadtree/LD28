@@ -16,18 +16,11 @@ public abstract class ComponentEntity extends Entity {
 		this.relativePosition = component.getRelativePosition();
 	}
 
-	public float getDensity() {
-		return 1;
-	}
-
-	public Vector2 getRelativePosition() {
-		return component.getRelativePosition();
-	}
-
+	@Override
 	public Shape getShape() {
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(component.getBoundingBox().x / 2,
-				component.getBoundingBox().y / 2);
+				component.getBoundingBox().y / 2, relativePosition, 0);
 		return shape;
 	}
 
