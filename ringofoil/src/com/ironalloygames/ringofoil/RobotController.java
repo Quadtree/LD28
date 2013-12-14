@@ -3,13 +3,14 @@ package com.ironalloygames.ringofoil;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.InputProcessor;
+import com.ironalloygames.ringofoil.entity.ComponentEntity;
 import com.ironalloygames.ringofoil.entity.Entity;
 
 public class RobotController implements InputProcessor {
-	protected ArrayList<Entity> entities = new ArrayList<Entity>();
+	protected ArrayList<ComponentEntity> entities = new ArrayList<ComponentEntity>();
 
 	public void addEntity(Entity e) {
-		entities.add(e);
+		entities.add((ComponentEntity) e);
 	}
 
 	@Override
