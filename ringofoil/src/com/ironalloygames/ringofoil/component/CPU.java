@@ -2,8 +2,20 @@ package com.ironalloygames.ringofoil.component;
 
 import com.badlogic.gdx.math.Vector2;
 import com.ironalloygames.ringofoil.RG;
+import com.ironalloygames.ringofoil.entity.CPUEntity;
+import com.ironalloygames.ringofoil.entity.Entity;
 
 public class CPU extends Component {
+
+	@Override
+	public Entity createEntity() {
+		return new CPUEntity(this);
+	}
+
+	@Override
+	public Vector2 getBoundingBox() {
+		return super.getBoundingBox().scl(0.85f);
+	}
 
 	@Override
 	public void render(Vector2 position, float rotation) {

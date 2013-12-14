@@ -6,8 +6,9 @@ import java.util.List;
 import com.badlogic.gdx.math.Vector2;
 import com.ironalloygames.ringofoil.RG;
 import com.ironalloygames.ringofoil.component.Attachment.AttachmentPoint;
+import com.ironalloygames.ringofoil.entity.Entity;
 
-public class Component {
+public abstract class Component {
 	public static float SCALE = .5f;
 	public static float STANDARD_ASPECT_RATIO = .625f;
 
@@ -27,6 +28,8 @@ public class Component {
 			att.getChild().addChildComponentsToList(components);
 		}
 	}
+
+	public abstract Entity createEntity();
 
 	public Vector2 getBoundingBox() {
 		return new Vector2(1 * SCALE, 1 * SCALE * STANDARD_ASPECT_RATIO);

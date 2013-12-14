@@ -5,6 +5,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.ironalloygames.ringofoil.component.Attachment.AttachmentPoint;
+import com.ironalloygames.ringofoil.component.CPU;
+import com.ironalloygames.ringofoil.component.Structure;
+import com.ironalloygames.ringofoil.component.Tracks;
 
 public class RG implements ApplicationListener {
 	public static AssetManager am;
@@ -15,15 +19,36 @@ public class RG implements ApplicationListener {
 
 	public static OrthographicCamera uiCamera;
 
+	long ticks = 0;
+
 	@Override
 	public void create() {
 		uiCamera = new OrthographicCamera(800, 600);
 		gameCamera = new OrthographicCamera(800.f / 128, 600.f / 128);
 		batch = new SpriteBatch();
 
-		currentState = new EditorState();
+		currentState = new ArenaState();
+		((ArenaState) currentState).setRobots(createFakeRobot(),
+				createFakeRobot());
+		// currentState = new EditorState();
 
 		am = new AssetManager();
+
+		ticks = System.currentTimeMillis();
+	}
+
+	Robot createFakeRobot() {
+		Robot robot = new Robot();
+
+		CPU cpu = new CPU();
+		Structure structure = new Structure();
+		Tracks tracks = new Tracks();
+
+		robot.setRootComponent(cpu);
+		cpu.addChildComponent(structure, AttachmentPoint.BOTTOM);
+		structure.addChildComponent(tracks, AttachmentPoint.BOTTOM);
+
+		return robot;
 	}
 
 	@Override
@@ -49,6 +74,11 @@ public class RG implements ApplicationListener {
 		batch.begin();
 		currentState.renderUi();
 		batch.end();
+
+		if (ticks < System.currentTimeMillis()) {
+			ticks += 16;
+			currentState.update();
+		}
 	}
 
 	@Override
