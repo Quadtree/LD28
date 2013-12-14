@@ -1,0 +1,19 @@
+
+pack.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+plate
+  rotate: false
+  xy: 2, 2
+  size: 128, 80
+  orig: 128, 80
+  offset: 0, 0
+  index: -1
+tracks
+  rotate: false
+  xy: 132, 2
+  size: 128, 80
+  orig: 128, 80
+  offset: 0, 0
+  index: -1
