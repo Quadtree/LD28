@@ -3,6 +3,7 @@ package com.ironalloygames.ringofoil.entity;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
 import com.ironalloygames.ringofoil.ArenaState;
@@ -13,6 +14,8 @@ import com.ironalloygames.ringofoil.component.Component;
 
 public abstract class ComponentEntity extends Entity {
 	Component component;
+
+	Joint parentConnector;
 
 	Vector2 relativePosition;
 
@@ -59,12 +62,14 @@ public abstract class ComponentEntity extends Entity {
 				jd.localAnchorB.x = localAnchorB.x;
 				jd.localAnchorB.y = localAnchorB.y;
 
-				System.out.println("Welding " + jd.bodyA.getPosition() + " to "
-						+ jd.bodyB.getPosition());
-
-				((ArenaState) RG.currentState).world.createJoint(jd);
+				child.setParentConnector(((ArenaState) RG.currentState).world
+						.createJoint(jd));
 			}
 		}
+	}
+
+	public Joint getParentConnector() {
+		return parentConnector;
 	}
 
 	@Override
@@ -72,6 +77,15 @@ public abstract class ComponentEntity extends Entity {
 		super.render();
 
 		component.render(body.getPosition(), body.getAngle());
+
+		if (component.getParent() != null) {
+			Vector2 pt = component.getParent().getCenterPoint().scl(-1);
+			pt = body.getWorldPoint(pt);
+
+			RG.batch.draw(RG.am.get("connector"), pt.x, pt.y, .5f, .5f, 1, 1,
+					16 / 128f, 16 / 128f, body.getAngle());
+
+		}
 
 		/*
 		 * component.render(superEntity.body.getWorldPoint(relativePosition),
@@ -86,5 +100,9 @@ public abstract class ComponentEntity extends Entity {
 		 * 
 		 * }
 		 */
+	}
+
+	public void setParentConnector(Joint parentConnector) {
+		this.parentConnector = parentConnector;
 	}
 }
