@@ -1,5 +1,7 @@
 package com.ironalloygames.ringofoil.entity;
 
+import java.util.Map;
+
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.ironalloygames.ringofoil.ArenaState;
@@ -28,7 +30,7 @@ public abstract class ComponentEntity extends Entity {
 		body.createFixture(shape, 1);
 	}
 
-	public void generateAttachments() {
+	public void generateAttachments(Map<Component, ComponentEntity> entityMap) {
 
 	}
 

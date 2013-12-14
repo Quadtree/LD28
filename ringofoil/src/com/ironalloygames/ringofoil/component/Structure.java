@@ -2,12 +2,12 @@ package com.ironalloygames.ringofoil.component;
 
 import com.badlogic.gdx.math.Vector2;
 import com.ironalloygames.ringofoil.RG;
-import com.ironalloygames.ringofoil.entity.Entity;
+import com.ironalloygames.ringofoil.entity.ComponentEntity;
 import com.ironalloygames.ringofoil.entity.StructureEntity;
 
 public class Structure extends Component {
 	@Override
-	public Entity createEntity() {
+	public ComponentEntity createEntity() {
 		return new StructureEntity(this);
 	}
 

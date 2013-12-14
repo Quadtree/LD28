@@ -3,12 +3,12 @@ package com.ironalloygames.ringofoil.component;
 import com.badlogic.gdx.math.Vector2;
 import com.ironalloygames.ringofoil.RG;
 import com.ironalloygames.ringofoil.entity.CPUEntity;
-import com.ironalloygames.ringofoil.entity.Entity;
+import com.ironalloygames.ringofoil.entity.ComponentEntity;
 
 public class CPU extends Component {
 
 	@Override
-	public Entity createEntity() {
+	public ComponentEntity createEntity() {
 		return new CPUEntity(this);
 	}
 
