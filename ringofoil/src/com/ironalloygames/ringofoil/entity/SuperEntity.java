@@ -45,9 +45,7 @@ public class SuperEntity {
 	}
 
 	public void render() {
-		System.out.println(entities);
 		for (Entity e : entities) {
-
 			e.render();
 		}
 	}

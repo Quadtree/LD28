@@ -52,6 +52,8 @@ public class Attachment {
 		Vector2 accum = delta.cpy().scl(parent.getBoundingBox().x / 2,
 				parent.getBoundingBox().y / 2);
 
+		accum.add(delta.cpy().scl(8 / 128f, 8 / 128f));
+
 		if (child != null) {
 			accum.add(delta.cpy().scl(child.getBoundingBox().x / 2,
 					child.getBoundingBox().y / 2));

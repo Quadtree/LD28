@@ -40,6 +40,14 @@ public abstract class Component {
 		return new Vector2(1 * SCALE, 1 * SCALE * STANDARD_ASPECT_RATIO);
 	}
 
+	public List<Attachment> getChildren() {
+		return children;
+	}
+
+	public Attachment getParent() {
+		return parent;
+	}
+
 	public Vector2 getRelativePosition() {
 		if (parent == null) {
 			return new Vector2(0, 0);

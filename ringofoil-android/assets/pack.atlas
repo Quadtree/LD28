@@ -10,6 +10,13 @@ att_pt
   orig: 32, 32
   offset: 0, 0
   index: -1
+connector
+  rotate: false
+  xy: 392, 100
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
 cpu
   rotate: false
   xy: 2, 36
