@@ -111,8 +111,9 @@ public abstract class Component {
 		if (RG.am.get(graphic).isFlipX() != flipped)
 			RG.am.get(graphic).flip(true, false);
 
-		RG.batch.draw(RG.am.get(graphic), position.x, position.y, .5f, .5f, 1,
-				1, getBoundingBox().x, getBoundingBox().y, rotation
-						* (180f / MathUtils.PI));
+		Vector2 bb = getBoundingBox();
+
+		RG.batch.draw(RG.am.get(graphic), position.x - .5f, position.y - .5f,
+				.5f, .5f, 1, 1, bb.x, bb.y, rotation * (180f / MathUtils.PI));
 	}
 }

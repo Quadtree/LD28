@@ -33,6 +33,19 @@ public abstract class ComponentEntity extends Entity {
 			this.relativePosition.x *= -1;
 		}
 
+		createBody(robotCenter);
+
+		createFixture();
+
+		for (Attachment att : component.getChildren()) {
+			ComponentEntity child = att.getChild().createEntity(robotCenter,
+					flipped);
+
+			createJointToChild(att, child);
+		}
+	}
+
+	protected void createBody(Vector2 robotCenter) {
 		BodyDef bd = new BodyDef();
 		bd.type = BodyType.DynamicBody;
 		bd.position.x = relativePosition.x + robotCenter.x;
@@ -41,19 +54,14 @@ public abstract class ComponentEntity extends Entity {
 		System.out.println("Creating body at " + bd.position);
 
 		body = ((ArenaState) RG.currentState).world.createBody(bd);
+	}
 
+	protected void createFixture() {
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(component.getBoundingBox().x / 2,
 				component.getBoundingBox().y / 2);
 
-		body.createFixture(shape, 1);
-
-		for (Attachment att : component.getChildren()) {
-			ComponentEntity child = att.getChild().createEntity(robotCenter,
-					flipped);
-
-			createJointToChild(att, child);
-		}
+		body.createFixture(shape, getDensity());
 	}
 
 	public void createJointToChild(Attachment att, ComponentEntity child) {
@@ -79,6 +87,10 @@ public abstract class ComponentEntity extends Entity {
 				.createJoint(jd));
 	}
 
+	protected float getDensity() {
+		return 1;
+	}
+
 	public Joint getParentConnector() {
 		return parentConnector;
 	}
@@ -97,8 +109,8 @@ public abstract class ComponentEntity extends Entity {
 
 			pt = body.getWorldPoint(pt);
 
-			RG.batch.draw(RG.am.get("connector"), pt.x, pt.y, .5f, .5f, 1, 1,
-					16 / 128f, 16 / 128f, body.getAngle()
+			RG.batch.draw(RG.am.get("connector"), pt.x - .5f, pt.y - .5f, .5f,
+					.5f, 1, 1, 16 / 128f, 16 / 128f, body.getAngle()
 							* (180f / MathUtils.PI));
 
 		}

@@ -23,6 +23,7 @@ public class CPU extends Component {
 		renderSized(position, rotation, flipped, "plate");
 		renderSized(position, rotation, flipped, "cpu");
 
+		System.out.println(position);
 	}
 
 }

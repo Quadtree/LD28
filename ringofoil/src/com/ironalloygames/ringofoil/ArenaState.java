@@ -31,9 +31,19 @@ public class ArenaState extends GameState {
 		Body groundBody = world.createBody(bd);
 
 		PolygonShape groundShape = new PolygonShape();
-		groundShape.setAsBox(40, 1, new Vector2(0, -3), 0);
+		groundShape.setAsBox(40, 1, new Vector2(0, -3f), 0);
 
 		groundBody.createFixture(groundShape, 0);
+
+		PolygonShape leftWallShape = new PolygonShape();
+		leftWallShape.setAsBox(1, 40, new Vector2(-3.5f, 0), 0);
+
+		groundBody.createFixture(leftWallShape, 0);
+
+		PolygonShape rightWallShape = new PolygonShape();
+		rightWallShape.setAsBox(1, 40, new Vector2(3.5f, 0), 0);
+
+		groundBody.createFixture(rightWallShape, 0);
 	}
 
 	public void addEntity(Entity e) {
@@ -47,6 +57,9 @@ public class ArenaState extends GameState {
 		for (int i = 0; i < entities.size(); i++) {
 			entities.get(i).render();
 		}
+
+		// Box2DDebugRenderer db = new Box2DDebugRenderer();
+		// db.render(world, RG.gameCamera.combined);
 	}
 
 	@Override
@@ -56,8 +69,8 @@ public class ArenaState extends GameState {
 	}
 
 	public void setRobots(Robot robot0, Robot robot1) {
-		robot0.generate(new Vector2(-1, 0), false);
-		robot1.generate(new Vector2(1, 0), true);
+		robot0.generate(new Vector2(-2, 0), false);
+		robot1.generate(new Vector2(2, 0), true);
 	}
 
 	@Override

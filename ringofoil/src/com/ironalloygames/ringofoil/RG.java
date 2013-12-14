@@ -2,9 +2,12 @@ package com.ironalloygames.ringofoil;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.ironalloygames.ringofoil.component.Attachment.AttachmentPoint;
 import com.ironalloygames.ringofoil.component.CPU;
 import com.ironalloygames.ringofoil.component.Structure;
@@ -78,6 +81,14 @@ public class RG implements ApplicationListener {
 		batch.begin();
 		currentState.renderUi();
 		batch.end();
+
+		ShapeRenderer sr = new ShapeRenderer();
+		sr.setProjectionMatrix(gameCamera.combined);
+		sr.begin(ShapeType.Line);
+		sr.setColor(Color.BLACK);
+		sr.line(0, -20, 0, 20);
+		sr.line(-20, -2f, 20, -2f);
+		sr.end();
 
 		if (ticks < System.currentTimeMillis()) {
 			ticks += 16;
