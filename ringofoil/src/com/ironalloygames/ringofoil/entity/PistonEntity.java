@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.joints.PrismaticJoint;
 import com.badlogic.gdx.physics.box2d.joints.PrismaticJointDef;
 import com.ironalloygames.ringofoil.ArenaState;
@@ -13,6 +14,8 @@ import com.ironalloygames.ringofoil.component.Component;
 import com.ironalloygames.ringofoil.component.Piston;
 
 public class PistonEntity extends ComponentEntity {
+
+	boolean commandExtend = false;
 
 	PrismaticJoint joint;
 
@@ -31,14 +34,14 @@ public class PistonEntity extends ComponentEntity {
 	public void commandKeyDown() {
 		super.commandKeyDown();
 
-		joint.setMotorSpeed(100);
+		commandExtend = true;
 	}
 
 	@Override
 	public void commandKeyUp() {
 		super.commandKeyUp();
 
-		joint.setMotorSpeed(-100);
+		commandExtend = false;
 	}
 
 	@Override
@@ -54,6 +57,13 @@ public class PistonEntity extends ComponentEntity {
 
 		rodBody = ((ArenaState) RG.currentState).world.createBody(bd);
 
+		PolygonShape shape = new PolygonShape();
+		shape.setAsBox(component.getBoundingBox().x / 2,
+				component.getBoundingBox().y / 2);
+
+		rodBody.createFixture(shape, getDensity());
+
+		// if (commandExtend) {
 		PrismaticJointDef jd = new PrismaticJointDef();
 		jd.initialize(body, rodBody, body.getPosition(), new Vector2(1, 0));
 		jd.enableMotor = true;
@@ -64,6 +74,9 @@ public class PistonEntity extends ComponentEntity {
 
 		joint = (PrismaticJoint) ((ArenaState) RG.currentState).world
 				.createJoint(jd);
+
+		// joint.setMotorSpeed(-10);
+		// }
 	}
 
 	@Override
@@ -72,11 +85,35 @@ public class PistonEntity extends ComponentEntity {
 	}
 
 	@Override
+	protected float getDensity() {
+		return 1.5f;
+	}
+
+	@Override
 	public void render() {
 		piston.render(body.getPosition(), rodBody.getPosition(),
 				body.getAngle(), rodBody.getAngle(), flipped);
 
 		renderConnector();
+	}
+
+	@Override
+	public void update() {
+		super.update();
+
+		System.out.println(body.getAngle());
+
+		if (commandExtend) {
+			if (joint.getJointTranslation() < component.getBoundingBox().x * .8f)
+				joint.setMotorSpeed(10);
+			else
+				joint.setMotorSpeed(0);
+		} else {
+			if (joint.getJointTranslation() > component.getBoundingBox().x * .1f)
+				joint.setMotorSpeed(-10);
+			else
+				joint.setMotorSpeed(0);
+		}
 	}
 
 }

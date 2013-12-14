@@ -58,8 +58,8 @@ public class RG implements ApplicationListener {
 		robot.setRootComponent(cpu);
 		cpu.addChildComponent(structure, AttachmentPoint.BOTTOM);
 		structure.addChildComponent(tracks, AttachmentPoint.BOTTOM);
-		structure.addChildComponent(p1, AttachmentPoint.RIGHT);
-		p1.addChildComponent(structure2, AttachmentPoint.RIGHT);
+		structure.addChildComponent(structure2, AttachmentPoint.RIGHT);
+		structure2.addChildComponent(p1, AttachmentPoint.RIGHT);
 		structure2.addChildComponent(tracks2, AttachmentPoint.BOTTOM);
 
 		return robot;
