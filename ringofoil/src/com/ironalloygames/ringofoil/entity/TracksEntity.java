@@ -33,7 +33,7 @@ public class TracksEntity extends ComponentEntity {
 
 		for (RevoluteJoint rj : wheelJoints) {
 			rj.setMaxMotorTorque(100);
-			rj.setMotorSpeed(-dir * 10);
+			rj.setMotorSpeed(-dir * 20);
 			rj.enableMotor(true);
 		}
 	}

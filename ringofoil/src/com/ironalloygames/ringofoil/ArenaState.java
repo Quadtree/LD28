@@ -38,12 +38,12 @@ public class ArenaState extends GameState {
 		groundBody.createFixture(groundShape, 0);
 
 		PolygonShape leftWallShape = new PolygonShape();
-		leftWallShape.setAsBox(1, 40, new Vector2(-3.5f, 0), 0);
+		leftWallShape.setAsBox(1, 40, new Vector2(-4f, 0), 0);
 
 		groundBody.createFixture(leftWallShape, 0);
 
 		PolygonShape rightWallShape = new PolygonShape();
-		rightWallShape.setAsBox(1, 40, new Vector2(3.5f, 0), 0);
+		rightWallShape.setAsBox(1, 40, new Vector2(4f, 0), 0);
 
 		groundBody.createFixture(rightWallShape, 0);
 
@@ -104,7 +104,7 @@ public class ArenaState extends GameState {
 		robot1.generate(new Vector2(2, 0), true);
 
 		for (int i = endPos; i < entityAddQueue.size(); i++) {
-			controllers.get(0).addEntity(entityAddQueue.get(i));
+			controllers.get(1).addEntity(entityAddQueue.get(i));
 		}
 	}
 
