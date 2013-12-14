@@ -2,6 +2,7 @@ package com.ironalloygames.ringofoil;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.ironalloygames.ringofoil.component.Attachment.AttachmentPoint;
 import com.ironalloygames.ringofoil.component.CPU;
+import com.ironalloygames.ringofoil.component.Piston;
 import com.ironalloygames.ringofoil.component.Structure;
 import com.ironalloygames.ringofoil.component.Tracks;
 
@@ -46,14 +48,18 @@ public class RG implements ApplicationListener {
 
 		CPU cpu = new CPU();
 		Structure structure = new Structure();
+		Piston p1 = new Piston();
 		Structure structure2 = new Structure();
 		Tracks tracks = new Tracks();
 		Tracks tracks2 = new Tracks();
 
+		p1.setCommandKey(Keys.NUM_1);
+
 		robot.setRootComponent(cpu);
 		cpu.addChildComponent(structure, AttachmentPoint.BOTTOM);
 		structure.addChildComponent(tracks, AttachmentPoint.BOTTOM);
-		structure.addChildComponent(structure2, AttachmentPoint.RIGHT);
+		structure.addChildComponent(p1, AttachmentPoint.RIGHT);
+		p1.addChildComponent(structure2, AttachmentPoint.RIGHT);
 		structure2.addChildComponent(tracks2, AttachmentPoint.BOTTOM);
 
 		return robot;

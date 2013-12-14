@@ -1,7 +1,7 @@
 package com.ironalloygames.ringofoil;
 
 import com.badlogic.gdx.Input.Keys;
-import com.ironalloygames.ringofoil.entity.Entity;
+import com.ironalloygames.ringofoil.entity.ComponentEntity;
 import com.ironalloygames.ringofoil.entity.TracksEntity;
 
 public class PlayerRobotController extends RobotController {
@@ -17,6 +17,11 @@ public class PlayerRobotController extends RobotController {
 		if (keycode == Keys.D || keycode == Keys.RIGHT)
 			moveRight = true;
 
+		for (ComponentEntity e : entities) {
+			if (e.getCommandKey() == keycode)
+				e.commandKeyDown();
+		}
+
 		return super.keyDown(keycode);
 	}
 
@@ -28,6 +33,11 @@ public class PlayerRobotController extends RobotController {
 
 		if (keycode == Keys.D || keycode == Keys.RIGHT)
 			moveRight = false;
+
+		for (ComponentEntity e : entities) {
+			if (e.getCommandKey() == keycode)
+				e.commandKeyUp();
+		}
 
 		return super.keyUp(keycode);
 	}
@@ -43,7 +53,7 @@ public class PlayerRobotController extends RobotController {
 		if (!moveLeft && moveRight)
 			move = 1;
 
-		for (Entity e : entities) {
+		for (ComponentEntity e : entities) {
 			if (e instanceof TracksEntity) {
 				((TracksEntity) e).commandMove(move);
 			}

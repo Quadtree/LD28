@@ -24,20 +24,20 @@ cpu
   orig: 128, 80
   offset: 0, 0
   index: -1
-piston
+piston_base
   rotate: false
   xy: 132, 36
   size: 128, 80
   orig: 128, 80
   offset: 0, 0
-  index: 0
-piston
+  index: -1
+piston_rod
   rotate: false
   xy: 262, 36
   size: 128, 80
   orig: 128, 80
   offset: 0, 0
-  index: 1
+  index: -1
 plate
   rotate: false
   xy: 392, 36

@@ -14,6 +14,8 @@ public abstract class Component {
 	public static float STANDARD_ASPECT_RATIO = .625f;
 
 	List<Attachment> children = new ArrayList<Attachment>();
+	int commandKey;
+
 	Attachment parent;
 
 	public void addChildComponent(Component childComponent,
@@ -43,6 +45,10 @@ public abstract class Component {
 
 	public List<Attachment> getChildren() {
 		return children;
+	}
+
+	public int getCommandKey() {
+		return commandKey;
 	}
 
 	public Attachment getParent() {
@@ -115,5 +121,9 @@ public abstract class Component {
 
 		RG.batch.draw(RG.am.get(graphic), position.x - .5f, position.y - .5f,
 				.5f, .5f, 1, 1, bb.x, bb.y, rotation * (180f / MathUtils.PI));
+	}
+
+	public void setCommandKey(int commandKey) {
+		this.commandKey = commandKey;
 	}
 }

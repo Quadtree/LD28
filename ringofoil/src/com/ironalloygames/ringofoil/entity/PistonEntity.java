@@ -15,4 +15,18 @@ public class PistonEntity extends ComponentEntity {
 		piston = (Piston) component;
 	}
 
+	@Override
+	public void commandKeyDown() {
+		super.commandKeyDown();
+
+		System.out.println("EXTEND!");
+	}
+
+	@Override
+	public void commandKeyUp() {
+		super.commandKeyUp();
+
+		System.out.println("RETRACT!");
+	}
+
 }

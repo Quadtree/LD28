@@ -13,6 +13,8 @@ import com.ironalloygames.ringofoil.component.Attachment;
 import com.ironalloygames.ringofoil.component.Component;
 
 public abstract class ComponentEntity extends Entity {
+	int commandKey;
+
 	Component component;
 
 	boolean flipped;
@@ -43,6 +45,12 @@ public abstract class ComponentEntity extends Entity {
 
 			createJointToChild(att, child);
 		}
+	}
+
+	public void commandKeyDown() {
+	}
+
+	public void commandKeyUp() {
 	}
 
 	protected void createBody(Vector2 robotCenter) {
@@ -85,6 +93,10 @@ public abstract class ComponentEntity extends Entity {
 
 		child.setParentConnector(((ArenaState) RG.currentState).world
 				.createJoint(jd));
+	}
+
+	public int getCommandKey() {
+		return component.getCommandKey();
 	}
 
 	protected float getDensity() {
