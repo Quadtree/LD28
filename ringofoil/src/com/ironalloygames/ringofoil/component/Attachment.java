@@ -1,5 +1,7 @@
 package com.ironalloygames.ringofoil.component;
 
+import com.badlogic.gdx.math.Vector2;
+
 public class Attachment {
 	enum AttachmentPoint {
 		BOTTOM, LEFT, RIGHT, TOP
@@ -16,4 +18,19 @@ public class Attachment {
 		this.point = point;
 	}
 
+	public Component getChild() {
+		return child;
+	}
+
+	public Vector2 getChildRelativePosition() {
+		return new Vector2(0, 0);
+	}
+
+	public Component getParent() {
+		return parent;
+	}
+
+	public AttachmentPoint getPoint() {
+		return point;
+	}
 }

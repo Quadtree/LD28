@@ -3,16 +3,30 @@ pack.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-plate
+att_pt
   rotate: false
   xy: 2, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+cpu
+  rotate: false
+  xy: 2, 36
+  size: 128, 80
+  orig: 128, 80
+  offset: 0, 0
+  index: -1
+plate
+  rotate: false
+  xy: 132, 36
   size: 128, 80
   orig: 128, 80
   offset: 0, 0
   index: -1
 tracks
   rotate: false
-  xy: 132, 2
+  xy: 262, 36
   size: 128, 80
   orig: 128, 80
   offset: 0, 0

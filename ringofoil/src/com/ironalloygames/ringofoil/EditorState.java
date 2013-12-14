@@ -14,8 +14,9 @@ public class EditorState extends GameState {
 
 	@Override
 	public void render() {
+		System.out.println(robot.getComponents());
 		for (Component c : robot.getComponents()) {
-			c.render();
+			c.render(c.getRelativePosition(), 0);
 		}
 		super.render();
 	}
