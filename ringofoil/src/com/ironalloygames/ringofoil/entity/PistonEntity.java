@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.joints.PrismaticJoint;
 import com.badlogic.gdx.physics.box2d.joints.PrismaticJointDef;
@@ -23,8 +24,7 @@ public class PistonEntity extends ComponentEntity {
 
 	Body rodBody;
 
-	public PistonEntity(Component component, Vector2 robotCenter,
-			boolean flipped) {
+	public PistonEntity(Component component, Vector2 robotCenter, boolean flipped) {
 		super(component, robotCenter, flipped);
 
 		piston = (Piston) component;
@@ -58,14 +58,12 @@ public class PistonEntity extends ComponentEntity {
 		rodBody = ((ArenaState) RG.currentState).world.createBody(bd);
 
 		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(component.getBoundingBox().x / 2,
-				component.getBoundingBox().y / 2);
+		shape.setAsBox(component.getBoundingBox().x / 2, component.getBoundingBox().y / 2);
 
 		rodBody.createFixture(shape, getDensity()).setFilterData(getFilter());
 		rodBody.setUserData(this);
 
-		System.out.println("GI "
-				+ rodBody.getFixtureList().get(0).getFilterData().groupIndex);
+		System.out.println("GI " + rodBody.getFixtureList().get(0).getFilterData().groupIndex);
 
 		PrismaticJointDef jd = new PrismaticJointDef();
 		jd.initialize(body, rodBody, body.getPosition(), new Vector2(1, 0));
@@ -75,8 +73,7 @@ public class PistonEntity extends ComponentEntity {
 		jd.upperTranslation = component.getBoundingBox().x * .9f;
 		jd.maxMotorForce = 10;
 
-		joint = (PrismaticJoint) ((ArenaState) RG.currentState).world
-				.createJoint(jd);
+		joint = (PrismaticJoint) ((ArenaState) RG.currentState).world.createJoint(jd);
 	}
 
 	@Override
@@ -91,26 +88,41 @@ public class PistonEntity extends ComponentEntity {
 
 	@Override
 	public void render() {
-		piston.render(body.getPosition(), rodBody.getPosition(),
-				body.getAngle(), rodBody.getAngle(), flipped);
+		piston.render(body.getPosition(), rodBody.getPosition(), body.getAngle(), rodBody.getAngle(), flipped);
 
 		renderConnector();
+	}
+
+	@Override
+	protected void setToNewGroup(short group) {
+		Filter fd = new Filter();
+		fd.categoryBits = 2;
+		fd.maskBits = 2;
+		fd.groupIndex = group;
+
+		rodBody.getFixtureList().get(0).setFilterData(fd);
+
+		super.setToNewGroup(group);
 	}
 
 	@Override
 	public void update() {
 		super.update();
 
-		if (commandExtend) {
-			if (joint.getJointTranslation() < component.getBoundingBox().x * .8f)
-				joint.setMotorSpeed(10);
-			else
-				joint.setMotorSpeed(0);
+		if (!loose) {
+			if (commandExtend) {
+				if (joint.getJointTranslation() < component.getBoundingBox().x * .8f)
+					joint.setMotorSpeed(10);
+				else
+					joint.setMotorSpeed(0);
+			} else {
+				if (joint.getJointTranslation() > component.getBoundingBox().x * .1f)
+					joint.setMotorSpeed(-10);
+				else
+					joint.setMotorSpeed(0);
+			}
 		} else {
-			if (joint.getJointTranslation() > component.getBoundingBox().x * .1f)
-				joint.setMotorSpeed(-10);
-			else
-				joint.setMotorSpeed(0);
+			joint.enableMotor(false);
 		}
 	}
 

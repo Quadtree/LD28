@@ -1,5 +1,8 @@
 package com.ironalloygames.ringofoil.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -16,11 +19,15 @@ import com.ironalloygames.ringofoil.component.Attachment.AttachmentPoint;
 import com.ironalloygames.ringofoil.component.Component;
 
 public abstract class ComponentEntity extends Entity {
+	List<ComponentEntity> children = new ArrayList<ComponentEntity>();
+
 	int commandKey;
 
 	Component component;
 
 	boolean flipped;
+
+	public boolean loose = false;
 
 	Joint parentConnector;
 
@@ -92,6 +99,8 @@ public abstract class ComponentEntity extends Entity {
 		jd.localAnchorB.y = localAnchorB.y;
 
 		child.setParentConnector(((ArenaState) RG.currentState).world.createJoint(jd));
+
+		children.add(child);
 	}
 
 	protected Body getBodyForChildConnection(AttachmentPoint ap) {
@@ -108,6 +117,8 @@ public abstract class ComponentEntity extends Entity {
 
 	protected Filter getFilter() {
 		Filter fd = new Filter();
+		fd.categoryBits = 1;
+		fd.maskBits = 1;
 		fd.groupIndex = ((ArenaState) RG.currentState).currentGroup;
 
 		return fd;
@@ -189,6 +200,22 @@ public abstract class ComponentEntity extends Entity {
 		this.parentConnector = parentConnector;
 	}
 
+	protected void setToNewGroup(short group) {
+		loose = true;
+		Filter f = new Filter();
+		f.categoryBits = 2;
+		f.maskBits = 2;
+		f.groupIndex = group;
+
+		body.getFixtureList().get(0).setFilterData(f);
+
+		for (ComponentEntity ce : children) {
+			if (ce.parentConnector != null) {
+				ce.setToNewGroup(group);
+			}
+		}
+	}
+
 	@Override
 	public void takeDamage(float lightDamage, float heavyDamage) {
 		super.takeDamage(lightDamage, heavyDamage);
@@ -213,6 +240,10 @@ public abstract class ComponentEntity extends Entity {
 		if (component.getParent() == null && parentConnector != null) {
 			((ArenaState) RG.currentState).world.destroyJoint(parentConnector);
 			parentConnector = null;
+
+			short newGroup = --((ArenaState) RG.currentState).currentGroup;
+
+			setToNewGroup(newGroup);
 		}
 	}
 }

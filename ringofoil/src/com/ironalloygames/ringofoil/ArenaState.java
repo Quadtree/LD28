@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -39,10 +40,15 @@ public class ArenaState extends GameState implements ContactListener {
 
 		Body groundBody = world.createBody(bd);
 
+		Filter f = new Filter();
+		f.categoryBits = 3;
+		f.maskBits = 3;
+		f.groupIndex = 0;
+
 		PolygonShape groundShape = new PolygonShape();
 		groundShape.setAsBox(40, 1, new Vector2(0, -3f), 0);
 
-		groundBody.createFixture(groundShape, 0);
+		groundBody.createFixture(groundShape, 0).setFilterData(f);
 
 		PolygonShape leftWallShape = new PolygonShape();
 		leftWallShape.setAsBox(1, 40, new Vector2(-4f, 0), 0);

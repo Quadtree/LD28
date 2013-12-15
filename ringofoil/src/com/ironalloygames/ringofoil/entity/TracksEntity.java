@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
@@ -41,19 +42,15 @@ public class TracksEntity extends ComponentEntity {
 	@Override
 	protected void createFixture() {
 		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(component.getBoundingBox().x / 2, component
-				.getBoundingBox().y / 2 * .7f,
-				new Vector2(0, component.getBoundingBox().y / 2 * .4f), 0);
+		shape.setAsBox(component.getBoundingBox().x / 2, component.getBoundingBox().y / 2 * .7f, new Vector2(0, component.getBoundingBox().y / 2 * .4f), 0);
 
 		body.createFixture(shape, getDensity()).setFilterData(getFilter());
 
 		wheels = new ArrayList<Body>();
 		wheelJoints = new ArrayList<RevoluteJoint>();
 
-		createWheel(new Vector2(-component.getBoundingBox().x / 2 * .6f,
-				-component.getBoundingBox().y / 2 * .4f));
-		createWheel(new Vector2(component.getBoundingBox().x / 2 * .6f,
-				-component.getBoundingBox().y / 2 * .4f));
+		createWheel(new Vector2(-component.getBoundingBox().x / 2 * .6f, -component.getBoundingBox().y / 2 * .4f));
+		createWheel(new Vector2(component.getBoundingBox().x / 2 * .6f, -component.getBoundingBox().y / 2 * .4f));
 		createWheel(new Vector2(0, -component.getBoundingBox().y / 2 * .4f));
 	}
 
@@ -78,8 +75,7 @@ public class TracksEntity extends ComponentEntity {
 
 		RevoluteJointDef jd = new RevoluteJointDef();
 		jd.initialize(body, wheel, wheel.getWorldCenter());
-		wheelJoints.add((RevoluteJoint) ((ArenaState) RG.currentState).world
-				.createJoint(jd));
+		wheelJoints.add((RevoluteJoint) ((ArenaState) RG.currentState).world.createJoint(jd));
 	}
 
 	@Override
@@ -89,13 +85,34 @@ public class TracksEntity extends ComponentEntity {
 
 	@Override
 	public void render() {
-		tracks.renderWithWheels(body.getPosition(), body.getAngle(), flipped,
-				new Vector2[] { wheels.get(0).getPosition(),
-						wheels.get(1).getPosition(),
-						wheels.get(2).getPosition() }, new float[] {
-						wheels.get(0).getAngle(), wheels.get(1).getAngle(),
-						wheels.get(2).getAngle() });
+		tracks.renderWithWheels(body.getPosition(), body.getAngle(), flipped, new Vector2[] { wheels.get(0).getPosition(), wheels.get(1).getPosition(), wheels.get(2).getPosition() }, new float[] {
+				wheels.get(0).getAngle(), wheels.get(1).getAngle(), wheels.get(2).getAngle() });
 
 		renderConnector();
+	}
+
+	@Override
+	protected void setToNewGroup(short group) {
+		Filter fd = new Filter();
+		fd.categoryBits = 2;
+		fd.maskBits = 2;
+		fd.groupIndex = group;
+
+		for (Body b : wheels) {
+			b.getFixtureList().get(0).setFilterData(fd);
+		}
+
+		super.setToNewGroup(group);
+	}
+
+	@Override
+	public void update() {
+		super.update();
+
+		if (loose) {
+			for (RevoluteJoint rj : wheelJoints) {
+				rj.enableMotor(false);
+			}
+		}
 	}
 }

@@ -11,12 +11,12 @@ public class LargeMaceEntity extends ComponentEntity {
 
 	@Override
 	public float getHeavyDamageMultiplier() {
-		return .8f;
+		return .7f;
 	}
 
 	@Override
 	public float getLightDamageMultiplier() {
-		return .2f;
+		return .1f;
 	}
 
 }
