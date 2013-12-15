@@ -99,7 +99,34 @@ public class EditorState extends GameState {
 						comp = new Structure();
 					}
 
-					if (comp != null) {
+					Attachment at2 = new Attachment(comp, att.getParent(), att.getPoint());
+
+					Vector2[] pts = new Vector2[4];
+					pts[0] = at2.getChildRelativePosition().cpy().add(comp.getBoundingBox().scl(.5f, .5f)).add(att.getParent().getRelativePosition());
+					pts[1] = at2.getChildRelativePosition().cpy().add(comp.getBoundingBox().scl(-.5f, .5f)).add(att.getParent().getRelativePosition());
+					pts[2] = at2.getChildRelativePosition().cpy().add(comp.getBoundingBox().scl(.5f, -.5f)).add(att.getParent().getRelativePosition());
+					pts[3] = at2.getChildRelativePosition().cpy().add(comp.getBoundingBox().scl(-.5f, -.5f)).add(att.getParent().getRelativePosition());
+
+					System.out.println(pts[0] + " " + pts[1] + " " + pts[2] + " " + pts[3]);
+
+					boolean intersection = false;
+
+					for (Component tc : robot.getComponents()) {
+						if (tc == at2.getParent())
+							continue;
+
+						Vector2 ll = tc.getRelativePosition().cpy().add(tc.getBoundingBox().scl(-.52f, -.52f));
+						Vector2 ur = tc.getRelativePosition().cpy().add(tc.getBoundingBox().scl(.52f, .52f));
+						System.out.println(tc + ": " + ll + " " + ur);
+
+						for (Vector2 pt : pts) {
+
+							if (pt.x > ll.x && pt.y > ll.y && pt.x < ur.x && pt.y < ur.y)
+								intersection = true;
+						}
+					}
+
+					if (comp != null && !intersection) {
 						att.getParent().addChildComponent(comp, att.getPoint());
 						return true;
 					}
