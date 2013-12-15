@@ -24,6 +24,20 @@ public class RobotSelectState extends GameState {
 			if (editorState != null) {
 				RG.currentState = editorState;
 				Gdx.input.setInputProcessor(RG.currentState);
+			} else {
+				RG.currentState = new MainMenuState();
+				Gdx.input.setInputProcessor(RG.currentState);
+			}
+		}
+
+		if (keycode == Keys.ENTER) {
+			if (editorState != null) {
+				editorState.robot = selectedRobot;
+				RG.currentState = editorState;
+				Gdx.input.setInputProcessor(RG.currentState);
+			} else {
+				RG.tr = new Tournament(selectedRobot);
+				RG.tr.nextMatch();
 			}
 		}
 
@@ -48,7 +62,7 @@ public class RobotSelectState extends GameState {
 	public void renderUi() {
 		super.renderUi();
 
-		RG.am.getFont().drawWrapped(RG.batch, "Commands: Esc - Go back, Mouse Wheel/Arrow Keys - Scroll", -400, -420, 800);
+		RG.am.getFont().drawWrapped(RG.batch, "Commands: Esc - Go back, Enter - Accept selection, Mouse Wheel/Arrow Keys - Scroll", -400, -420, 800);
 
 		int y = 420;
 
@@ -67,8 +81,6 @@ public class RobotSelectState extends GameState {
 		if (row >= 0 && row < robots.length) {
 			selectedIndex = row;
 			selectedRobot = RG.rsd.loadRobot(robots[row].replace(".robot", ""));
-			if (editorState != null)
-				editorState.robot = selectedRobot;
 		}
 
 		return super.touchDown(screenX, screenY, pointer, button);

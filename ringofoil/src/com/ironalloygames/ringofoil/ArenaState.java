@@ -17,7 +17,7 @@ import com.ironalloygames.ringofoil.entity.Entity;
 
 public class ArenaState extends GameState implements ContactListener {
 
-	ArrayList<RobotController> controllers = new ArrayList<RobotController>();
+	public ArrayList<RobotController> controllers = new ArrayList<RobotController>();
 
 	public short currentGroup = 0;
 
@@ -59,9 +59,6 @@ public class ArenaState extends GameState implements ContactListener {
 		rightWallShape.setAsBox(1, 40, new Vector2(4f, 0), 0);
 
 		groundBody.createFixture(rightWallShape, 0);
-
-		controllers.add(new PlayerRobotController());
-		controllers.add(new AiRobotController());
 	}
 
 	public void addEntity(Entity e) {

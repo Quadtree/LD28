@@ -26,6 +26,8 @@ public class RG implements ApplicationListener {
 
 	public static OrthographicCamera textCamera;
 
+	public static Tournament tr;
+
 	public static OrthographicCamera uiCamera;
 
 	ShapeRenderer sr;

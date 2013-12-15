@@ -9,6 +9,7 @@ import com.badlogic.gdx.Input.TextInputListener;
 import com.badlogic.gdx.math.Vector2;
 import com.ironalloygames.ringofoil.component.Arm;
 import com.ironalloygames.ringofoil.component.Attachment;
+import com.ironalloygames.ringofoil.component.Attachment.AttachmentPoint;
 import com.ironalloygames.ringofoil.component.CPU;
 import com.ironalloygames.ringofoil.component.Component;
 import com.ironalloygames.ringofoil.component.LargeMace;
@@ -61,8 +62,9 @@ public class EditorState extends GameState {
 			selectedComponent.setCommandKey(keycode);
 		}
 
-		if (selectedComponent != null && selectedComponent.getParent() != null && keycode == Keys.DEL) {
-			selectedComponent.getParent().getParent().getChildren().remove(selectedComponent);
+		if (selectedComponent != null && selectedComponent.getParent() != null && keycode == Keys.X) {
+			System.out.println("Deleting " + selectedComponent);
+			selectedComponent.getParent().getParent().getChildren().remove(selectedComponent.getParent());
 			selectedComponent = null;
 		}
 
@@ -127,7 +129,7 @@ public class EditorState extends GameState {
 			}
 
 			RG.am.getFont().drawWrapped(RG.batch,
-					"Component selected. Action key is set to " + keyChar + ". Change its action command by pressing a number key." + (selectedComponent instanceof CPU ? "" : " Press DEL to delete it."), -400, 420, 800);
+					"Component selected. Action key is set to " + keyChar + ". Change its action command by pressing a number key." + (selectedComponent instanceof CPU ? "" : " Press X to delete it."), -400, 420, 800);
 		} else if (paletteItemSelected >= 0) {
 			RG.am.getFont().drawWrapped(RG.batch, "Selected: " + palette.get(paletteItemSelected).desc + "\nClick on a green spot to place this item, or right click to deselect.", -400, 420, 800);
 		} else {
@@ -174,6 +176,17 @@ public class EditorState extends GameState {
 							comp = new Piston();
 							break;
 						}
+
+						if (att.getPoint() == AttachmentPoint.LEFT && !comp.isAttachmentPointValid(AttachmentPoint.RIGHT))
+							return true;
+						if (att.getPoint() == AttachmentPoint.RIGHT && !comp.isAttachmentPointValid(AttachmentPoint.LEFT))
+							return true;
+						if (att.getPoint() == AttachmentPoint.TOP && !comp.isAttachmentPointValid(AttachmentPoint.BOTTOM))
+							return true;
+						if (att.getPoint() == AttachmentPoint.BOTTOM && !comp.isAttachmentPointValid(AttachmentPoint.TOP))
+							return true;
+						if (att.getPoint() == AttachmentPoint.ARM && !comp.isAttachmentPointValid(AttachmentPoint.LEFT))
+							return true;
 
 						Attachment at2 = new Attachment(comp, att.getParent(), att.getPoint());
 
