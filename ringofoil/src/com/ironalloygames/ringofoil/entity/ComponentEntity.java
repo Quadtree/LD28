@@ -27,9 +27,13 @@ public abstract class ComponentEntity extends Entity {
 
 	boolean flipped;
 
+	float liquidLeft = 1;
+
 	public boolean loose = false;
 
 	Joint parentConnector;
+
+	boolean punctured = false;
 
 	Vector2 relativePosition;
 
@@ -53,6 +57,10 @@ public abstract class ComponentEntity extends Entity {
 
 			createJointToChild(att, child);
 		}
+	}
+
+	public boolean canBePunctured() {
+		return true;
 	}
 
 	public void commandKeyDown() {
@@ -218,7 +226,13 @@ public abstract class ComponentEntity extends Entity {
 
 	@Override
 	public void takeDamage(float lightDamage, float heavyDamage) {
+		float initialHp = getHp();
+
 		super.takeDamage(lightDamage, heavyDamage);
+
+		if (initialHp - getHp() > 0.1f && MathUtils.randomBoolean(.35f) && canBePunctured()) {
+			punctured = true;
+		}
 
 		if (getHp() < 0) {
 			if (component.getParent() != null) {
@@ -236,6 +250,11 @@ public abstract class ComponentEntity extends Entity {
 	@Override
 	public void update() {
 		super.update();
+
+		if (punctured && MathUtils.randomBoolean(liquidLeft)) {
+			new SparkEntity(getPosition(), MathUtils.random(1.4f, 1.6f), MathUtils.random(4, 7) * liquidLeft, body.getFixtureList().get(0).getFilterData(), "oil");
+			liquidLeft -= 0.005f;
+		}
 
 		if (component.getParent() == null && parentConnector != null) {
 			((ArenaState) RG.currentState).world.destroyJoint(parentConnector);

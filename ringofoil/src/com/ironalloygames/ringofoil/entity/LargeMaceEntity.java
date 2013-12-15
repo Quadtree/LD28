@@ -10,6 +10,11 @@ public class LargeMaceEntity extends ComponentEntity {
 	}
 
 	@Override
+	public boolean canBePunctured() {
+		return false;
+	}
+
+	@Override
 	public float getHeavyDamageMultiplier() {
 		return .7f;
 	}
@@ -18,5 +23,4 @@ public class LargeMaceEntity extends ComponentEntity {
 	public float getLightDamageMultiplier() {
 		return .1f;
 	}
-
 }

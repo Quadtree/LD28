@@ -50,14 +50,14 @@ public class SparkEntity extends Entity {
 
 	@Override
 	public boolean keep() {
-		return body.getLinearVelocity().len() > 2;
+		return body.getLinearVelocity().len() > 2 || getPosition().y > -1.9f;
 	}
 
 	@Override
 	public void render() {
 		super.render();
 
-		RG.batch.draw(RG.am.get(graphic), body.getPosition().x - .5f, body.getPosition().y - .5f, .5f, .5f, 1, 1, 48 / 128f * Component.SCALE, 16 / 128f * Component.SCALE, body.getLinearVelocity().angle());
+		RG.batch.draw(RG.am.get(graphic), body.getPosition().x - .5f, body.getPosition().y - .5f, .5f, .5f, 1, 1, 24 / 128f * Component.SCALE, 8 / 128f * Component.SCALE, body.getLinearVelocity().angle());
 	}
 
 }

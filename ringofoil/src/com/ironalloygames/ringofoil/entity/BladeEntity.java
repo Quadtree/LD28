@@ -10,8 +10,12 @@ public class BladeEntity extends ComponentEntity {
 	}
 
 	@Override
+	public boolean canBePunctured() {
+		return false;
+	}
+
+	@Override
 	protected float getDensity() {
 		return .15f;
 	}
-
 }

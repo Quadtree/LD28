@@ -9,4 +9,9 @@ public class ArmorEntity extends ComponentEntity {
 		super(component, robotCenter, flipped);
 	}
 
+	@Override
+	public boolean canBePunctured() {
+		return false;
+	}
+
 }
