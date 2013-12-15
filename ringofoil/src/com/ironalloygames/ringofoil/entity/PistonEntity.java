@@ -69,8 +69,14 @@ public class PistonEntity extends ComponentEntity {
 		jd.initialize(body, rodBody, body.getPosition(), new Vector2(1, 0));
 		jd.enableMotor = true;
 		jd.enableLimit = true;
-		jd.lowerTranslation = 0;
-		jd.upperTranslation = (flipped ? -1 : 1) * component.getBoundingBox().x * .9f;
+		if (!flipped) {
+			jd.lowerTranslation = 0;
+			jd.upperTranslation = component.getBoundingBox().x * .9f;
+		} else {
+			jd.lowerTranslation = -component.getBoundingBox().x * .9f;
+			jd.upperTranslation = 0;
+		}
+
 		jd.maxMotorForce = 10;
 
 		joint = (PrismaticJoint) ((ArenaState) RG.currentState).world.createJoint(jd);
@@ -110,16 +116,30 @@ public class PistonEntity extends ComponentEntity {
 		super.update();
 
 		if (!loose) {
-			if (commandExtend) {
-				if (joint.getJointTranslation() < component.getBoundingBox().x * .8f)
-					joint.setMotorSpeed((flipped ? -1 : 1) * 10);
-				else
-					joint.setMotorSpeed(0);
+			if (!flipped) {
+				if (commandExtend) {
+					if (joint.getJointTranslation() < component.getBoundingBox().x * .8f)
+						joint.setMotorSpeed(10);
+					else
+						joint.setMotorSpeed(0);
+				} else {
+					if (joint.getJointTranslation() > component.getBoundingBox().x * .1f)
+						joint.setMotorSpeed(-10);
+					else
+						joint.setMotorSpeed(0);
+				}
 			} else {
-				if (joint.getJointTranslation() > component.getBoundingBox().x * .1f)
-					joint.setMotorSpeed((flipped ? -1 : 1) * -10);
-				else
-					joint.setMotorSpeed(0);
+				if (commandExtend) {
+					if (joint.getJointTranslation() < -component.getBoundingBox().x * .1f)
+						joint.setMotorSpeed(-10);
+					else
+						joint.setMotorSpeed(0);
+				} else {
+					if (joint.getJointTranslation() > -component.getBoundingBox().x * .8f)
+						joint.setMotorSpeed(10);
+					else
+						joint.setMotorSpeed(0);
+				}
 			}
 		} else {
 			joint.enableMotor(false);

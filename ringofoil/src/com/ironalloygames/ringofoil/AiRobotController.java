@@ -49,7 +49,7 @@ public class AiRobotController extends RobotController {
 			}
 		}
 
-		if (MathUtils.random.nextInt(120) == 0) {
+		if (MathUtils.random.nextInt(30) == 0) {
 			firingState = !firingState;
 
 			if (firingState) {
