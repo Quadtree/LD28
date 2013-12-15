@@ -25,7 +25,12 @@ public class ArenaState extends GameState implements ContactListener {
 
 	ArrayList<Entity> entityAddQueue = new ArrayList<Entity>();
 
+	public int lastDamageTick;
+
+	public float robot1DamageTaken;
+	public float robot2DamageTaken;
 	ArrayList<Robot> robots = new ArrayList<Robot>();
+	public int tick;
 
 	public World world;
 
@@ -135,8 +140,10 @@ public class ArenaState extends GameState implements ContactListener {
 
 	@Override
 	public void renderUi() {
-		// TODO Auto-generated method stub
 		super.renderUi();
+
+		RG.am.getFont().draw(RG.batch, "Robot 1      Score: " + this.robot2DamageTaken, -550, 420);
+		RG.am.getFont().draw(RG.batch, "Robot 2      Score: " + this.robot1DamageTaken, 320, 420);
 	}
 
 	public void setRobots(Robot robot0, Robot robot1) {
@@ -185,5 +192,7 @@ public class ArenaState extends GameState implements ContactListener {
 		if (robots.get(1).rootComponent.getHp() <= 0) {
 			RG.tr.recordResult(robots.get(0), robots.get(1));
 		}
+
+		tick++;
 	}
 }

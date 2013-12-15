@@ -66,6 +66,15 @@ public abstract class Entity {
 		if (damage > 0.01f) {
 			System.out.println(this + " takes " + damage + " damage!");
 		}
+
+		((ArenaState) RG.currentState).lastDamageTick = ((ArenaState) RG.currentState).tick;
+
+		if (this.body.getFixtureList().get(0).getFilterData().groupIndex == -1) {
+			((ArenaState) RG.currentState).robot1DamageTaken += damage;
+		}
+		if (this.body.getFixtureList().get(0).getFilterData().groupIndex == -2) {
+			((ArenaState) RG.currentState).robot2DamageTaken += damage;
+		}
 	}
 
 	public void update() {
