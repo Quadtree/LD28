@@ -47,8 +47,11 @@ public class RG implements ApplicationListener {
 		// ((ArenaState) currentState).setRobots(createFakeRobot(),
 		// createFakeRobot());
 
-		currentState = new EditorState();
+		// currentState = new EditorState();
+
+		currentState = new MainMenuState();
 		Gdx.input.setInputProcessor(currentState);
+
 		am = new AssetManager();
 
 		ticks = System.currentTimeMillis();

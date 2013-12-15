@@ -58,7 +58,7 @@ public class Attachment implements Serializable {
 
 		Vector2 accum;
 
-		if (delta1.len2() > delta2.len2()) {
+		if (delta2.len2() > delta1.len2() || child == null) {
 			accum = delta1;
 		} else {
 			accum = delta2;
