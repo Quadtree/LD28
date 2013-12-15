@@ -60,11 +60,8 @@ public abstract class Entity {
 	public void impact(float force, Entity otherEntity) {
 		otherEntity.takeDamage(force * getLightDamageMultiplier(), force * getHeavyDamageMultiplier());
 
-		Vector2 centerPoint = this.getPosition().sub(otherEntity.getPosition()).scl(.5f).add(this.getPosition());
-
-		for (int i = 0; i < (int) (force * 5); i++) {
-			new SparkEntity(centerPoint, MathUtils.random(0, MathUtils.PI2), 5, body.getFixtureList().get(0).getFilterData(), "spark");
-		}
+		lastHitPos = this.getPosition().sub(otherEntity.getPosition()).scl(.5f).add(this.getPosition());
+		lastHitSparks += (int) (force);
 
 		// if (force > .25f)
 		// System.out.println("IMPACT! " + this + " " + otherEntity + " " +
@@ -103,6 +100,9 @@ public abstract class Entity {
 	}
 
 	public void update() {
-
+		for (int i = 0; i < lastHitSparks; i++) {
+			new SparkEntity(lastHitPos, MathUtils.random(0, MathUtils.PI2), 5, body.getFixtureList().get(0).getFilterData(), "spark");
+		}
+		lastHitSparks = 0;
 	}
 }

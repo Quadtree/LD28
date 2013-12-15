@@ -57,7 +57,7 @@ public class SparkEntity extends Entity {
 	public void render() {
 		super.render();
 
-		RG.batch.draw(RG.am.get(graphic), body.getPosition().x - .5f, body.getPosition().y - .5f, .5f, .5f, 1, 1, 48 / 128f * Component.SCALE, 16 / 128f * Component.SCALE, body.getAngle() * (180f / MathUtils.PI));
+		RG.batch.draw(RG.am.get(graphic), body.getPosition().x - .5f, body.getPosition().y - .5f, .5f, .5f, 1, 1, 48 / 128f * Component.SCALE, 16 / 128f * Component.SCALE, body.getLinearVelocity().angle());
 	}
 
 }
