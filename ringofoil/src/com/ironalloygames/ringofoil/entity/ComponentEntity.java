@@ -220,8 +220,8 @@ public abstract class ComponentEntity extends Entity {
 	public void takeDamage(float lightDamage, float heavyDamage) {
 		super.takeDamage(lightDamage, heavyDamage);
 
-		if (MathUtils.randomBoolean((getMaxHp() - getHp()) / getMaxHp())) {
-			if (component.getParent() != null && (MathUtils.randomBoolean() || component.getChildren().size() == 0)) {
+		if (getHp() < 0) {
+			if (component.getParent() != null) {
 				component.getParent().getParent().getChildren().remove(component.getParent());
 				component.setParent(null);
 			} else if (component.getChildren().size() > 0) {
