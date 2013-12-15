@@ -208,6 +208,9 @@ public class ArenaState extends GameState implements ContactListener {
 	public void update() {
 		super.update();
 
+		RG.am.getSound("robot2win");
+		RG.am.getSound("robot1win");
+
 		for (int j = 0; j < gameSpeed; j++) {
 
 			while (entityAddQueue.size() > 0) {
@@ -234,12 +237,26 @@ public class ArenaState extends GameState implements ContactListener {
 
 			if (robots.get(0).rootComponent.getHp() <= 0) {
 				System.out.println(robots.get(1) + " has won by knockout! " + this);
+				RG.am.getSound("robot2win").play();
+				try {
+					Thread.sleep(gameSpeed == 1 ? 1600 : 400);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				RG.tr.recordResult(robots.get(1), robots.get(0));
 				return;
 			}
 
 			if (robots.get(1).rootComponent.getHp() <= 0) {
 				System.out.println(robots.get(0) + " has won by knockout! " + this);
+				RG.am.getSound("robot1win").play();
+				try {
+					Thread.sleep(gameSpeed == 1 ? 1600 : 400);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				RG.tr.recordResult(robots.get(0), robots.get(1));
 				return;
 			}
@@ -249,10 +266,24 @@ public class ArenaState extends GameState implements ContactListener {
 			if (this.tick - this.lastDamageTick >= 8 * 60) {
 				if (this.robot1DamageTaken > this.robot2DamageTaken) {
 					System.out.println(robots.get(1) + " has won by points!");
+					RG.am.getSound("robot2win").play();
+					try {
+						Thread.sleep(gameSpeed == 1 ? 1600 : 400);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					RG.tr.recordResult(robots.get(1), robots.get(0));
 					return;
 				} else {
 					System.out.println(robots.get(0) + " has won by points!");
+					RG.am.getSound("robot1win").play();
+					try {
+						Thread.sleep(gameSpeed == 1 ? 1600 : 400);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					RG.tr.recordResult(robots.get(0), robots.get(1));
 					return;
 				}

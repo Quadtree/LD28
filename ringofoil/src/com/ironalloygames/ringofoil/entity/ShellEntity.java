@@ -56,4 +56,8 @@ public class ShellEntity extends Entity {
 		RG.batch.draw(RG.am.get("shellinflight"), body.getPosition().x - .5f, body.getPosition().y - .5f, .5f, .5f, 1, 1, 64 / 128f * Component.SCALE, 16 / 128f * Component.SCALE, body.getLinearVelocity().angle());
 	}
 
+	@Override
+	public void takeDamage(float lightDamage, float heavyDamage) {
+	}
+
 }
