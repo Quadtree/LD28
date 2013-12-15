@@ -163,10 +163,10 @@ public class ArenaState extends GameState implements ContactListener {
 		RG.am.getFont().draw(RG.batch, "Robot 1      Score: " + (int) (this.robot2DamageTaken * 100), -550, 420);
 		RG.am.getFont().draw(RG.batch, "Robot 2      Score: " + (int) (this.robot1DamageTaken * 100), 300, 420);
 
-		if (this.tick - this.lastDamageTick > 7 * 60) {
+		if (this.tick - this.lastDamageTick > 4 * 60) {
 
 			RG.am.getFont().draw(RG.batch,
-					"Match will be called for " + (this.robot1DamageTaken > this.robot2DamageTaken ? "Robot 2" : "Robot 1") + " on points in " + (14 - (this.tick - this.lastDamageTick) / 60) + " seconds...", -350, 0);
+					"Match will be called for " + (this.robot1DamageTaken > this.robot2DamageTaken ? "Robot 2" : "Robot 1") + " on points in " + (8 - (this.tick - this.lastDamageTick) / 60) + " seconds...", -350, 0);
 		}
 	}
 
@@ -189,6 +189,8 @@ public class ArenaState extends GameState implements ContactListener {
 
 		robots.add(robot0);
 		robots.add(robot1);
+
+		System.out.println("Match running with " + robots);
 
 		if (controllers.get(0) instanceof AiRobotController) {
 			gameSpeed = 64;
@@ -224,24 +226,28 @@ public class ArenaState extends GameState implements ContactListener {
 			}
 
 			if (robots.get(0).rootComponent.getHp() <= 0) {
-				System.out.println(robots.get(1) + " has won by knockout!");
+				System.out.println(robots.get(1) + " has won by knockout! " + this);
 				RG.tr.recordResult(robots.get(1), robots.get(0));
+				return;
 			}
 
 			if (robots.get(1).rootComponent.getHp() <= 0) {
-				System.out.println(robots.get(0) + " has won by knockout!");
+				System.out.println(robots.get(0) + " has won by knockout! " + this);
 				RG.tr.recordResult(robots.get(0), robots.get(1));
+				return;
 			}
 
 			tick++;
 
-			if (this.tick - this.lastDamageTick >= 14 * 60) {
+			if (this.tick - this.lastDamageTick >= 8 * 60) {
 				if (this.robot1DamageTaken > this.robot2DamageTaken) {
 					System.out.println(robots.get(1) + " has won by points!");
 					RG.tr.recordResult(robots.get(1), robots.get(0));
+					return;
 				} else {
-					System.out.println(robots.get(0) + " has won by knockout!");
+					System.out.println(robots.get(0) + " has won by points!");
 					RG.tr.recordResult(robots.get(0), robots.get(1));
+					return;
 				}
 			}
 		}

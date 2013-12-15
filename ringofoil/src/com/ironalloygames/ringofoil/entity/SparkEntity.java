@@ -60,4 +60,8 @@ public class SparkEntity extends Entity {
 		RG.batch.draw(RG.am.get(graphic), body.getPosition().x - .5f, body.getPosition().y - .5f, .5f, .5f, 1, 1, 24 / 128f * Component.SCALE, 8 / 128f * Component.SCALE, body.getLinearVelocity().angle());
 	}
 
+	@Override
+	public void takeDamage(float lightDamage, float heavyDamage) {
+	}
+
 }
