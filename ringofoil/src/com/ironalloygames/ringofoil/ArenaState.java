@@ -155,6 +155,9 @@ public class ArenaState extends GameState implements ContactListener {
 		for (int i = endPos; i < entityAddQueue.size(); i++) {
 			controllers.get(1).addEntity(entityAddQueue.get(i));
 		}
+
+		robots.add(robot0);
+		robots.add(robot1);
 	}
 
 	@Override
@@ -173,6 +176,14 @@ public class ArenaState extends GameState implements ContactListener {
 
 		for (int i = 0; i < entities.size(); i++) {
 			entities.get(i).update();
+		}
+
+		if (robots.get(0).rootComponent.getHp() <= 0) {
+			RG.tr.recordResult(robots.get(1), robots.get(0));
+		}
+
+		if (robots.get(1).rootComponent.getHp() <= 0) {
+			RG.tr.recordResult(robots.get(0), robots.get(1));
 		}
 	}
 }

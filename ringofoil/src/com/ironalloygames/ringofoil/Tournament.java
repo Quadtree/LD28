@@ -17,7 +17,7 @@ public class Tournament {
 		this.playerRobot = playerRobot;
 		currentRoundRobots.add(playerRobot);
 
-		while (currentRoundRobots.size() < 16) {
+		while (currentRoundRobots.size() < 4) {
 			String rname = RG.rsd.list()[MathUtils.random.nextInt(RG.rsd.list().length)].replace(".robot", "");
 
 			currentRoundRobots.add(RG.rsd.loadRobot(rname));
@@ -25,6 +25,12 @@ public class Tournament {
 	}
 
 	public void nextMatch() {
+
+		if (currentRoundRobots.size() == 0) {
+			currentRoundRobots = nextRoundRobots;
+			nextRoundRobots = new ArrayList<Robot>();
+		}
+
 		ArenaState as = new ArenaState();
 		RG.currentState = as;
 		Gdx.input.setInputProcessor(RG.currentState);
@@ -41,5 +47,15 @@ public class Tournament {
 
 		as.setRobots(currentRoundRobots.get(0), currentRoundRobots.get(1));
 
+	}
+
+	public void recordResult(Robot winner, Robot loser) {
+		System.out.println("Result, " + winner + " won " + loser + " lost");
+
+		currentRoundRobots.remove(loser);
+		nextRoundRobots.add(winner);
+		currentRoundRobots.remove(winner);
+
+		nextMatch();
 	}
 }
