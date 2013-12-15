@@ -34,10 +34,11 @@ public class RG implements ApplicationListener {
 		gameCamera = new OrthographicCamera(800.f / 128, 600.f / 128);
 		batch = new SpriteBatch();
 
-		currentState = new ArenaState();
-		((ArenaState) currentState).setRobots(createFakeRobot(), createFakeRobot());
+		// currentState = new ArenaState();
+		// ((ArenaState) currentState).setRobots(createFakeRobot(),
+		// createFakeRobot());
 
-		// currentState = new EditorState();
+		currentState = new EditorState();
 		Gdx.input.setInputProcessor(currentState);
 		am = new AssetManager();
 

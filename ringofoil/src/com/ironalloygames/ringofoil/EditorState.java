@@ -27,6 +27,7 @@ public class EditorState extends GameState {
 		for (Component c : robot.getComponents()) {
 			c.render(c.getRelativePosition(), 0, false);
 			c.renderAttachmentPoints();
+			c.renderConnector();
 		}
 		super.render();
 	}

@@ -132,9 +132,21 @@ public abstract class Component {
 
 				Vector2 pt = a.getCenterPoint().add(this.getRelativePosition());
 
-				RG.batch.draw(RG.am.get("att_pt"), pt.x, pt.y, .5f, .5f, 1, 1, .1f, .1f, 0);
+				RG.batch.draw(RG.am.get("att_pt"), pt.x - .5f, pt.y - .5f, .5f, .5f, 1, 1, .1f, .1f, 0);
 			}
 		}
+	}
+
+	public void renderConnector() {
+		if (parent != null) {
+			Vector2 pos = this.getRelativePosition().add(parent.getCenterPoint().scl(-1));
+
+			renderConnector(pos, 0);
+		}
+	}
+
+	public void renderConnector(Vector2 pt, float angle) {
+		RG.batch.draw(RG.am.get("connector"), pt.x - .5f, pt.y - .5f, .5f, .5f, 1, 1, 16 / 128f, 16 / 128f, angle * (180f / MathUtils.PI));
 	}
 
 	protected void renderSized(Vector2 position, float rotation, boolean flipped, String graphic) {

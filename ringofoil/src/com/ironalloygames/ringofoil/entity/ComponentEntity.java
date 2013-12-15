@@ -186,7 +186,7 @@ public abstract class ComponentEntity extends Entity {
 
 			pt = body.getWorldPoint(pt);
 
-			RG.batch.draw(RG.am.get("connector"), pt.x - .5f, pt.y - .5f, .5f, .5f, 1, 1, 16 / 128f, 16 / 128f, body.getAngle() * (180f / MathUtils.PI));
+			component.renderConnector(pt, body.getAngle());
 
 		}
 	}
