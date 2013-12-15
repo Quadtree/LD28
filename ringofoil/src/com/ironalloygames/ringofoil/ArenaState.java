@@ -224,10 +224,12 @@ public class ArenaState extends GameState implements ContactListener {
 			}
 
 			if (robots.get(0).rootComponent.getHp() <= 0) {
+				System.out.println(robots.get(1) + " has won by knockout!");
 				RG.tr.recordResult(robots.get(1), robots.get(0));
 			}
 
 			if (robots.get(1).rootComponent.getHp() <= 0) {
+				System.out.println(robots.get(0) + " has won by knockout!");
 				RG.tr.recordResult(robots.get(0), robots.get(1));
 			}
 
@@ -235,8 +237,10 @@ public class ArenaState extends GameState implements ContactListener {
 
 			if (this.tick - this.lastDamageTick >= 14 * 60) {
 				if (this.robot1DamageTaken > this.robot2DamageTaken) {
+					System.out.println(robots.get(1) + " has won by points!");
 					RG.tr.recordResult(robots.get(1), robots.get(0));
 				} else {
+					System.out.println(robots.get(0) + " has won by knockout!");
 					RG.tr.recordResult(robots.get(0), robots.get(1));
 				}
 			}

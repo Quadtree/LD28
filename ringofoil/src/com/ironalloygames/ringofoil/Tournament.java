@@ -54,6 +54,7 @@ public class Tournament {
 		else
 			as.controllers.add(new AiRobotController());
 
+		System.out.println("Loading match: " + currentRoundRobots.get(0) + " " + currentRoundRobots.get(1));
 		as.setRobots(currentRoundRobots.get(0), currentRoundRobots.get(1));
 
 	}
