@@ -2,10 +2,14 @@ package com.ironalloygames.ringofoil;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.math.Vector2;
+import com.ironalloygames.ringofoil.component.Arm;
 import com.ironalloygames.ringofoil.component.Attachment;
 import com.ironalloygames.ringofoil.component.CPU;
 import com.ironalloygames.ringofoil.component.Component;
+import com.ironalloygames.ringofoil.component.LargeMace;
+import com.ironalloygames.ringofoil.component.Piston;
 import com.ironalloygames.ringofoil.component.Structure;
 import com.ironalloygames.ringofoil.component.Tracks;
 
@@ -40,6 +44,9 @@ public class EditorState extends GameState {
 
 		palette.add(new PaletteItem(new Structure(), "Structure: Basic large structural component, used to connect things together."));
 		palette.add(new PaletteItem(new Tracks(), "Wheels: Provides your robot with some mobility."));
+		palette.add(new PaletteItem(new Arm(), "Arm: Motorized arm that can swing things around."));
+		palette.add(new PaletteItem(new LargeMace(), "Large Mace: Huge mace. Good for smashing heavy armor."));
+		palette.add(new PaletteItem(new Piston(), "Piston: Powerful extendible piston. Good for ramming things."));
 	}
 
 	@Override
@@ -74,64 +81,88 @@ public class EditorState extends GameState {
 		} else {
 			RG.am.getFont().drawWrapped(RG.batch, "Left click an item in the palette to select it.", -400, 420, 800);
 		}
+
+		RG.am.getFont().drawWrapped(RG.batch, "Commands: Esc - Return to Main Menu, S - Save, L - Load", -400, -420, 800);
 	}
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 
-		if (mouseWorldPosition.x > -2.9f && mouseWorldPosition.x < -2.3f) {
-			int paletteItem = (int) (-(5f / 3f) * (mouseWorldPosition.y - 0.3f - 2));
+		if (button == Buttons.LEFT) {
+			if (mouseWorldPosition.x > -2.9f && mouseWorldPosition.x < -2.3f) {
+				int paletteItem = (int) (-(5f / 3f) * (mouseWorldPosition.y - 0.3f - 2));
 
-			System.out.println(paletteItem);
+				System.out.println(paletteItem);
 
-			if (paletteItem >= 0 && paletteItem < palette.size()) {
-				paletteItemSelected = paletteItem;
-				return true;
+				if (paletteItem >= 0 && paletteItem < palette.size()) {
+					paletteItemSelected = paletteItem;
+					return true;
+				}
 			}
-		}
 
-		if (paletteItemSelected >= 0) {
-			for (Attachment att : attachmentPoints) {
-				if (att.getCenterPoint().cpy().add(att.getParent().getRelativePosition()).sub(mouseWorldPosition).len2() < 0.05f) {
-					Component comp = null;
-					switch (paletteItemSelected) {
-					case 0:
-						comp = new Structure();
-					}
-
-					Attachment at2 = new Attachment(comp, att.getParent(), att.getPoint());
-
-					Vector2 nur = at2.getChildRelativePosition().cpy().add(comp.getBoundingBox().scl(.5f, .5f)).add(att.getParent().getRelativePosition());
-					Vector2 nll = at2.getChildRelativePosition().cpy().add(comp.getBoundingBox().scl(-.5f, -.5f)).add(att.getParent().getRelativePosition());
-
-					System.out.println(nur + " " + nll);
-
-					boolean intersection = false;
-
-					for (Component tc : robot.getComponents()) {
-						if (tc == at2.getParent())
-							continue;
-
-						Vector2 ll = tc.getRelativePosition().cpy().add(tc.getBoundingBox().scl(-.51f, -.51f));
-						Vector2 ur = tc.getRelativePosition().cpy().add(tc.getBoundingBox().scl(.51f, .51f));
-						System.out.println(tc + ": " + ll + " " + ur);
-
-						/*
-						 * for (Vector2 pt : pts) {
-						 * 
-						 * if (pt.x > ll.x && pt.y > ll.y && pt.x < ur.x && pt.y
-						 * < ur.y) intersection = true; }
-						 */
-
-						if ((nll.x < ur.x || nur.x > ll.x) && (nll.y < ur.y || nur.y > ll.y)) {
-							System.out.println("INTERSECTION " + nur + " " + nll + " " + ur + " " + ll);
-							intersection = true;
+			if (paletteItemSelected >= 0) {
+				for (Attachment att : attachmentPoints) {
+					if (att.getCenterPoint().cpy().add(att.getParent().getRelativePosition()).sub(mouseWorldPosition).len2() < 0.05f) {
+						Component comp = null;
+						switch (paletteItemSelected) {
+						case 0:
+							comp = new Structure();
+							break;
+						case 1:
+							comp = new Tracks();
+							break;
+						case 2:
+							comp = new Arm();
+							break;
+						case 3:
+							comp = new LargeMace();
+							break;
+						case 4:
+							comp = new Piston();
+							break;
 						}
-					}
 
-					if (comp != null && !intersection) {
-						att.getParent().addChildComponent(comp, att.getPoint());
-						return true;
+						Attachment at2 = new Attachment(comp, att.getParent(), att.getPoint());
+
+						Vector2 nmax = at2.getChildRelativePosition().cpy().add(comp.getBoundingBox().scl(.5f, .5f)).add(att.getParent().getRelativePosition());
+						Vector2 nmin = at2.getChildRelativePosition().cpy().add(comp.getBoundingBox().scl(-.5f, -.5f)).add(att.getParent().getRelativePosition());
+
+						AABB nBox = new AABB(nmax, nmin);
+
+						// System.out.println(nur + " " + nll);
+
+						boolean intersection = false;
+
+						for (Component tc : robot.getComponents()) {
+							if (tc == at2.getParent())
+								continue;
+
+							Vector2 min = tc.getRelativePosition().cpy().add(tc.getBoundingBox().scl(-.51f, -.51f));
+							Vector2 max = tc.getRelativePosition().cpy().add(tc.getBoundingBox().scl(.51f, .51f));
+
+							AABB box = new AABB(max, min);
+
+							// System.out.println(tc + ": " + ll + " " + ur);
+
+							/*
+							 * for (Vector2 pt : pts) {
+							 * 
+							 * if (pt.x > ll.x && pt.y > ll.y && pt.x < ur.x &&
+							 * pt.y < ur.y) intersection = true; }
+							 */
+
+							if (nBox.intersects(box)) {
+								// System.out.println("INTERSECTION " + nur +
+								// " " +
+								// nll + " " + ur + " " + ll);
+								intersection = true;
+							}
+						}
+
+						if (comp != null && !intersection) {
+							att.getParent().addChildComponent(comp, att.getPoint());
+							return true;
+						}
 					}
 				}
 			}
