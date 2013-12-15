@@ -25,8 +25,11 @@ public class Tournament {
 	}
 
 	public void nextMatch() {
+		System.out.println("Next match: " + currentRoundRobots + " " + nextRoundRobots);
 
 		if (currentRoundRobots.size() == 0) {
+			System.out.println("GOING TO NEXT LEVEL OF TOURNAMENT");
+
 			currentRoundRobots = nextRoundRobots;
 			nextRoundRobots = new ArrayList<Robot>();
 

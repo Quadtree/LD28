@@ -27,11 +27,13 @@ public class ArenaState extends GameState implements ContactListener {
 
 	ArrayList<Entity> entityAddQueue = new ArrayList<Entity>();
 
-	public int lastDamageTick;
+	int gameSpeed = 1;
 
+	public int lastDamageTick;
 	public float robot1DamageTaken;
 	public float robot2DamageTaken;
 	ArrayList<Robot> robots = new ArrayList<Robot>();
+
 	public int tick;
 
 	public World world;
@@ -159,7 +161,7 @@ public class ArenaState extends GameState implements ContactListener {
 		super.renderUi();
 
 		RG.am.getFont().draw(RG.batch, "Robot 1      Score: " + (int) (this.robot2DamageTaken * 100), -550, 420);
-		RG.am.getFont().draw(RG.batch, "Robot 2      Score: " + (int) (this.robot1DamageTaken), 300, 420);
+		RG.am.getFont().draw(RG.batch, "Robot 2      Score: " + (int) (this.robot1DamageTaken * 100), 300, 420);
 
 		if (this.tick - this.lastDamageTick > 7 * 60) {
 
@@ -187,46 +189,56 @@ public class ArenaState extends GameState implements ContactListener {
 
 		robots.add(robot0);
 		robots.add(robot1);
+
+		if (controllers.get(0) instanceof AiRobotController) {
+			gameSpeed = 64;
+		}
 	}
 
 	@Override
 	public void update() {
 		super.update();
 
-		while (entityAddQueue.size() > 0) {
-			entities.add(entityAddQueue.remove(0));
-		}
+		for (int j = 0; j < gameSpeed; j++) {
 
-		for (RobotController c : controllers) {
-			c.update();
-		}
-
-		world.step(0.016f, 10, 10);
-
-		for (int i = 0; i < entities.size(); i++) {
-			if (entities.get(i).keep())
-				entities.get(i).update();
-			else {
-				entities.get(i).destroyed();
-				entities.remove(i--);
+			while (entityAddQueue.size() > 0) {
+				entities.add(entityAddQueue.remove(0));
 			}
-		}
 
-		if (robots.get(0).rootComponent.getHp() <= 0) {
-			RG.tr.recordResult(robots.get(1), robots.get(0));
-		}
+			for (RobotController c : controllers) {
+				c.update();
+			}
 
-		if (robots.get(1).rootComponent.getHp() <= 0) {
-			RG.tr.recordResult(robots.get(0), robots.get(1));
-		}
+			if (gameSpeed == 1)
+				world.step(0.016f, 10, 10);
+			else
+				world.step(0.016f, 1, 1);
 
-		tick++;
+			for (int i = 0; i < entities.size(); i++) {
+				if (entities.get(i).keep())
+					entities.get(i).update();
+				else {
+					entities.get(i).destroyed();
+					entities.remove(i--);
+				}
+			}
 
-		if (this.tick - this.lastDamageTick >= 14 * 60) {
-			if (this.robot1DamageTaken > this.robot2DamageTaken) {
+			if (robots.get(0).rootComponent.getHp() <= 0) {
 				RG.tr.recordResult(robots.get(1), robots.get(0));
-			} else {
+			}
+
+			if (robots.get(1).rootComponent.getHp() <= 0) {
 				RG.tr.recordResult(robots.get(0), robots.get(1));
+			}
+
+			tick++;
+
+			if (this.tick - this.lastDamageTick >= 14 * 60) {
+				if (this.robot1DamageTaken > this.robot2DamageTaken) {
+					RG.tr.recordResult(robots.get(1), robots.get(0));
+				} else {
+					RG.tr.recordResult(robots.get(0), robots.get(1));
+				}
 			}
 		}
 	}

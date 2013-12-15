@@ -27,11 +27,6 @@ public class Blade extends Component {
 	}
 
 	@Override
-	public float getHeavyDamageResistance() {
-		return 1.5f;
-	}
-
-	@Override
 	public float getLightDamageMultiplier() {
 		return 7f;
 	}
