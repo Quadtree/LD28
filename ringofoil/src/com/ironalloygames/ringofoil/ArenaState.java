@@ -144,6 +144,12 @@ public class ArenaState extends GameState implements ContactListener {
 
 		RG.am.getFont().draw(RG.batch, "Robot 1      Score: " + this.robot2DamageTaken, -550, 420);
 		RG.am.getFont().draw(RG.batch, "Robot 2      Score: " + this.robot1DamageTaken, 320, 420);
+
+		if (this.tick - this.lastDamageTick > 7 * 60) {
+
+			RG.am.getFont().draw(RG.batch,
+					"Match will be called for " + (this.robot1DamageTaken > this.robot2DamageTaken ? "Robot 2" : "Robot 1") + " on points in " + (14 - (this.tick - this.lastDamageTick) / 60) + " seconds...", -350, 0);
+		}
 	}
 
 	public void setRobots(Robot robot0, Robot robot1) {
@@ -194,5 +200,13 @@ public class ArenaState extends GameState implements ContactListener {
 		}
 
 		tick++;
+
+		if (this.tick - this.lastDamageTick >= 14 * 60) {
+			if (this.robot1DamageTaken > this.robot2DamageTaken) {
+				RG.tr.recordResult(robots.get(1), robots.get(0));
+			} else {
+				RG.tr.recordResult(robots.get(0), robots.get(1));
+			}
+		}
 	}
 }

@@ -29,6 +29,11 @@ public class Tournament {
 		if (currentRoundRobots.size() == 0) {
 			currentRoundRobots = nextRoundRobots;
 			nextRoundRobots = new ArrayList<Robot>();
+
+			if (currentRoundRobots.size() == 1) {
+				RG.currentState = new WinState();
+				Gdx.input.setInputProcessor(RG.currentState);
+			}
 		}
 
 		ArenaState as = new ArenaState();
@@ -51,6 +56,11 @@ public class Tournament {
 
 	public void recordResult(Robot winner, Robot loser) {
 		System.out.println("Result, " + winner + " won " + loser + " lost");
+
+		if (loser == playerRobot) {
+			RG.currentState = new LoseState();
+			Gdx.input.setInputProcessor(RG.currentState);
+		}
 
 		currentRoundRobots.remove(loser);
 		nextRoundRobots.add(winner);
