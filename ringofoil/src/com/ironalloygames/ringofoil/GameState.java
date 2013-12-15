@@ -41,6 +41,9 @@ public class GameState implements InputProcessor {
 	public void render() {
 	}
 
+	public void renderText() {
+	}
+
 	public void renderUi() {
 	}
 

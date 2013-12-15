@@ -22,6 +22,8 @@ public class RG implements ApplicationListener {
 
 	public static OrthographicCamera gameCamera;
 
+	public static OrthographicCamera textCamera;
+
 	public static OrthographicCamera uiCamera;
 
 	ShapeRenderer sr;
@@ -30,8 +32,9 @@ public class RG implements ApplicationListener {
 
 	@Override
 	public void create() {
-		uiCamera = new OrthographicCamera(800, 600);
+		uiCamera = new OrthographicCamera(1200, 900);
 		gameCamera = new OrthographicCamera(800.f / 128, 600.f / 128);
+		textCamera = new OrthographicCamera(1200, 900);
 		batch = new SpriteBatch();
 
 		// currentState = new ArenaState();
@@ -94,6 +97,11 @@ public class RG implements ApplicationListener {
 		batch.setProjectionMatrix(uiCamera.combined);
 		batch.begin();
 		currentState.renderUi();
+		batch.end();
+
+		batch.setProjectionMatrix(textCamera.combined);
+		batch.begin();
+		currentState.renderText();
 		batch.end();
 
 		if (ticks < System.currentTimeMillis()) {

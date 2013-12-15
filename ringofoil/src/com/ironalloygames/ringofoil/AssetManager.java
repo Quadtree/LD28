@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
@@ -11,6 +12,8 @@ public class AssetManager {
 	TextureAtlas atlas;
 
 	HashMap<String, Texture> bigTextures = new HashMap<String, Texture>();
+	BitmapFont font;
+
 	HashMap<String, Sprite> loaded = new HashMap<String, Sprite>();
 
 	public AssetManager() {
@@ -35,5 +38,16 @@ public class AssetManager {
 		}
 
 		return bigTextures.get(name);
+	}
+
+	public BitmapFont getFont() {
+		if (font == null) {
+			// if (Gdx.graphics.getWidth() > 1000)
+			font = new BitmapFont(Gdx.files.internal("font_1366.fnt"));
+			// else
+			// font = new BitmapFont(Gdx.files.internal("font_800.fnt"));
+		}
+
+		return font;
 	}
 }
