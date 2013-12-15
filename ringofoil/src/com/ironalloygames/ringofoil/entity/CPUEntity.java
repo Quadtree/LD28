@@ -1,5 +1,6 @@
 package com.ironalloygames.ringofoil.entity;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.ironalloygames.ringofoil.component.CPU;
 
@@ -19,6 +20,16 @@ public class CPUEntity extends ComponentEntity {
 		if (getHp() < 0 && hpAbove) {
 			this.lastHitPos = body.getPosition();
 			this.lastHitSparks = 35;
+		}
+	}
+
+	@Override
+	public void update() {
+		super.update();
+
+		if (getHp() < 0) {
+			this.lastHitPos = body.getPosition();
+			this.lastHitSparks = MathUtils.random(1, 4);
 		}
 	}
 }

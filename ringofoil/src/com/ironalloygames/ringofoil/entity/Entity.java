@@ -17,7 +17,8 @@ public abstract class Entity {
 	}
 
 	public void destroyed() {
-		((ArenaState) RG.currentState).world.destroyBody(body);
+		if (body != null)
+			((ArenaState) RG.currentState).world.destroyBody(body);
 		body = null;
 	}
 

@@ -16,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.ironalloygames.ringofoil.entity.Entity;
+import com.ironalloygames.ringofoil.entity.SparkEntity;
 
 public class ArenaState extends GameState implements ContactListener {
 
@@ -39,6 +40,7 @@ public class ArenaState extends GameState implements ContactListener {
 	public int tick;
 
 	int winner = -1;
+	int winTimer = 120;
 
 	public World world;
 
@@ -91,6 +93,11 @@ public class ArenaState extends GameState implements ContactListener {
 			if (force > 2) {
 				Entity e1 = (Entity) contact.getFixtureA().getBody().getUserData();
 				Entity e2 = (Entity) contact.getFixtureB().getBody().getUserData();
+
+				if (e1 instanceof SparkEntity)
+					return;
+				if (e2 instanceof SparkEntity)
+					return;
 
 				e1.impact(force / 10 * contact.getFixtureA().getBody().getMass() / 0.0625f, e2);
 				e2.impact(force / 10 * contact.getFixtureB().getBody().getMass() / 0.0625f, e1);
@@ -220,6 +227,15 @@ public class ArenaState extends GameState implements ContactListener {
 
 		for (int j = 0; j < gameSpeed; j++) {
 
+			if (winner != -1) {
+				winTimer--;
+
+				if (winTimer == 0) {
+					RG.tr.recordResult(robots.get(winner), robots.get(1 - winner));
+					return;
+				}
+			}
+
 			while (entityAddQueue.size() > 0) {
 				entities.add(entityAddQueue.remove(0));
 			}
@@ -242,57 +258,36 @@ public class ArenaState extends GameState implements ContactListener {
 				}
 			}
 
-			if (robots.get(0).rootComponent.getHp() <= 0) {
-				System.out.println(robots.get(1) + " has won by knockout! " + this);
-				RG.am.getSound("robot2win").play();
-				try {
-					Thread.sleep(gameSpeed == 1 ? 1600 : 400);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				RG.tr.recordResult(robots.get(1), robots.get(0));
-				return;
-			}
-
-			if (robots.get(1).rootComponent.getHp() <= 0) {
-				System.out.println(robots.get(0) + " has won by knockout! " + this);
-				RG.am.getSound("robot1win").play();
-				try {
-					Thread.sleep(gameSpeed == 1 ? 1600 : 400);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				RG.tr.recordResult(robots.get(0), robots.get(1));
-				return;
-			}
-
 			tick++;
 
-			if (this.tick - this.lastDamageTick >= 8 * 60) {
-				if (this.robot1DamageTaken > this.robot2DamageTaken) {
-					System.out.println(robots.get(1) + " has won by points!");
+			if (winner == -1) {
+
+				if (robots.get(0).rootComponent.getHp() <= 0) {
+					System.out.println(robots.get(1) + " has won by knockout! " + this);
 					RG.am.getSound("robot2win").play();
-					try {
-						Thread.sleep(gameSpeed == 1 ? 1600 : 400);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					RG.tr.recordResult(robots.get(1), robots.get(0));
+					winner = 1;
 					return;
-				} else {
-					System.out.println(robots.get(0) + " has won by points!");
+				}
+
+				if (robots.get(1).rootComponent.getHp() <= 0) {
+					System.out.println(robots.get(0) + " has won by knockout! " + this);
 					RG.am.getSound("robot1win").play();
-					try {
-						Thread.sleep(gameSpeed == 1 ? 1600 : 400);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					RG.tr.recordResult(robots.get(0), robots.get(1));
+					winner = 0;
 					return;
+				}
+
+				if (this.tick - this.lastDamageTick >= 8 * 60) {
+					if (this.robot1DamageTaken > this.robot2DamageTaken) {
+						System.out.println(robots.get(1) + " has won by points!");
+						RG.am.getSound("robot2win").play();
+						winner = 1;
+						return;
+					} else {
+						System.out.println(robots.get(0) + " has won by points!");
+						RG.am.getSound("robot1win").play();
+						winner = 0;
+						return;
+					}
 				}
 			}
 		}

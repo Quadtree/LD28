@@ -22,7 +22,7 @@ public class Beam extends Component {
 	}
 
 	@Override
-	public float getHp() {
+	public float getMaxHp() {
 		return .5f;
 	}
 
