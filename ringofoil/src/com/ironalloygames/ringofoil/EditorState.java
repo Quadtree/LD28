@@ -111,7 +111,7 @@ public class EditorState extends GameState {
 		}
 
 		for (int i = 0; i < palette.size(); ++i) {
-			palette.get(i).comp.render(new Vector2(-2.6f, 2 - i * .6f), 0, false);
+			palette.get(i).comp.render(new Vector2(-2.6f, 2 - i * .4f), 0, false);
 		}
 
 		if (selectedComponent != null) {
@@ -164,7 +164,7 @@ public class EditorState extends GameState {
 
 		if (button == Buttons.LEFT) {
 			if (mouseWorldPosition.x > -2.9f && mouseWorldPosition.x < -2.3f) {
-				int paletteItem = (int) (-(5f / 3f) * (mouseWorldPosition.y - 0.3f - 2));
+				int paletteItem = (int) (-(5f / 3f) * (.6f / .4f) * (mouseWorldPosition.y - 0.3f - 2));
 
 				System.out.println(paletteItem);
 

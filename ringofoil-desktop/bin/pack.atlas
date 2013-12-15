@@ -12,7 +12,7 @@ arm
   index: -1
 armor
   rotate: false
-  xy: 262, 76
+  xy: 392, 158
   size: 32, 80
   orig: 32, 80
   offset: 0, 0
@@ -24,6 +24,13 @@ att_pt
   orig: 32, 32
   offset: 0, 0
   index: -1
+cannon
+  rotate: false
+  xy: 132, 158
+  size: 128, 80
+  orig: 128, 80
+  offset: 0, 0
+  index: -1
 connector
   rotate: false
   xy: 262, 58
@@ -33,14 +40,14 @@ connector
   index: -1
 cpu
   rotate: false
-  xy: 132, 158
+  xy: 132, 76
   size: 128, 80
   orig: 128, 80
   offset: 0, 0
   index: -1
 mace
   rotate: false
-  xy: 392, 190
+  xy: 426, 190
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
@@ -61,7 +68,7 @@ piston_rod
   index: -1
 plate
   rotate: false
-  xy: 132, 76
+  xy: 262, 158
   size: 128, 80
   orig: 128, 80
   offset: 0, 0
@@ -73,16 +80,23 @@ selected
   orig: 128, 128
   offset: 0, 0
   index: -1
+shell
+  rotate: false
+  xy: 426, 165
+  size: 8, 23
+  orig: 8, 23
+  offset: 0, 0
+  index: -1
 tracks
   rotate: false
-  xy: 262, 158
+  xy: 262, 76
   size: 128, 80
   orig: 128, 80
   offset: 0, 0
   index: -1
 wheel
   rotate: false
-  xy: 296, 124
+  xy: 392, 124
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
