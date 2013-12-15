@@ -102,12 +102,16 @@ public class ArmEntity extends ComponentEntity {
 		// System.out.println(leftPoint + " " + centerPoint + " " + rightPoint);
 		// System.out.println(leftDist + " " + centerDist + " " + rightDist);
 
-		if (leftDist < centerDist && leftDist < rightDist) {
-			joint.setMotorSpeed(-3);
-		} else if (rightDist < centerDist && rightDist < leftDist) {
-			joint.setMotorSpeed(3);
+		if (!loose) {
+			if (leftDist < centerDist && leftDist < rightDist) {
+				joint.setMotorSpeed(-3);
+			} else if (rightDist < centerDist && rightDist < leftDist) {
+				joint.setMotorSpeed(3);
+			} else {
+				joint.setMotorSpeed(0);
+			}
 		} else {
-			joint.setMotorSpeed(0);
+			joint.enableMotor(false);
 		}
 	}
 }
