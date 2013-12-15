@@ -10,4 +10,15 @@ public class CPUEntity extends ComponentEntity {
 		super(cpu, robotCenter, flipped);
 		this.cpu = cpu;
 	}
+
+	@Override
+	public void takeDamage(float heavyDamage, float lightDamage) {
+		boolean hpAbove = getHp() > 0;
+		super.takeDamage(heavyDamage, lightDamage);
+
+		if (getHp() < 0 && hpAbove) {
+			this.lastHitPos = body.getPosition();
+			this.lastHitSparks = 35;
+		}
+	}
 }

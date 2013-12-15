@@ -38,6 +38,8 @@ public class ArenaState extends GameState implements ContactListener {
 
 	public int tick;
 
+	int winner = -1;
+
 	public World world;
 
 	public ArenaState() {
@@ -78,6 +80,9 @@ public class ArenaState extends GameState implements ContactListener {
 
 	@Override
 	public void beginContact(Contact contact) {
+		if (winner != -1)
+			return;
+
 		if (contact.getFixtureA().getBody().getUserData() instanceof Entity && contact.getFixtureB().getBody().getUserData() instanceof Entity) {
 			Vector2 forceDelta = contact.getFixtureA().getBody().getLinearVelocity().cpy().sub(contact.getFixtureB().getBody().getLinearVelocity());
 
