@@ -74,8 +74,22 @@ public class ArenaState extends GameState implements ContactListener {
 
 	@Override
 	public void beginContact(Contact contact) {
-		// TODO Auto-generated method stub
+		if (contact.getFixtureA().getBody().getUserData() instanceof Entity && contact.getFixtureB().getBody().getUserData() instanceof Entity) {
+			Vector2 forceDelta = contact.getFixtureA().getBody().getLinearVelocity().cpy().sub(contact.getFixtureB().getBody().getLinearVelocity());
 
+			float force = forceDelta.len();
+
+			if (force > 2) {
+				Entity e1 = (Entity) contact.getFixtureA().getBody().getUserData();
+				Entity e2 = (Entity) contact.getFixtureB().getBody().getUserData();
+
+				e1.impact(force / 10 * contact.getFixtureA().getBody().getMass() / 0.0625f, e2);
+				e2.impact(force / 10 * contact.getFixtureB().getBody().getMass() / 0.0625f, e1);
+			}
+
+			// e1.impact(forceDelta.len(), e2);
+			// e2.impact(forceDelta.len(), e1);
+		}
 	}
 
 	@Override
@@ -105,19 +119,19 @@ public class ArenaState extends GameState implements ContactListener {
 
 	@Override
 	public void postSolve(Contact contact, ContactImpulse impulse) {
-		if (contact.getFixtureA().getBody().getUserData() instanceof Entity && contact.getFixtureB().getBody().getUserData() instanceof Entity) {
-			Entity e1 = (Entity) contact.getFixtureA().getBody().getUserData();
-			Entity e2 = (Entity) contact.getFixtureB().getBody().getUserData();
-
-			float totalImpulse = impulse.getNormalImpulses()[0];
-
-			// for (float f : impulse.getNormalImpulses()) {
-			// totalImpulse += f;
-			// }
-
-			e1.impact(totalImpulse, e2);
-			e2.impact(totalImpulse, e1);
-		}
+		/*
+		 * if (contact.getFixtureA().getBody().getUserData() instanceof Entity
+		 * && contact.getFixtureB().getBody().getUserData() instanceof Entity) {
+		 * Entity e1 = (Entity) contact.getFixtureA().getBody().getUserData();
+		 * Entity e2 = (Entity) contact.getFixtureB().getBody().getUserData();
+		 * 
+		 * float totalImpulse = impulse.getNormalImpulses()[0];
+		 * 
+		 * // for (float f : impulse.getNormalImpulses()) { // totalImpulse +=
+		 * f; // }
+		 * 
+		 * e1.impact(totalImpulse, e2); e2.impact(totalImpulse, e1); }
+		 */
 	}
 
 	@Override
