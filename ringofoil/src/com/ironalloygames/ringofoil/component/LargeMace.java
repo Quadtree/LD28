@@ -26,6 +26,11 @@ public class LargeMace extends Component {
 	}
 
 	@Override
+	public float getHeavyDamageReduction() {
+		return super.getHeavyDamageReduction() + 0.15f;
+	}
+
+	@Override
 	public float getLightDamageResistance() {
 		return .25f;
 	}
