@@ -194,8 +194,14 @@ public abstract class ComponentEntity extends Entity {
 		super.takeDamage(lightDamage, heavyDamage);
 
 		if (MathUtils.randomBoolean((getMaxHp() - getHp()) / getMaxHp())) {
-			if (component.getParent() != null) {
+			if (component.getParent() != null && (MathUtils.randomBoolean() || component.getChildren().size() == 0)) {
+				component.getParent().getParent().getChildren().remove(component.getParent());
 				component.setParent(null);
+			} else if (component.getChildren().size() > 0) {
+				Attachment child = component.getChildren().get(MathUtils.random.nextInt(component.getChildren().size()));
+
+				child.getChild().setParent(null);
+				component.getChildren().remove(child);
 			}
 		}
 	}
