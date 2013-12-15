@@ -9,6 +9,7 @@ import com.badlogic.gdx.Input.TextInputListener;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.ironalloygames.ringofoil.component.Arm;
+import com.ironalloygames.ringofoil.component.Armor;
 import com.ironalloygames.ringofoil.component.Attachment;
 import com.ironalloygames.ringofoil.component.Attachment.AttachmentPoint;
 import com.ironalloygames.ringofoil.component.CPU;
@@ -54,10 +55,16 @@ public class EditorState extends GameState {
 		palette.add(new PaletteItem(new Arm(), "Arm: Motorized arm that can swing things around."));
 		palette.add(new PaletteItem(new LargeMace(), "Large Mace: Huge mace. Good for smashing heavy armor."));
 		palette.add(new PaletteItem(new Piston(), "Piston: Powerful extendible piston. Good for ramming things."));
+		palette.add(new PaletteItem(new Armor(), "Armor: Very tough, especially against blades and bullets."));
 	}
 
 	@Override
 	public boolean keyDown(int keycode) {
+
+		if (keycode == Keys.ESCAPE) {
+			RG.currentState = new MainMenuState();
+			Gdx.input.setInputProcessor(RG.currentState);
+		}
 
 		if (selectedComponent != null && keycode >= Keys.NUM_1 && keycode <= Keys.NUM_9) {
 			selectedComponent.setCommandKey(keycode);
@@ -187,6 +194,9 @@ public class EditorState extends GameState {
 							break;
 						case 4:
 							comp = new Piston();
+							break;
+						case 5:
+							comp = new Armor();
 							break;
 						}
 

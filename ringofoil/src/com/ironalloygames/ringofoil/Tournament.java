@@ -33,6 +33,7 @@ public class Tournament {
 			if (currentRoundRobots.size() == 1) {
 				RG.currentState = new WinState();
 				Gdx.input.setInputProcessor(RG.currentState);
+				return;
 			}
 		}
 
