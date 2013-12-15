@@ -188,4 +188,25 @@ public abstract class ComponentEntity extends Entity {
 	public void setParentConnector(Joint parentConnector) {
 		this.parentConnector = parentConnector;
 	}
+
+	@Override
+	public void takeDamage(float lightDamage, float heavyDamage) {
+		super.takeDamage(lightDamage, heavyDamage);
+
+		if (MathUtils.randomBoolean((getMaxHp() - getHp()) / getMaxHp())) {
+			if (component.getParent() != null) {
+				component.setParent(null);
+			}
+		}
+	}
+
+	@Override
+	public void update() {
+		super.update();
+
+		if (component.getParent() == null && parentConnector != null) {
+			((ArenaState) RG.currentState).world.destroyJoint(parentConnector);
+			parentConnector = null;
+		}
+	}
 }

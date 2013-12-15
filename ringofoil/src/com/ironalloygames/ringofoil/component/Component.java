@@ -20,6 +20,10 @@ public abstract class Component {
 
 	Attachment parent;
 
+	public Component() {
+		hp = this.getMaxHp();
+	}
+
 	public void addChildComponent(Component childComponent, AttachmentPoint point) {
 		Attachment att = new Attachment(childComponent, this, point);
 		childComponent.parent = att;
@@ -148,6 +152,10 @@ public abstract class Component {
 
 	public void setHp(float hp) {
 		this.hp = hp;
+	}
+
+	public void setParent(Attachment parent) {
+		this.parent = parent;
 	}
 
 	public void takeDamage(float heavyDamage, float lightDamage) {

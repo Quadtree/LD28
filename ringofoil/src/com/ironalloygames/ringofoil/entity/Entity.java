@@ -45,8 +45,9 @@ public abstract class Entity {
 
 	public void impact(float force, Entity otherEntity) {
 		otherEntity.takeDamage(force * getLightDamageMultiplier(), force * getHeavyDamageMultiplier());
-		if (force > .25f)
-			System.out.println("IMPACT! " + this + " " + otherEntity + " " + force);
+		// if (force > .25f)
+		// System.out.println("IMPACT! " + this + " " + otherEntity + " " +
+		// force);
 	}
 
 	public void render() {
@@ -57,8 +58,14 @@ public abstract class Entity {
 	}
 
 	public void takeDamage(float lightDamage, float heavyDamage) {
-		setHp(getHp() - Math.max(0, (lightDamage - getLightDamageReduction()) * getLightDamageResistance()));
-		setHp(getHp() - Math.max(0, (heavyDamage - getHeavyDamageReduction()) * getHeavyDamageResistance()));
+		float damage = Math.max(0, (lightDamage - getLightDamageReduction()) * getLightDamageResistance());
+		damage += Math.max(0, (heavyDamage - getHeavyDamageReduction()) * getHeavyDamageResistance());
+
+		setHp(getHp() - damage);
+
+		if (damage > 0.01f) {
+			System.out.println(this + " takes " + damage + " damage!");
+		}
 	}
 
 	public void update() {
