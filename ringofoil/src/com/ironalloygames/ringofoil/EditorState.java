@@ -1,5 +1,8 @@
 package com.ironalloygames.ringofoil;
 
+import java.util.ArrayList;
+
+import com.ironalloygames.ringofoil.component.Attachment;
 import com.ironalloygames.ringofoil.component.Attachment.AttachmentPoint;
 import com.ironalloygames.ringofoil.component.CPU;
 import com.ironalloygames.ringofoil.component.Component;
@@ -7,6 +10,8 @@ import com.ironalloygames.ringofoil.component.Structure;
 import com.ironalloygames.ringofoil.component.Tracks;
 
 public class EditorState extends GameState {
+
+	public ArrayList<Attachment> attachmentPoints;
 
 	Robot robot;
 
@@ -24,6 +29,8 @@ public class EditorState extends GameState {
 
 	@Override
 	public void render() {
+		attachmentPoints = new ArrayList<Attachment>();
+
 		for (Component c : robot.getComponents()) {
 			c.render(c.getRelativePosition(), 0, false);
 			c.renderAttachmentPoints();

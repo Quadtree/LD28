@@ -41,19 +41,17 @@ public class Attachment {
 			throw new RuntimeException("Att pt " + point + "not fnd");
 		}
 
-		Vector2 delta1 = delta.cpy().scl(parent.getBoundingBox().x / 2,
-				parent.getBoundingBox().y / 2);
+		Vector2 delta1 = delta.cpy().scl(parent.getBoundingBox().x / 2, parent.getBoundingBox().y / 2);
 
 		Vector2 delta2 = new Vector2(0, 0);
 
 		if (child != null) {
-			delta2 = delta.cpy().scl(child.getBoundingBox().x / 2,
-					child.getBoundingBox().y / 2);
+			delta2 = delta.cpy().scl(child.getBoundingBox().x / 2, child.getBoundingBox().y / 2);
 		}
 
 		Vector2 accum;
 
-		if (delta2.len2() > delta1.len2()) {
+		if (delta1.len2() > delta2.len2()) {
 			accum = delta1;
 		} else {
 			accum = delta2;
@@ -91,14 +89,12 @@ public class Attachment {
 			throw new RuntimeException("Att pt " + point + "not fnd");
 		}
 
-		Vector2 accum = delta.cpy().scl(parent.getBoundingBox().x / 2,
-				parent.getBoundingBox().y / 2);
+		Vector2 accum = delta.cpy().scl(parent.getBoundingBox().x / 2, parent.getBoundingBox().y / 2);
 
 		accum.add(delta.cpy().scl(8 / 128f, 8 / 128f));
 
 		if (child != null) {
-			accum.add(delta.cpy().scl(child.getBoundingBox().x / 2,
-					child.getBoundingBox().y / 2));
+			accum.add(delta.cpy().scl(child.getBoundingBox().x / 2, child.getBoundingBox().y / 2));
 		}
 		return accum;
 	}

@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.ironalloygames.ringofoil.EditorState;
 import com.ironalloygames.ringofoil.RG;
 import com.ironalloygames.ringofoil.component.Attachment.AttachmentPoint;
 import com.ironalloygames.ringofoil.entity.ComponentEntity;
@@ -133,6 +134,10 @@ public abstract class Component {
 				Vector2 pt = a.getCenterPoint().add(this.getRelativePosition());
 
 				RG.batch.draw(RG.am.get("att_pt"), pt.x - .5f, pt.y - .5f, .5f, .5f, 1, 1, .1f, .1f, 0);
+
+				if (RG.currentState instanceof EditorState) {
+					((EditorState) RG.currentState).attachmentPoints.add(a);
+				}
 			}
 		}
 	}
