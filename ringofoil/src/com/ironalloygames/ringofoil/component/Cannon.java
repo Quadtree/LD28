@@ -12,6 +12,8 @@ public class Cannon extends Component {
 	 */
 	private static final long serialVersionUID = 1920461711973887184L;
 
+	public int roundsLeft = 8;
+
 	public Cannon() {
 	}
 

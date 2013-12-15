@@ -30,7 +30,7 @@ public class AiRobotController extends RobotController {
 
 		int move = 0;
 
-		if (MathUtils.random.nextInt(360) == 0 || (moveForward == false && MathUtils.random.nextInt(90) == 0)) {
+		if (MathUtils.random.nextInt(360) == 0 || (moveForward == false && MathUtils.random.nextInt(360) == 0)) {
 			moveForward = !moveForward;
 		}
 
