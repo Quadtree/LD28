@@ -30,16 +30,18 @@ public class ArenaState extends GameState implements ContactListener {
 
 	ArrayList<Entity> entityAddQueue = new ArrayList<Entity>();
 
-	int gameSpeed = 1;
+	int fightFade = 120;
 
+	int gameSpeed = 1;
 	public int lastDamageTick;
 	public float robot1DamageTaken;
 	public float robot2DamageTaken;
+
 	ArrayList<Robot> robots = new ArrayList<Robot>();
 
 	public int tick;
-
 	int winner = -1;
+
 	int winTimer = 120;
 
 	public World world;
@@ -182,10 +184,26 @@ public class ArenaState extends GameState implements ContactListener {
 		RG.am.getFont().draw(RG.batch, "Robot 1      Score: " + (int) (this.robot2DamageTaken * 100), -550, 420);
 		RG.am.getFont().draw(RG.batch, "Robot 2      Score: " + (int) (this.robot1DamageTaken * 100), 300, 420);
 
-		if (this.tick - this.lastDamageTick > 4 * 60) {
+		if (this.tick - this.lastDamageTick > 4 * 60 && winner == -1) {
 
 			RG.am.getFont().draw(RG.batch,
 					"Match will be called for " + (this.robot1DamageTaken > this.robot2DamageTaken ? "Robot 2" : "Robot 1") + " on points in " + (8 - (this.tick - this.lastDamageTick) / 60) + " seconds...", -350, 0);
+		}
+
+		if (fightFade > 0) {
+			if (fightFade > 10) {
+				RG.batch.draw(RG.am.getBigTexture("fight"), -600, -450);
+			} else {
+				RG.batch.draw(RG.am.getBigTexture("fight"), -600, -450 + (10 - fightFade) * 40);
+			}
+		}
+
+		if (winner != -1) {
+			if (winTimer < 110) {
+				RG.batch.draw(RG.am.getBigTexture("robot" + (winner + 1) + "wins"), -600, -450);
+			} else {
+				RG.batch.draw(RG.am.getBigTexture("robot" + (winner + 1) + "wins"), -600, -450 + -(110 - winTimer) * 40);
+			}
 		}
 	}
 
@@ -226,6 +244,8 @@ public class ArenaState extends GameState implements ContactListener {
 		RG.am.getSound("robot1win");
 
 		for (int j = 0; j < gameSpeed; j++) {
+
+			fightFade--;
 
 			if (winner != -1) {
 				winTimer--;
