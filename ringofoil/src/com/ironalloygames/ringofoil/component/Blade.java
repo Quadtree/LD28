@@ -32,6 +32,11 @@ public class Blade extends Component {
 	}
 
 	@Override
+	public float getLightDamageResistance() {
+		return .15f;
+	}
+
+	@Override
 	protected int getUnitCost() {
 		return 35;
 	}

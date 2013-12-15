@@ -3,6 +3,7 @@ package com.ironalloygames.ringofoil;
 import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -15,6 +16,8 @@ public class AssetManager {
 	BitmapFont font;
 
 	HashMap<String, Sprite> loaded = new HashMap<String, Sprite>();
+
+	HashMap<String, Sound> sounds = new HashMap<String, Sound>();
 
 	public AssetManager() {
 		atlas = new TextureAtlas(Gdx.files.internal("pack.atlas"));
@@ -49,5 +52,15 @@ public class AssetManager {
 		}
 
 		return font;
+	}
+
+	public Sound getSound(String name) {
+		if (!sounds.containsKey(name)) {
+			sounds.put(name, Gdx.audio.newSound(Gdx.files.internal(name + ".ogg")));
+
+			System.out.println("Loaded sound texture " + name + " as " + loaded.get(name));
+		}
+
+		return sounds.get(name);
 	}
 }

@@ -1,6 +1,7 @@
 package com.ironalloygames.ringofoil;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 
 public class WinState extends GameState {
 
@@ -10,8 +11,10 @@ public class WinState extends GameState {
 
 	@Override
 	public boolean keyDown(int keycode) {
-		RG.currentState = new MainMenuState();
-		Gdx.input.setInputProcessor(RG.currentState);
+		if (keycode == Keys.ENTER) {
+			RG.currentState = new MainMenuState();
+			Gdx.input.setInputProcessor(RG.currentState);
+		}
 		return super.keyDown(keycode);
 	}
 

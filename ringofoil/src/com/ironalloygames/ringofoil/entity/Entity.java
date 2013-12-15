@@ -63,6 +63,16 @@ public abstract class Entity {
 		lastHitPos = this.getPosition().sub(otherEntity.getPosition()).scl(.5f).add(this.getPosition());
 		lastHitSparks += (int) (force);
 
+		if (force > 0.1f) {
+			String soundStub = "hitdmg";
+
+			if (this.getLightDamageResistance() < .5f) {
+				soundStub = "ding";
+			}
+
+			RG.am.getSound(soundStub + MathUtils.random(1, 4)).play();
+		}
+
 		// if (force > .25f)
 		// System.out.println("IMPACT! " + this + " " + otherEntity + " " +
 		// force);
