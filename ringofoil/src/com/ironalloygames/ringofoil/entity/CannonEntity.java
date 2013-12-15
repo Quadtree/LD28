@@ -22,6 +22,7 @@ public class CannonEntity extends ComponentEntity {
 
 		if (((Cannon) component).roundsLeft > 0) {
 			new ShellEntity(body.getPosition(), body.getAngle() + (flipped ? MathUtils.PI : 0), body.getFixtureList().get(0).getFilterData());
+			RG.am.getSound("shoot").play();
 			((Cannon) component).roundsLeft--;
 		}
 	}

@@ -22,6 +22,6 @@ public class LoseState extends GameState {
 	public void renderUi() {
 		super.renderUi();
 
-		RG.am.getFont().drawWrapped(RG.batch, "YOU LOSE!", 200, -425, 800);
+		RG.batch.draw(RG.am.getBigTexture("defeat"), -600, -450);
 	}
 }

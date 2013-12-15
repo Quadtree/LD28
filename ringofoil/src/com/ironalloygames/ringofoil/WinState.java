@@ -22,6 +22,6 @@ public class WinState extends GameState {
 	public void renderUi() {
 		super.renderUi();
 
-		RG.am.getFont().drawWrapped(RG.batch, "YOU WIN!", 200, -425, 800);
+		RG.batch.draw(RG.am.getBigTexture("victory"), -600, -450);
 	}
 }

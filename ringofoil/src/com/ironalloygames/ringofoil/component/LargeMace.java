@@ -26,6 +26,11 @@ public class LargeMace extends Component {
 	}
 
 	@Override
+	public float getLightDamageResistance() {
+		return .25f;
+	}
+
+	@Override
 	protected int getUnitCost() {
 		return 35;
 	}
