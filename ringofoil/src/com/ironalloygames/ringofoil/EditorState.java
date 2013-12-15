@@ -132,7 +132,7 @@ public class EditorState extends GameState {
 	@Override
 	public void renderUi() {
 		super.renderUi();
-		RG.am.getFont().setColor(.5f, .5f, 1f, 1);
+		RG.am.getFont().setColor(Color.WHITE);
 
 		if (selectedComponent != null) {
 
@@ -143,13 +143,13 @@ public class EditorState extends GameState {
 			}
 
 			RG.am.getFont().drawWrapped(RG.batch,
-					"Component selected. Action key is set to " + keyChar + ". Change its action command by pressing a number key." + (selectedComponent instanceof CPU ? "" : " Press X to delete it."), -400, 420, 800);
+					"Component selected. Action key is set to " + keyChar + ". Change its action command by pressing a number key." + (selectedComponent instanceof CPU ? "" : " Press X to delete it."), -240, 420, 800);
 		} else if (paletteItemSelected >= 0) {
 			RG.am.getFont().drawWrapped(RG.batch,
 					"Selected: " + palette.get(paletteItemSelected).desc + "\nCost: $" + palette.get(paletteItemSelected).comp.getCost() * 10 + "\nClick on a green spot to place this item, or right click to deselect.",
-					-400, 420, 800);
+					-240, 420, 800);
 		} else {
-			RG.am.getFont().drawWrapped(RG.batch, "Left click an item in the palette to select it. Click a part of the robot to select it.", -400, 420, 800);
+			RG.am.getFont().drawWrapped(RG.batch, "Left click an item in the palette to select it. Click a part of the robot to select it.", -240, 420, 800);
 		}
 
 		if (robot.getCost() > ArenaState.ROBOT_MAX_COST) {
@@ -160,9 +160,15 @@ public class EditorState extends GameState {
 
 		RG.am.getFont().drawWrapped(RG.batch, "Total Robot Cost: $" + (robot.getCost() * 10) + "/$" + (ArenaState.ROBOT_MAX_COST * 10), -400, -380, 800);
 
-		RG.am.getFont().setColor(.5f, .5f, 1f, 1);
+		RG.am.getFont().setColor(Color.WHITE);
 
 		RG.am.getFont().drawWrapped(RG.batch, "Commands: Esc - Return to Main Menu, S - Save, L - Load", -400, -420, 800);
+	}
+
+	@Override
+	public void renderUiPrerender() {
+		RG.batch.draw(RG.am.getBigTexture("robotselect"), -600, -450);
+		super.renderUiPrerender();
 	}
 
 	@Override

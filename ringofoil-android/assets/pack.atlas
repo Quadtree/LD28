@@ -19,7 +19,7 @@ armor
   index: -1
 att_pt
   rotate: false
-  xy: 426, 87
+  xy: 132, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -40,7 +40,7 @@ cannon
   index: -1
 connector
   rotate: false
-  xy: 485, 226
+  xy: 198, 36
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
@@ -57,6 +57,13 @@ mace
   xy: 426, 121
   size: 48, 48
   orig: 48, 48
+  offset: 0, 0
+  index: -1
+oil
+  rotate: false
+  xy: 262, 62
+  size: 48, 16
+  orig: 48, 16
   offset: 0, 0
   index: -1
 piston_base
@@ -89,7 +96,7 @@ selected
   index: -1
 shell
   rotate: false
-  xy: 262, 55
+  xy: 485, 219
   size: 8, 23
   orig: 8, 23
   offset: 0, 0
@@ -101,6 +108,13 @@ shellinflight
   orig: 64, 16
   offset: 0, 0
   index: -1
+spark
+  rotate: false
+  xy: 426, 103
+  size: 48, 16
+  orig: 48, 16
+  offset: 0, 0
+  index: -1
 tracks
   rotate: false
   xy: 262, 80
@@ -110,7 +124,7 @@ tracks
   index: -1
 wheel
   rotate: false
-  xy: 132, 2
+  xy: 166, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

@@ -47,6 +47,11 @@ public class GameState implements InputProcessor {
 	public void renderUi() {
 	}
 
+	public void renderUiPrerender() {
+		// TODO Auto-generated method stub
+
+	}
+
 	@Override
 	public boolean scrolled(int amount) {
 		// TODO Auto-generated method stub

@@ -49,7 +49,6 @@ public class RobotSelectState extends GameState {
 
 	@Override
 	public void render() {
-
 		if (selectedRobot != null) {
 			for (Component c : selectedRobot.getComponents()) {
 				c.render(c.getRelativePosition(), 0, false);
@@ -80,21 +79,36 @@ public class RobotSelectState extends GameState {
 			RG.am.getFont().setColor(Color.WHITE);
 		}
 
-		RG.am.getFont().draw(RG.batch, "Commands: Esc - Go back, Enter - Accept selection, Mouse Wheel/Arrow Keys - Scroll", -400, -420);
+		RG.am.getFont().draw(RG.batch, "Commands: Esc - Go back, Enter - Accept selection", -400, -420);
 
 		int y = 420;
 
-		for (String robot : robots) {
-			RG.am.getFont().drawWrapped(RG.batch, robot.replace(".robot", ""), -400, y, 800);
+		int i = 0;
 
+		for (String robot : robots) {
+			if (i++ == selectedIndex)
+				RG.am.getFont().setColor(Color.GREEN);
+			else
+				RG.am.getFont().setColor(Color.WHITE);
+			RG.am.getFont().drawWrapped(RG.batch, robot.replace(".robot", ""), -560, y, 800);
+			RG.am.getFont().setColor(Color.WHITE);
 			y -= 20;
+
 		}
+	}
+
+	@Override
+	public void renderUiPrerender() {
+		RG.batch.draw(RG.am.getBigTexture("robotselect"), -600, -450);
+		super.renderUiPrerender();
 	}
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 
-		int row = (int) ((420 - mouseScreenPosition.y) / 20) - 7;
+		int row = (screenY - 30) / 20;
+
+		System.out.println(row);
 
 		if (row >= 0 && row < robots.length) {
 			selectedIndex = row;

@@ -1,5 +1,6 @@
 package com.ironalloygames.ringofoil.entity;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.ironalloygames.ringofoil.ArenaState;
@@ -7,6 +8,9 @@ import com.ironalloygames.ringofoil.RG;
 
 public abstract class Entity {
 	Body body;
+
+	Vector2 lastHitPos;
+	int lastHitSparks = 0;
 
 	public Entity() {
 		((ArenaState) RG.currentState).addEntity(this);
@@ -55,6 +59,13 @@ public abstract class Entity {
 
 	public void impact(float force, Entity otherEntity) {
 		otherEntity.takeDamage(force * getLightDamageMultiplier(), force * getHeavyDamageMultiplier());
+
+		Vector2 centerPoint = this.getPosition().sub(otherEntity.getPosition()).scl(.5f).add(this.getPosition());
+
+		for (int i = 0; i < (int) (force * 5); i++) {
+			new SparkEntity(centerPoint, MathUtils.random(0, MathUtils.PI2), 5, body.getFixtureList().get(0).getFilterData(), "spark");
+		}
+
 		// if (force > .25f)
 		// System.out.println("IMPACT! " + this + " " + otherEntity + " " +
 		// force);

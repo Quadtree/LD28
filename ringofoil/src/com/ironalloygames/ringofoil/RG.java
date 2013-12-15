@@ -100,6 +100,11 @@ public class RG implements ApplicationListener {
 		Gdx.gl.glClearColor(.8f, .8f, .8f, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
+		batch.setProjectionMatrix(uiCamera.combined);
+		batch.begin();
+		currentState.renderUiPrerender();
+		batch.end();
+
 		batch.setProjectionMatrix(gameCamera.combined);
 		batch.begin();
 		currentState.render();
