@@ -17,7 +17,7 @@ public class Tournament {
 		this.playerRobot = playerRobot;
 		currentRoundRobots.add(playerRobot);
 
-		while (currentRoundRobots.size() < 4) {
+		while (currentRoundRobots.size() < 8) {
 			String rname = RG.rsd.list()[MathUtils.random.nextInt(RG.rsd.list().length)].replace(".robot", "");
 
 			currentRoundRobots.add(RG.rsd.loadRobot(rname));

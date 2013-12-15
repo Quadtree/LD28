@@ -2,6 +2,8 @@ package com.ironalloygames.ringofoil;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -104,6 +106,11 @@ public class ArenaState extends GameState implements ContactListener {
 	public boolean keyDown(int keycode) {
 		for (RobotController c : controllers) {
 			c.keyDown(keycode);
+		}
+
+		if (keycode == Keys.ESCAPE) {
+			RG.currentState = new MainMenuState();
+			Gdx.input.setInputProcessor(RG.currentState);
 		}
 
 		return super.keyDown(keycode);

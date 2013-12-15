@@ -27,7 +27,7 @@ public class MainMenuState extends GameState {
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 
 		if (screenX >= 360 && screenX < 801 && screenY > 370 && screenY < 483) {
-			RG.currentState = new RobotSelectState(null);
+			RG.currentState = new InfoState();
 			Gdx.input.setInputProcessor(RG.currentState);
 		}
 		if (screenX >= 360 && screenX < 801 && screenY > 501 && screenY < 616) {
