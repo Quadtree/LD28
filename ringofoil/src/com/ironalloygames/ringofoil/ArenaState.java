@@ -126,6 +126,8 @@ public class ArenaState extends GameState implements ContactListener {
 	public void render() {
 		super.render();
 
+		RG.batch.draw(RG.am.getBigTexture("arena"), -400 / 128f, -300 / 128f, 800 / 128f, 600 / 128f);
+
 		for (int i = 0; i < entities.size(); i++) {
 			entities.get(i).render();
 		}

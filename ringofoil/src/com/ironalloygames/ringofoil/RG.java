@@ -37,12 +37,13 @@ public class RG implements ApplicationListener {
 		batch = new SpriteBatch();
 
 		currentState = new ArenaState();
-		((ArenaState) currentState).setRobots(createFakeRobot(),
-				createFakeRobot());
-		Gdx.input.setInputProcessor(currentState);
-		// currentState = new EditorState();
+		((ArenaState) currentState).setRobots(createFakeRobot(), createFakeRobot());
 
+		// currentState = new EditorState();
+		Gdx.input.setInputProcessor(currentState);
 		am = new AssetManager();
+
+		sr = new ShapeRenderer();
 
 		ticks = System.currentTimeMillis();
 	}
@@ -70,8 +71,6 @@ public class RG implements ApplicationListener {
 		a1.addChildComponent(p1, AttachmentPoint.ARM);
 		p1.addChildComponent(mace, AttachmentPoint.RIGHT);
 		structure2.addChildComponent(tracks2, AttachmentPoint.BOTTOM);
-
-		sr = new ShapeRenderer();
 
 		return robot;
 	}
