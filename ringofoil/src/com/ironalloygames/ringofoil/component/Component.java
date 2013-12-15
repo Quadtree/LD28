@@ -16,6 +16,8 @@ public abstract class Component {
 	List<Attachment> children = new ArrayList<Attachment>();
 	int commandKey;
 
+	float hp;
+
 	Attachment parent;
 
 	public void addChildComponent(Component childComponent,
@@ -49,6 +51,14 @@ public abstract class Component {
 
 	public int getCommandKey() {
 		return commandKey;
+	}
+
+	public float getHp() {
+		return hp;
+	}
+
+	public float getMaxHp() {
+		return 1;
 	}
 
 	public Attachment getParent() {
@@ -125,5 +135,14 @@ public abstract class Component {
 
 	public void setCommandKey(int commandKey) {
 		this.commandKey = commandKey;
+	}
+
+	public void setHp(float hp) {
+		this.hp = hp;
+	}
+
+	public void takeDamage(float heavyDamage, float lightDamage) {
+		this.hp -= heavyDamage;
+		this.hp -= lightDamage;
 	}
 }

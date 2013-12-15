@@ -65,6 +65,7 @@ public abstract class ComponentEntity extends Entity {
 		System.out.println("Creating body at " + bd.position);
 
 		body = ((ArenaState) RG.currentState).world.createBody(bd);
+		body.setUserData(this);
 	}
 
 	protected void createFixture() {
