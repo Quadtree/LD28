@@ -124,7 +124,7 @@ public class ArenaState extends GameState {
 			c.update();
 		}
 
-		world.step(0.016f, 12, 12);
+		world.step(0.016f, 10, 10);
 
 		for (int i = 0; i < entities.size(); i++) {
 			entities.get(i).update();

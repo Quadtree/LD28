@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.ironalloygames.ringofoil.component.Arm;
 import com.ironalloygames.ringofoil.component.Attachment.AttachmentPoint;
 import com.ironalloygames.ringofoil.component.CPU;
+import com.ironalloygames.ringofoil.component.LargeMace;
 import com.ironalloygames.ringofoil.component.Piston;
 import com.ironalloygames.ringofoil.component.Structure;
 import com.ironalloygames.ringofoil.component.Tracks;
@@ -24,6 +25,8 @@ public class RG implements ApplicationListener {
 	public static OrthographicCamera gameCamera;
 
 	public static OrthographicCamera uiCamera;
+
+	ShapeRenderer sr;
 
 	long ticks = 0;
 
@@ -55,6 +58,8 @@ public class RG implements ApplicationListener {
 		Tracks tracks = new Tracks();
 		Tracks tracks2 = new Tracks();
 
+		LargeMace mace = new LargeMace();
+
 		p1.setCommandKey(Keys.NUM_1);
 
 		robot.setRootComponent(cpu);
@@ -63,7 +68,10 @@ public class RG implements ApplicationListener {
 		structure.addChildComponent(structure2, AttachmentPoint.RIGHT);
 		structure2.addChildComponent(a1, AttachmentPoint.RIGHT);
 		a1.addChildComponent(p1, AttachmentPoint.ARM);
+		p1.addChildComponent(mace, AttachmentPoint.RIGHT);
 		structure2.addChildComponent(tracks2, AttachmentPoint.BOTTOM);
+
+		sr = new ShapeRenderer();
 
 		return robot;
 	}
@@ -92,7 +100,6 @@ public class RG implements ApplicationListener {
 		currentState.renderUi();
 		batch.end();
 
-		ShapeRenderer sr = new ShapeRenderer();
 		sr.setProjectionMatrix(gameCamera.combined);
 		sr.begin(ShapeType.Line);
 		sr.setColor(Color.BLACK);

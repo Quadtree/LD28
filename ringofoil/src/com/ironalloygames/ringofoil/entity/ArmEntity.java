@@ -52,7 +52,7 @@ public class ArmEntity extends ComponentEntity {
 		RevoluteJointDef jd = new RevoluteJointDef();
 		jd.initialize(body, rodBody, body.getPosition());
 		jd.enableMotor = true;
-		jd.maxMotorTorque = 20;
+		jd.maxMotorTorque = 5;
 		jd.motorSpeed = 0;
 
 		joint = (RevoluteJoint) ((ArenaState) RG.currentState).world
@@ -103,7 +103,5 @@ public class ArmEntity extends ComponentEntity {
 		} else {
 			joint.setMotorSpeed(0);
 		}
-
-		System.out.println("TEST " + joint.getMotorSpeed());
 	}
 }

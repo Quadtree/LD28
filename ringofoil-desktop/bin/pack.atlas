@@ -12,7 +12,7 @@ arm
   index: -1
 att_pt
   rotate: false
-  xy: 522, 68
+  xy: 572, 68
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -29,6 +29,13 @@ cpu
   xy: 132, 46
   size: 128, 80
   orig: 128, 80
+  offset: 0, 0
+  index: -1
+mace
+  rotate: false
+  xy: 522, 52
+  size: 48, 48
+  orig: 48, 48
   offset: 0, 0
   index: -1
 piston_base
@@ -61,7 +68,7 @@ tracks
   index: -1
 wheel
   rotate: false
-  xy: 556, 68
+  xy: 606, 68
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
