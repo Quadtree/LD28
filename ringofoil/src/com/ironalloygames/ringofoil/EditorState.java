@@ -13,6 +13,7 @@ import com.ironalloygames.ringofoil.component.Armor;
 import com.ironalloygames.ringofoil.component.Attachment;
 import com.ironalloygames.ringofoil.component.Attachment.AttachmentPoint;
 import com.ironalloygames.ringofoil.component.CPU;
+import com.ironalloygames.ringofoil.component.Cannon;
 import com.ironalloygames.ringofoil.component.Component;
 import com.ironalloygames.ringofoil.component.LargeMace;
 import com.ironalloygames.ringofoil.component.Piston;
@@ -56,6 +57,7 @@ public class EditorState extends GameState {
 		palette.add(new PaletteItem(new LargeMace(), "Large Mace: Huge mace. Good for smashing heavy armor."));
 		palette.add(new PaletteItem(new Piston(), "Piston: Powerful extendible piston. Good for ramming things."));
 		palette.add(new PaletteItem(new Armor(), "Armor: Very tough, especially against blades and bullets."));
+		palette.add(new PaletteItem(new Cannon(), "Cannon: Extremely high damage, but very limited ammo."));
 	}
 
 	@Override
@@ -128,7 +130,7 @@ public class EditorState extends GameState {
 	@Override
 	public void renderUi() {
 		super.renderUi();
-		RG.am.getFont().setColor(.5f, .5f, 0, 1);
+		RG.am.getFont().setColor(.5f, .5f, 1f, 1);
 
 		if (selectedComponent != null) {
 
@@ -141,7 +143,9 @@ public class EditorState extends GameState {
 			RG.am.getFont().drawWrapped(RG.batch,
 					"Component selected. Action key is set to " + keyChar + ". Change its action command by pressing a number key." + (selectedComponent instanceof CPU ? "" : " Press X to delete it."), -400, 420, 800);
 		} else if (paletteItemSelected >= 0) {
-			RG.am.getFont().drawWrapped(RG.batch, "Selected: " + palette.get(paletteItemSelected).desc + "\nClick on a green spot to place this item, or right click to deselect.", -400, 420, 800);
+			RG.am.getFont().drawWrapped(RG.batch,
+					"Selected: " + palette.get(paletteItemSelected).desc + "\nCost: $" + palette.get(paletteItemSelected).comp.getCost() * 10 + "\nClick on a green spot to place this item, or right click to deselect.",
+					-400, 420, 800);
 		} else {
 			RG.am.getFont().drawWrapped(RG.batch, "Left click an item in the palette to select it. Click a part of the robot to select it.", -400, 420, 800);
 		}
@@ -154,7 +158,7 @@ public class EditorState extends GameState {
 
 		RG.am.getFont().drawWrapped(RG.batch, "Total Robot Cost: $" + (robot.getCost() * 10) + "/$" + (ArenaState.ROBOT_MAX_COST * 10), -400, -380, 800);
 
-		RG.am.getFont().setColor(.5f, .5f, 0, 1);
+		RG.am.getFont().setColor(.5f, .5f, 1f, 1);
 
 		RG.am.getFont().drawWrapped(RG.batch, "Commands: Esc - Return to Main Menu, S - Save, L - Load", -400, -420, 800);
 	}
@@ -197,6 +201,9 @@ public class EditorState extends GameState {
 							break;
 						case 5:
 							comp = new Armor();
+							break;
+						case 6:
+							comp = new Cannon();
 							break;
 						}
 

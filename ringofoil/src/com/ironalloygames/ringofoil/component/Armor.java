@@ -7,6 +7,11 @@ import com.ironalloygames.ringofoil.entity.ComponentEntity;
 
 public class Armor extends Component {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4131112417597278148L;
+
 	public Armor() {
 		// TODO Auto-generated constructor stub
 	}
@@ -22,11 +27,6 @@ public class Armor extends Component {
 	}
 
 	@Override
-	public int getCost() {
-		return 45;
-	}
-
-	@Override
 	public float getHeavyDamageResistance() {
 		return .8f;
 	}
@@ -39,6 +39,11 @@ public class Armor extends Component {
 	@Override
 	public float getMaxHp() {
 		return 2;
+	}
+
+	@Override
+	protected int getUnitCost() {
+		return 45;
 	}
 
 	@Override
