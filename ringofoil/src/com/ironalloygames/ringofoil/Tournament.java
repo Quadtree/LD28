@@ -60,6 +60,7 @@ public class Tournament {
 		if (loser == playerRobot) {
 			RG.currentState = new LoseState();
 			Gdx.input.setInputProcessor(RG.currentState);
+			return;
 		}
 
 		currentRoundRobots.remove(loser);

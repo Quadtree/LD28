@@ -91,9 +91,19 @@ public class ArmEntity extends ComponentEntity {
 
 		// System.out.println("Aiming at " + aimPoint);
 
-		Vector2 leftPoint = rodBody.getWorldPoint(new Vector2(.1f, -.02f)).cpy();
-		Vector2 centerPoint = rodBody.getWorldPoint(new Vector2(.101f, 0)).cpy();
-		Vector2 rightPoint = rodBody.getWorldPoint(new Vector2(.1f, .02f)).cpy();
+		Vector2 leftPoint;
+		Vector2 centerPoint;
+		Vector2 rightPoint;
+
+		if (!flipped) {
+			leftPoint = rodBody.getWorldPoint(new Vector2(.1f, -.02f)).cpy();
+			centerPoint = rodBody.getWorldPoint(new Vector2(.101f, 0)).cpy();
+			rightPoint = rodBody.getWorldPoint(new Vector2(.1f, .02f)).cpy();
+		} else {
+			leftPoint = rodBody.getWorldPoint(new Vector2(-.1f, -.02f)).cpy();
+			centerPoint = rodBody.getWorldPoint(new Vector2(-.101f, 0)).cpy();
+			rightPoint = rodBody.getWorldPoint(new Vector2(-.1f, .02f)).cpy();
+		}
 
 		float leftDist = leftPoint.sub(aimPoint).len2();
 		float centerDist = centerPoint.sub(aimPoint).len2();
@@ -104,9 +114,9 @@ public class ArmEntity extends ComponentEntity {
 
 		if (!loose) {
 			if (leftDist < centerDist && leftDist < rightDist) {
-				joint.setMotorSpeed(-3);
+				joint.setMotorSpeed((flipped ? -1 : 1) * -3);
 			} else if (rightDist < centerDist && rightDist < leftDist) {
-				joint.setMotorSpeed(3);
+				joint.setMotorSpeed((flipped ? -1 : 1) * 3);
 			} else {
 				joint.setMotorSpeed(0);
 			}

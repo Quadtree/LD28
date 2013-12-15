@@ -1,5 +1,6 @@
 package com.ironalloygames.ringofoil.entity;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.ironalloygames.ringofoil.ArenaState;
 import com.ironalloygames.ringofoil.RG;
@@ -41,6 +42,10 @@ public abstract class Entity {
 
 	public float getMaxHp() {
 		return 1;
+	}
+
+	public Vector2 getPosition() {
+		return body.getPosition().cpy();
 	}
 
 	public void impact(float force, Entity otherEntity) {

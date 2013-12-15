@@ -70,7 +70,7 @@ public class PistonEntity extends ComponentEntity {
 		jd.enableMotor = true;
 		jd.enableLimit = true;
 		jd.lowerTranslation = 0;
-		jd.upperTranslation = component.getBoundingBox().x * .9f;
+		jd.upperTranslation = (flipped ? -1 : 1) * component.getBoundingBox().x * .9f;
 		jd.maxMotorForce = 10;
 
 		joint = (PrismaticJoint) ((ArenaState) RG.currentState).world.createJoint(jd);
@@ -112,12 +112,12 @@ public class PistonEntity extends ComponentEntity {
 		if (!loose) {
 			if (commandExtend) {
 				if (joint.getJointTranslation() < component.getBoundingBox().x * .8f)
-					joint.setMotorSpeed(10);
+					joint.setMotorSpeed((flipped ? -1 : 1) * 10);
 				else
 					joint.setMotorSpeed(0);
 			} else {
 				if (joint.getJointTranslation() > component.getBoundingBox().x * .1f)
-					joint.setMotorSpeed(-10);
+					joint.setMotorSpeed((flipped ? -1 : 1) * -10);
 				else
 					joint.setMotorSpeed(0);
 			}
