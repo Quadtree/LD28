@@ -14,16 +14,31 @@ public class CannonEntity extends ComponentEntity {
 	}
 
 	@Override
-	public void render() {
-		super.render();
+	public void commandKeyDown() {
+		super.commandKeyDown();
 
-		System.out.println("ROUND " + ((Cannon) component).roundsLeft);
-		for (int i = 0; i < ((Cannon) component).roundsLeft; i++) {
-			Vector2 pt = new Vector2((-.38f + i * .076f) * Component.SCALE, .18f * Component.SCALE);
-			pt = body.getWorldPoint(pt);
-			RG.batch.draw(RG.am.get("shell"), pt.x - .5f, pt.y - .5f, .5f, .5f, 1, 1, 8 / 128f * Component.SCALE, 23 / 128f * Component.SCALE, body.getAngle() * (180f / MathUtils.PI));
-			System.out.println(pt);
+		if (loose)
+			return;
+
+		if (((Cannon) component).roundsLeft > 0) {
+			new ShellEntity(body.getPosition(), body.getAngle() + (flipped ? MathUtils.PI : 0), body.getFixtureList().get(0).getFilterData());
+			((Cannon) component).roundsLeft--;
 		}
 	}
 
+	@Override
+	public void render() {
+		super.render();
+
+		for (int i = 0; i < ((Cannon) component).roundsLeft; i++) {
+			Vector2 pt = new Vector2((-.38f + i * .076f) * Component.SCALE, .18f * Component.SCALE);
+
+			if (flipped) {
+				pt.x = -pt.x;
+			}
+
+			pt = body.getWorldPoint(pt);
+			RG.batch.draw(RG.am.get("shell"), pt.x - .5f, pt.y - .5f, .5f, .5f, 1, 1, 8 / 128f * Component.SCALE, 23 / 128f * Component.SCALE, body.getAngle() * (180f / MathUtils.PI));
+		}
+	}
 }

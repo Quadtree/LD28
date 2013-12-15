@@ -12,6 +12,11 @@ public abstract class Entity {
 		((ArenaState) RG.currentState).addEntity(this);
 	}
 
+	public void destroyed() {
+		((ArenaState) RG.currentState).world.destroyBody(body);
+		body = null;
+	}
+
 	public float getHeavyDamageMultiplier() {
 		return 0.1f;
 	}
@@ -53,6 +58,10 @@ public abstract class Entity {
 		// if (force > .25f)
 		// System.out.println("IMPACT! " + this + " " + otherEntity + " " +
 		// force);
+	}
+
+	public boolean keep() {
+		return true;
 	}
 
 	public void render() {

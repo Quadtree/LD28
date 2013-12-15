@@ -19,7 +19,7 @@ armor
   index: -1
 att_pt
   rotate: false
-  xy: 132, 16
+  xy: 392, 124
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -82,9 +82,16 @@ selected
   index: -1
 shell
   rotate: false
-  xy: 426, 165
+  xy: 476, 215
   size: 8, 23
   orig: 8, 23
+  offset: 0, 0
+  index: -1
+shellinflight
+  rotate: false
+  xy: 132, 32
+  size: 64, 16
+  orig: 64, 16
   offset: 0, 0
   index: -1
 tracks
@@ -96,7 +103,7 @@ tracks
   index: -1
 wheel
   rotate: false
-  xy: 392, 124
+  xy: 426, 156
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

@@ -204,7 +204,12 @@ public class ArenaState extends GameState implements ContactListener {
 		world.step(0.016f, 10, 10);
 
 		for (int i = 0; i < entities.size(); i++) {
-			entities.get(i).update();
+			if (entities.get(i).keep())
+				entities.get(i).update();
+			else {
+				entities.get(i).destroyed();
+				entities.remove(i--);
+			}
 		}
 
 		if (robots.get(0).rootComponent.getHp() <= 0) {
