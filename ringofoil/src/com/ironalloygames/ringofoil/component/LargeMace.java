@@ -6,6 +6,11 @@ import com.ironalloygames.ringofoil.entity.LargeMaceEntity;
 
 public class LargeMace extends Component {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3926364119283965420L;
+
 	public LargeMace() {
 		// TODO Auto-generated constructor stub
 	}

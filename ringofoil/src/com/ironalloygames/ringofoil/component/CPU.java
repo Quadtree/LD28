@@ -6,6 +6,11 @@ import com.ironalloygames.ringofoil.entity.ComponentEntity;
 
 public class CPU extends Component {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5540318526074511630L;
+
 	@Override
 	public ComponentEntity createEntity(Vector2 robotCenter, boolean flipped) {
 		return new CPUEntity(this, robotCenter, flipped);

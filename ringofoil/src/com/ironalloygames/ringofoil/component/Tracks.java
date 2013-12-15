@@ -8,6 +8,11 @@ import com.ironalloygames.ringofoil.entity.ComponentEntity;
 import com.ironalloygames.ringofoil.entity.TracksEntity;
 
 public class Tracks extends Component {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1084798913635297965L;
+
 	@Override
 	public ComponentEntity createEntity(Vector2 robotCenter, boolean flipped) {
 		return new TracksEntity(this, robotCenter, flipped);

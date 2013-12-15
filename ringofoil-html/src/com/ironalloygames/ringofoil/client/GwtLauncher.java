@@ -11,7 +11,7 @@ public class GwtLauncher extends GwtApplication {
 	public ApplicationListener getApplicationListener() {
 		Storage.getLocalStorageIfSupported();
 
-		return new RG();
+		return new RG(null);
 	}
 
 	@Override

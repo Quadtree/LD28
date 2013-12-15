@@ -1,5 +1,6 @@
 package com.ironalloygames.ringofoil.component;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,8 +11,13 @@ import com.ironalloygames.ringofoil.RG;
 import com.ironalloygames.ringofoil.component.Attachment.AttachmentPoint;
 import com.ironalloygames.ringofoil.entity.ComponentEntity;
 
-public abstract class Component {
+public abstract class Component implements Serializable {
 	public static float SCALE = .5f;
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8415894025289279157L;
 	public static float STANDARD_ASPECT_RATIO = .625f;
 
 	List<Attachment> children = new ArrayList<Attachment>();

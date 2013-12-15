@@ -17,6 +17,6 @@ public class Main {
 		cfg.width = 1200;
 		cfg.height = 900;
 
-		new LwjglApplication(new RG(), cfg);
+		new LwjglApplication(new RG(new DiskRobotStorageDriver()), cfg);
 	}
 }

@@ -5,6 +5,11 @@ import com.ironalloygames.ringofoil.entity.ComponentEntity;
 import com.ironalloygames.ringofoil.entity.StructureEntity;
 
 public class Structure extends Component {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -996018436834585699L;
+
 	@Override
 	public ComponentEntity createEntity(Vector2 robotCenter, boolean flipped) {
 		return new StructureEntity(this, robotCenter, flipped);

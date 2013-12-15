@@ -1,9 +1,10 @@
 package com.ironalloygames.ringofoil;
 
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.util.ArrayList;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 public class DiskRobotStorageDriver extends RobotStorageDriver {
 
@@ -17,38 +18,45 @@ public class DiskRobotStorageDriver extends RobotStorageDriver {
 	protected String[] list() {
 		File dir = new File(baseDir);
 
-		ArrayList<String> names = new ArrayList<String>();
-
-		for (File f : dir.listFiles()) {
-			if (f.isFile()) {
-				names.add(f.getName());
-			}
-		}
-
-		return (String[]) names.toArray();
+		return dir.list();
 	}
 
 	@Override
 	public Robot loadRobot(String name) {
 		try {
-			FileReader fos = new FileReader(baseDir + "/" + name + ".robot.txt");
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(baseDir + "/" + name + ".robot"));
 
-			fos.read(cb);
-			fos.close();
+			Robot r = (Robot) ois.readObject();
+			ois.close();
+
+			return r;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+	@Override
+	protected String read(String name) {
+		return null;
+	}
+
+	@Override
+	public void saveRobot(Robot robot, String name) {
+		try {
+			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(baseDir + "/" + name + ".robot"));
+
+			oos.writeObject(robot);
+			oos.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	@Override
-	public void saveRobot(Robot robot, String name) {
-		try {
-			FileWriter fos = new FileWriter(baseDir + "/" + name + ".robot.txt");
-			fos.write(data);
-			fos.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	protected void write(String name, String data) {
+
 	}
 
 }

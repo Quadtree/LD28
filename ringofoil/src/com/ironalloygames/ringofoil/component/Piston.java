@@ -7,6 +7,11 @@ import com.ironalloygames.ringofoil.entity.PistonEntity;
 
 public class Piston extends Component {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2182400434913569226L;
+
 	@Override
 	public ComponentEntity createEntity(Vector2 robotCenter, boolean flipped) {
 		return new PistonEntity(this, robotCenter, flipped);
@@ -29,8 +34,7 @@ public class Piston extends Component {
 		render(position, position, rotation, rotation, flipped);
 	}
 
-	public void render(Vector2 position, Vector2 rodPosition, float rotation,
-			float rodRotation, boolean flipped) {
+	public void render(Vector2 position, Vector2 rodPosition, float rotation, float rodRotation, boolean flipped) {
 
 		renderSized(rodPosition, rodRotation, flipped, "piston_rod");
 		renderSized(position, rotation, flipped, "piston_base");

@@ -1,11 +1,18 @@
 package com.ironalloygames.ringofoil.component;
 
+import java.io.Serializable;
+
 import com.badlogic.gdx.math.Vector2;
 
-public class Attachment {
+public class Attachment implements Serializable {
 	public enum AttachmentPoint {
 		ARM, BOTTOM, LEFT, RIGHT, TOP
 	}
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6485381487566697837L;
 
 	Component child;
 	Component parent;

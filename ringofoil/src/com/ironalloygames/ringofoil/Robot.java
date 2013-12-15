@@ -1,12 +1,17 @@
 package com.ironalloygames.ringofoil;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.math.Vector2;
 import com.ironalloygames.ringofoil.component.Component;
 
-public class Robot {
+public class Robot implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6652893614264158955L;
 	Component rootComponent;
 
 	public Robot() {

@@ -2,8 +2,10 @@ package com.ironalloygames.ringofoil;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.Input.TextInputListener;
 import com.badlogic.gdx.math.Vector2;
 import com.ironalloygames.ringofoil.component.Arm;
 import com.ironalloygames.ringofoil.component.Attachment;
@@ -34,7 +36,7 @@ public class EditorState extends GameState {
 
 	int paletteItemSelected = -1;
 
-	Robot robot;
+	public Robot robot;
 
 	Component selectedComponent = null;
 
@@ -62,6 +64,25 @@ public class EditorState extends GameState {
 		if (selectedComponent != null && selectedComponent.getParent() != null && keycode == Keys.DEL) {
 			selectedComponent.getParent().getParent().getChildren().remove(selectedComponent);
 			selectedComponent = null;
+		}
+
+		if (keycode == Keys.S) {
+			Gdx.input.getPlaceholderTextInput(new TextInputListener() {
+
+				@Override
+				public void canceled() {
+				}
+
+				@Override
+				public void input(String text) {
+					RG.rsd.saveRobot(robot, text);
+				}
+			}, "Enter a Name to Save", "Name");
+		}
+
+		if (keycode == Keys.L) {
+			RG.currentState = new RobotSelectState(this);
+			Gdx.input.setInputProcessor(RG.currentState);
 		}
 
 		return super.keyDown(keycode);

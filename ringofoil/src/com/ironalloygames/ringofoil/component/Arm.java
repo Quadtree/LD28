@@ -7,6 +7,11 @@ import com.ironalloygames.ringofoil.entity.ComponentEntity;
 
 public class Arm extends Component {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1802276674561545849L;
+
 	public Arm() {
 		// TODO Auto-generated constructor stub
 	}
@@ -28,8 +33,7 @@ public class Arm extends Component {
 		render(position, rotation, rotation, flipped);
 	}
 
-	public void render(Vector2 position, float rotation, float armRotation,
-			boolean flipped) {
+	public void render(Vector2 position, float rotation, float armRotation, boolean flipped) {
 		renderSized(position, rotation, flipped, "plate");
 		renderSized(position, armRotation, flipped, "arm");
 	}
