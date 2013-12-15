@@ -12,6 +12,7 @@ import com.ironalloygames.ringofoil.component.Arm;
 import com.ironalloygames.ringofoil.component.Armor;
 import com.ironalloygames.ringofoil.component.Attachment;
 import com.ironalloygames.ringofoil.component.Attachment.AttachmentPoint;
+import com.ironalloygames.ringofoil.component.Blade;
 import com.ironalloygames.ringofoil.component.CPU;
 import com.ironalloygames.ringofoil.component.Cannon;
 import com.ironalloygames.ringofoil.component.Component;
@@ -58,6 +59,7 @@ public class EditorState extends GameState {
 		palette.add(new PaletteItem(new Piston(), "Piston: Powerful extendible piston. Good for ramming things."));
 		palette.add(new PaletteItem(new Armor(), "Armor: Very tough, especially against blades and bullets."));
 		palette.add(new PaletteItem(new Cannon(), "Cannon: Extremely high damage, but very limited ammo."));
+		palette.add(new PaletteItem(new Blade(), "Blade: Sharp cutting edge, deals great damage versus unarmored."));
 	}
 
 	@Override
@@ -204,6 +206,9 @@ public class EditorState extends GameState {
 							break;
 						case 6:
 							comp = new Cannon();
+							break;
+						case 7:
+							comp = new Blade();
 							break;
 						}
 
