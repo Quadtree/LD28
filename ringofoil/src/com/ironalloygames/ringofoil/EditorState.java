@@ -101,13 +101,10 @@ public class EditorState extends GameState {
 
 					Attachment at2 = new Attachment(comp, att.getParent(), att.getPoint());
 
-					Vector2[] pts = new Vector2[4];
-					pts[0] = at2.getChildRelativePosition().cpy().add(comp.getBoundingBox().scl(.5f, .5f)).add(att.getParent().getRelativePosition());
-					pts[1] = at2.getChildRelativePosition().cpy().add(comp.getBoundingBox().scl(-.5f, .5f)).add(att.getParent().getRelativePosition());
-					pts[2] = at2.getChildRelativePosition().cpy().add(comp.getBoundingBox().scl(.5f, -.5f)).add(att.getParent().getRelativePosition());
-					pts[3] = at2.getChildRelativePosition().cpy().add(comp.getBoundingBox().scl(-.5f, -.5f)).add(att.getParent().getRelativePosition());
+					Vector2 nur = at2.getChildRelativePosition().cpy().add(comp.getBoundingBox().scl(.5f, .5f)).add(att.getParent().getRelativePosition());
+					Vector2 nll = at2.getChildRelativePosition().cpy().add(comp.getBoundingBox().scl(-.5f, -.5f)).add(att.getParent().getRelativePosition());
 
-					System.out.println(pts[0] + " " + pts[1] + " " + pts[2] + " " + pts[3]);
+					System.out.println(nur + " " + nll);
 
 					boolean intersection = false;
 
@@ -115,14 +112,20 @@ public class EditorState extends GameState {
 						if (tc == at2.getParent())
 							continue;
 
-						Vector2 ll = tc.getRelativePosition().cpy().add(tc.getBoundingBox().scl(-.52f, -.52f));
-						Vector2 ur = tc.getRelativePosition().cpy().add(tc.getBoundingBox().scl(.52f, .52f));
+						Vector2 ll = tc.getRelativePosition().cpy().add(tc.getBoundingBox().scl(-.51f, -.51f));
+						Vector2 ur = tc.getRelativePosition().cpy().add(tc.getBoundingBox().scl(.51f, .51f));
 						System.out.println(tc + ": " + ll + " " + ur);
 
-						for (Vector2 pt : pts) {
+						/*
+						 * for (Vector2 pt : pts) {
+						 * 
+						 * if (pt.x > ll.x && pt.y > ll.y && pt.x < ur.x && pt.y
+						 * < ur.y) intersection = true; }
+						 */
 
-							if (pt.x > ll.x && pt.y > ll.y && pt.x < ur.x && pt.y < ur.y)
-								intersection = true;
+						if ((nll.x < ur.x || nur.x > ll.x) && (nll.y < ur.y || nur.y > ll.y)) {
+							System.out.println("INTERSECTION " + nur + " " + nll + " " + ur + " " + ll);
+							intersection = true;
 						}
 					}
 
