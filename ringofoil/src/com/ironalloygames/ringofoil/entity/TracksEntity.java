@@ -68,6 +68,7 @@ public class TracksEntity extends ComponentEntity {
 		bd.position.y = wheelPos.y;
 
 		Body wheel = ((ArenaState) RG.currentState).world.createBody(bd);
+		wheel.setUserData(this);
 
 		CircleShape cs = new CircleShape();
 		cs.setRadius(component.getBoundingBox().x * .125f);

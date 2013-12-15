@@ -6,11 +6,15 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.physics.box2d.ContactImpulse;
+import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.ironalloygames.ringofoil.entity.Entity;
 
-public class ArenaState extends GameState {
+public class ArenaState extends GameState implements ContactListener {
 
 	ArrayList<RobotController> controllers = new ArrayList<RobotController>();
 
@@ -26,6 +30,7 @@ public class ArenaState extends GameState {
 
 	public ArenaState() {
 		world = new World(new Vector2(0, -9.8f), false);
+		world.setContactListener(this);
 
 		BodyDef bd = new BodyDef();
 		bd.type = BodyType.StaticBody;
@@ -58,6 +63,18 @@ public class ArenaState extends GameState {
 	}
 
 	@Override
+	public void beginContact(Contact contact) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void endContact(Contact contact) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
 	public boolean keyDown(int keycode) {
 		for (RobotController c : controllers) {
 			c.keyDown(keycode);
@@ -74,6 +91,29 @@ public class ArenaState extends GameState {
 		}
 
 		return super.keyUp(keycode);
+	}
+
+	@Override
+	public void postSolve(Contact contact, ContactImpulse impulse) {
+		if (contact.getFixtureA().getBody().getUserData() instanceof Entity && contact.getFixtureB().getBody().getUserData() instanceof Entity) {
+			Entity e1 = (Entity) contact.getFixtureA().getBody().getUserData();
+			Entity e2 = (Entity) contact.getFixtureB().getBody().getUserData();
+
+			float totalImpulse = impulse.getNormalImpulses()[0];
+
+			// for (float f : impulse.getNormalImpulses()) {
+			// totalImpulse += f;
+			// }
+
+			e1.impact(totalImpulse, e2);
+			e2.impact(totalImpulse, e1);
+		}
+	}
+
+	@Override
+	public void preSolve(Contact contact, Manifold oldManifold) {
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override

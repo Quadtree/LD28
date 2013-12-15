@@ -11,7 +11,54 @@ public abstract class Entity {
 		((ArenaState) RG.currentState).addEntity(this);
 	}
 
+	public float getHeavyDamageMultiplier() {
+		return 0.1f;
+	}
+
+	public float getHeavyDamageReduction() {
+		return 0;
+	}
+
+	public float getHeavyDamageResistance() {
+		return 1;
+	}
+
+	public float getHp() {
+		return 1;
+	}
+
+	public float getLightDamageMultiplier() {
+		return 0.1f;
+	}
+
+	public float getLightDamageReduction() {
+		return 0;
+	}
+
+	public float getLightDamageResistance() {
+		return 1;
+	}
+
+	public float getMaxHp() {
+		return 1;
+	}
+
+	public void impact(float force, Entity otherEntity) {
+		otherEntity.takeDamage(force * getLightDamageMultiplier(), force * getHeavyDamageMultiplier());
+		if (force > .25f)
+			System.out.println("IMPACT! " + this + " " + otherEntity + " " + force);
+	}
+
 	public void render() {
+	}
+
+	public void setHp(float hp) {
+
+	}
+
+	public void takeDamage(float lightDamage, float heavyDamage) {
+		setHp(getHp() - Math.max(0, (lightDamage - getLightDamageReduction()) * getLightDamageResistance()));
+		setHp(getHp() - Math.max(0, (heavyDamage - getHeavyDamageReduction()) * getHeavyDamageResistance()));
 	}
 
 	public void update() {

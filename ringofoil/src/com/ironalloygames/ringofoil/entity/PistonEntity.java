@@ -62,6 +62,7 @@ public class PistonEntity extends ComponentEntity {
 				component.getBoundingBox().y / 2);
 
 		rodBody.createFixture(shape, getDensity()).setFilterData(getFilter());
+		rodBody.setUserData(this);
 
 		System.out.println("GI "
 				+ rodBody.getFixtureList().get(0).getFilterData().groupIndex);

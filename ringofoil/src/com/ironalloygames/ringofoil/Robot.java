@@ -17,21 +17,6 @@ public class Robot {
 		System.out.println("Initiating generation.");
 
 		rootComponent.createEntity(position, flipped);
-
-		/*
-		 * HashMap<Component, ComponentEntity> entityMap = new
-		 * HashMap<Component, ComponentEntity>();
-		 * 
-		 * for (Component c : getComponents()) {
-		 * System.out.println("Generating " + c); ComponentEntity e =
-		 * c.createEntity();
-		 * e.setPosition(c.getRelativePosition().add(position));
-		 * entityMap.put(c, e); ((ArenaState) RG.currentState).entities.add(e);
-		 * }
-		 * 
-		 * for (Component c : getComponents()) {
-		 * entityMap.get(c).generateAttachments(entityMap); }
-		 */
 	}
 
 	public List<Component> getComponents() {

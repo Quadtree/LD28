@@ -26,8 +26,7 @@ public abstract class ComponentEntity extends Entity {
 
 	Vector2 relativePosition;
 
-	public ComponentEntity(Component component, Vector2 robotCenter,
-			boolean flipped) {
+	public ComponentEntity(Component component, Vector2 robotCenter, boolean flipped) {
 		this.component = component;
 		this.relativePosition = component.getRelativePosition();
 		this.flipped = flipped;
@@ -43,8 +42,7 @@ public abstract class ComponentEntity extends Entity {
 		createFixture();
 
 		for (Attachment att : component.getChildren()) {
-			ComponentEntity child = att.getChild().createEntity(robotCenter,
-					flipped);
+			ComponentEntity child = att.getChild().createEntity(robotCenter, flipped);
 
 			createJointToChild(att, child);
 		}
@@ -70,8 +68,7 @@ public abstract class ComponentEntity extends Entity {
 
 	protected void createFixture() {
 		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(component.getBoundingBox().x / 2,
-				component.getBoundingBox().y / 2);
+		shape.setAsBox(component.getBoundingBox().x / 2, component.getBoundingBox().y / 2);
 
 		body.createFixture(shape, getDensity()).setFilterData(getFilter());
 	}
@@ -81,8 +78,7 @@ public abstract class ComponentEntity extends Entity {
 		jd.bodyA = getBodyForChildConnection(att.getPoint());
 		jd.bodyB = child.body;
 
-		Vector2 delta = jd.bodyB.getPosition().cpy()
-				.sub(jd.bodyA.getPosition());
+		Vector2 delta = jd.bodyB.getPosition().cpy().sub(jd.bodyA.getPosition());
 
 		// Vector2 centerPoint =
 		// jd.bodyA.getPosition().cpy().add(delta.cpy().scl(.5f));
@@ -95,8 +91,7 @@ public abstract class ComponentEntity extends Entity {
 		jd.localAnchorB.x = localAnchorB.x;
 		jd.localAnchorB.y = localAnchorB.y;
 
-		child.setParentConnector(((ArenaState) RG.currentState).world
-				.createJoint(jd));
+		child.setParentConnector(((ArenaState) RG.currentState).world.createJoint(jd));
 	}
 
 	protected Body getBodyForChildConnection(AttachmentPoint ap) {
@@ -116,6 +111,46 @@ public abstract class ComponentEntity extends Entity {
 		fd.groupIndex = ((ArenaState) RG.currentState).currentGroup;
 
 		return fd;
+	}
+
+	@Override
+	public float getHeavyDamageMultiplier() {
+		return component.getHeavyDamageMultiplier();
+	}
+
+	@Override
+	public float getHeavyDamageReduction() {
+		return component.getHeavyDamageReduction();
+	}
+
+	@Override
+	public float getHeavyDamageResistance() {
+		return component.getHeavyDamageResistance();
+	}
+
+	@Override
+	public float getHp() {
+		return component.getHp();
+	}
+
+	@Override
+	public float getLightDamageMultiplier() {
+		return component.getLightDamageMultiplier();
+	}
+
+	@Override
+	public float getLightDamageReduction() {
+		return component.getLightDamageReduction();
+	}
+
+	@Override
+	public float getLightDamageResistance() {
+		return component.getLightDamageResistance();
+	}
+
+	@Override
+	public float getMaxHp() {
+		return component.getMaxHp();
 	}
 
 	public Joint getParentConnector() {
@@ -140,11 +175,14 @@ public abstract class ComponentEntity extends Entity {
 
 			pt = body.getWorldPoint(pt);
 
-			RG.batch.draw(RG.am.get("connector"), pt.x - .5f, pt.y - .5f, .5f,
-					.5f, 1, 1, 16 / 128f, 16 / 128f, body.getAngle()
-							* (180f / MathUtils.PI));
+			RG.batch.draw(RG.am.get("connector"), pt.x - .5f, pt.y - .5f, .5f, .5f, 1, 1, 16 / 128f, 16 / 128f, body.getAngle() * (180f / MathUtils.PI));
 
 		}
+	}
+
+	@Override
+	public void setHp(float hp) {
+		component.setHp(hp);
 	}
 
 	public void setParentConnector(Joint parentConnector) {

@@ -20,8 +20,7 @@ public abstract class Component {
 
 	Attachment parent;
 
-	public void addChildComponent(Component childComponent,
-			AttachmentPoint point) {
+	public void addChildComponent(Component childComponent, AttachmentPoint point) {
 		Attachment att = new Attachment(childComponent, this, point);
 		childComponent.parent = att;
 		children.add(att);
@@ -34,8 +33,7 @@ public abstract class Component {
 		}
 	}
 
-	public abstract ComponentEntity createEntity(Vector2 robotCenter,
-			boolean flipped);
+	public abstract ComponentEntity createEntity(Vector2 robotCenter, boolean flipped);
 
 	public List<Attachment> getAllAttachmentsExceptParent() {
 		return children;
@@ -53,8 +51,32 @@ public abstract class Component {
 		return commandKey;
 	}
 
+	public float getHeavyDamageMultiplier() {
+		return 0.1f;
+	}
+
+	public float getHeavyDamageReduction() {
+		return .15f;
+	}
+
+	public float getHeavyDamageResistance() {
+		return 1;
+	}
+
 	public float getHp() {
 		return hp;
+	}
+
+	public float getLightDamageMultiplier() {
+		return 0.1f;
+	}
+
+	public float getLightDamageReduction() {
+		return .15f;
+	}
+
+	public float getLightDamageResistance() {
+		return 1;
 	}
 
 	public float getMaxHp() {
@@ -70,24 +92,14 @@ public abstract class Component {
 			return new Vector2(0, 0);
 		}
 
-		return parent.getParent().getRelativePosition()
-				.add(parent.getChildRelativePosition()).cpy();
+		return parent.getParent().getRelativePosition().add(parent.getChildRelativePosition()).cpy();
 	}
 
 	public boolean isAttachmentPointConnected(AttachmentPoint point) {
 		if (parent != null
-				&& ((parent.point.equals(AttachmentPoint.TOP) && point
-						.equals(AttachmentPoint.BOTTOM))
-						|| (parent.point.equals(AttachmentPoint.BOTTOM) && point
-								.equals(AttachmentPoint.TOP))
-						|| (parent.point.equals(AttachmentPoint.LEFT) && point
-								.equals(AttachmentPoint.RIGHT))
-						|| (parent.point.equals(AttachmentPoint.RIGHT) && point
-								.equals(AttachmentPoint.LEFT))
-						|| (parent.point.equals(AttachmentPoint.ARM) && point
-								.equals(AttachmentPoint.LEFT)) || (parent.point
-						.equals(AttachmentPoint.LEFT) && point
-						.equals(AttachmentPoint.ARM))))
+				&& ((parent.point.equals(AttachmentPoint.TOP) && point.equals(AttachmentPoint.BOTTOM)) || (parent.point.equals(AttachmentPoint.BOTTOM) && point.equals(AttachmentPoint.TOP))
+						|| (parent.point.equals(AttachmentPoint.LEFT) && point.equals(AttachmentPoint.RIGHT)) || (parent.point.equals(AttachmentPoint.RIGHT) && point.equals(AttachmentPoint.LEFT))
+						|| (parent.point.equals(AttachmentPoint.ARM) && point.equals(AttachmentPoint.LEFT)) || (parent.point.equals(AttachmentPoint.LEFT) && point.equals(AttachmentPoint.ARM))))
 			return true;
 
 		for (Attachment ap : children) {
@@ -116,21 +128,18 @@ public abstract class Component {
 
 				Vector2 pt = a.getCenterPoint().add(this.getRelativePosition());
 
-				RG.batch.draw(RG.am.get("att_pt"), pt.x, pt.y, .5f, .5f, 1, 1,
-						.1f, .1f, 0);
+				RG.batch.draw(RG.am.get("att_pt"), pt.x, pt.y, .5f, .5f, 1, 1, .1f, .1f, 0);
 			}
 		}
 	}
 
-	protected void renderSized(Vector2 position, float rotation,
-			boolean flipped, String graphic) {
+	protected void renderSized(Vector2 position, float rotation, boolean flipped, String graphic) {
 		if (RG.am.get(graphic).isFlipX() != flipped)
 			RG.am.get(graphic).flip(true, false);
 
 		Vector2 bb = getBoundingBox();
 
-		RG.batch.draw(RG.am.get(graphic), position.x - .5f, position.y - .5f,
-				.5f, .5f, 1, 1, bb.x, bb.y, rotation * (180f / MathUtils.PI));
+		RG.batch.draw(RG.am.get(graphic), position.x - .5f, position.y - .5f, .5f, .5f, 1, 1, bb.x, bb.y, rotation * (180f / MathUtils.PI));
 	}
 
 	public void setCommandKey(int commandKey) {

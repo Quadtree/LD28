@@ -35,8 +35,6 @@ public class GameState implements InputProcessor {
 		mouseWorldPosition.x = mouseScreenPosition.x / 128.f;
 		mouseWorldPosition.y = mouseScreenPosition.y / 128.f;
 
-		System.out.println(mouseScreenPosition + " " + mouseWorldPosition);
-
 		return false;
 	}
 
