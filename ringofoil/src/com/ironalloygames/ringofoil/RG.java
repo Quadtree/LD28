@@ -22,6 +22,8 @@ public class RG implements ApplicationListener {
 
 	public static OrthographicCamera gameCamera;
 
+	public static RobotStorageDriver rsd;
+
 	public static OrthographicCamera textCamera;
 
 	public static OrthographicCamera uiCamera;
@@ -29,6 +31,10 @@ public class RG implements ApplicationListener {
 	ShapeRenderer sr;
 
 	long ticks = 0;
+
+	public RG(RobotStorageDriver rsd) {
+		RG.rsd = rsd;
+	}
 
 	@Override
 	public void create() {

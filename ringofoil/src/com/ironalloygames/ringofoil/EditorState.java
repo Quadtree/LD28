@@ -3,6 +3,7 @@ package com.ironalloygames.ringofoil;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Input.Buttons;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Vector2;
 import com.ironalloygames.ringofoil.component.Arm;
 import com.ironalloygames.ringofoil.component.Attachment;
@@ -35,6 +36,8 @@ public class EditorState extends GameState {
 
 	Robot robot;
 
+	Component selectedComponent = null;
+
 	public EditorState() {
 		robot = new Robot();
 
@@ -47,6 +50,21 @@ public class EditorState extends GameState {
 		palette.add(new PaletteItem(new Arm(), "Arm: Motorized arm that can swing things around."));
 		palette.add(new PaletteItem(new LargeMace(), "Large Mace: Huge mace. Good for smashing heavy armor."));
 		palette.add(new PaletteItem(new Piston(), "Piston: Powerful extendible piston. Good for ramming things."));
+	}
+
+	@Override
+	public boolean keyDown(int keycode) {
+
+		if (selectedComponent != null && keycode >= Keys.NUM_1 && keycode <= Keys.NUM_9) {
+			selectedComponent.setCommandKey(keycode);
+		}
+
+		if (selectedComponent != null && selectedComponent.getParent() != null && keycode == Keys.DEL) {
+			selectedComponent.getParent().getParent().getChildren().remove(selectedComponent);
+			selectedComponent = null;
+		}
+
+		return super.keyDown(keycode);
 	}
 
 	@Override
@@ -64,6 +82,10 @@ public class EditorState extends GameState {
 		for (int i = 0; i < palette.size(); ++i) {
 			palette.get(i).comp.render(new Vector2(-2.6f, 2 - i * .6f), 0, false);
 		}
+
+		if (selectedComponent != null) {
+			RG.batch.draw(RG.am.get("selected"), selectedComponent.getRelativePosition().x - .4f, selectedComponent.getRelativePosition().y - .4f, .8f, .8f);
+		}
 	}
 
 	@Override
@@ -75,8 +97,17 @@ public class EditorState extends GameState {
 	@Override
 	public void renderUi() {
 		super.renderUi();
+		if (selectedComponent != null) {
 
-		if (paletteItemSelected >= 0) {
+			String keyChar = "[None]";
+
+			if (selectedComponent.getCommandKey() != 0) {
+				keyChar = "" + (char) ('1' + selectedComponent.getCommandKey() - Keys.NUM_1);
+			}
+
+			RG.am.getFont().drawWrapped(RG.batch,
+					"Component selected. Action key is set to " + keyChar + ". Change its action command by pressing a number key." + (selectedComponent instanceof CPU ? "" : " Press DEL to delete it."), -400, 420, 800);
+		} else if (paletteItemSelected >= 0) {
 			RG.am.getFont().drawWrapped(RG.batch, "Selected: " + palette.get(paletteItemSelected).desc + "\nClick on a green spot to place this item, or right click to deselect.", -400, 420, 800);
 		} else {
 			RG.am.getFont().drawWrapped(RG.batch, "Left click an item in the palette to select it. Click a part of the robot to select it.", -400, 420, 800);
@@ -96,6 +127,7 @@ public class EditorState extends GameState {
 
 				if (paletteItem >= 0 && paletteItem < palette.size()) {
 					paletteItemSelected = paletteItem;
+					selectedComponent = null;
 					return true;
 				}
 			}
@@ -152,8 +184,23 @@ public class EditorState extends GameState {
 					}
 				}
 			}
+
+			for (Component tc : robot.getComponents()) {
+				Vector2 min = tc.getRelativePosition().cpy().add(tc.getBoundingBox().scl(-.51f, -.51f));
+				Vector2 max = tc.getRelativePosition().cpy().add(tc.getBoundingBox().scl(.51f, .51f));
+
+				AABB box = new AABB(max, min);
+
+				if (box.contains(mouseWorldPosition)) {
+					selectedComponent = tc;
+					paletteItemSelected = -1;
+					return true;
+				}
+			}
+
 		} else if (button == Buttons.RIGHT) {
 			paletteItemSelected = -1;
+			selectedComponent = null;
 		}
 
 		return super.touchDown(screenX, screenY, pointer, button);

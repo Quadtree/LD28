@@ -5,70 +5,77 @@ filter: Nearest,Nearest
 repeat: none
 arm
   rotate: false
-  xy: 2, 46
+  xy: 2, 28
   size: 128, 80
   orig: 128, 80
   offset: 0, 0
   index: -1
 att_pt
   rotate: false
-  xy: 572, 68
+  xy: 392, 206
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 connector
   rotate: false
-  xy: 2, 2
+  xy: 262, 90
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 cpu
   rotate: false
-  xy: 132, 46
+  xy: 132, 158
   size: 128, 80
   orig: 128, 80
   offset: 0, 0
   index: -1
 mace
   rotate: false
-  xy: 522, 52
+  xy: 262, 108
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 piston_base
   rotate: false
-  xy: 2, 20
+  xy: 2, 2
   size: 128, 24
   orig: 128, 24
   offset: 0, 0
   index: -1
 piston_rod
   rotate: false
-  xy: 522, 102
+  xy: 132, 50
   size: 128, 24
   orig: 128, 24
   offset: 0, 0
   index: -1
 plate
   rotate: false
-  xy: 262, 46
+  xy: 132, 76
   size: 128, 80
   orig: 128, 80
   offset: 0, 0
   index: -1
+selected
+  rotate: false
+  xy: 2, 110
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
 tracks
   rotate: false
-  xy: 392, 46
+  xy: 262, 158
   size: 128, 80
   orig: 128, 80
   offset: 0, 0
   index: -1
 wheel
   rotate: false
-  xy: 606, 68
+  xy: 132, 16
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
