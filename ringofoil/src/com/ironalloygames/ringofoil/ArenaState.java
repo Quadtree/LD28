@@ -202,6 +202,8 @@ public class ArenaState extends GameState implements ContactListener {
 		if (controllers.get(0) instanceof AiRobotController) {
 			gameSpeed = 64;
 		}
+
+		RG.am.getSound("fight").play();
 	}
 
 	@Override
