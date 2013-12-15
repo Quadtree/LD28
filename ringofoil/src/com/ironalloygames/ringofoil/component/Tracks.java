@@ -19,6 +19,11 @@ public class Tracks extends Component {
 	}
 
 	@Override
+	protected int getUnitCost() {
+		return 35;
+	}
+
+	@Override
 	public boolean isAttachmentPointValid(AttachmentPoint point) {
 		return point == AttachmentPoint.TOP;
 	}

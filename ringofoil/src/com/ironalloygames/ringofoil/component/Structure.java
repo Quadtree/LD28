@@ -16,6 +16,11 @@ public class Structure extends Component {
 	}
 
 	@Override
+	protected int getUnitCost() {
+		return 20;
+	}
+
+	@Override
 	public void render(Vector2 position, float rotation, boolean flipped) {
 		super.render(position, rotation, flipped);
 

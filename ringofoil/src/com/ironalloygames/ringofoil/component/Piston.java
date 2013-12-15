@@ -23,6 +23,11 @@ public class Piston extends Component {
 	}
 
 	@Override
+	protected int getUnitCost() {
+		return 60;
+	}
+
+	@Override
 	public boolean isAttachmentPointValid(AttachmentPoint point) {
 		return point == AttachmentPoint.LEFT || point == AttachmentPoint.RIGHT;
 	}

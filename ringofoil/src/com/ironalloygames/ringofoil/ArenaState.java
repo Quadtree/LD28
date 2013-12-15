@@ -17,6 +17,8 @@ import com.ironalloygames.ringofoil.entity.Entity;
 
 public class ArenaState extends GameState implements ContactListener {
 
+	public static final int ROBOT_MAX_COST = 500;
+
 	public ArrayList<RobotController> controllers = new ArrayList<RobotController>();
 
 	public short currentGroup = 0;
@@ -142,8 +144,8 @@ public class ArenaState extends GameState implements ContactListener {
 	public void renderUi() {
 		super.renderUi();
 
-		RG.am.getFont().draw(RG.batch, "Robot 1      Score: " + this.robot2DamageTaken, -550, 420);
-		RG.am.getFont().draw(RG.batch, "Robot 2      Score: " + this.robot1DamageTaken, 320, 420);
+		RG.am.getFont().draw(RG.batch, "Robot 1      Score: " + (int) (this.robot2DamageTaken * 100), -550, 420);
+		RG.am.getFont().draw(RG.batch, "Robot 2      Score: " + (int) (this.robot1DamageTaken), 300, 420);
 
 		if (this.tick - this.lastDamageTick > 7 * 60) {
 

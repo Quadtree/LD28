@@ -2,6 +2,7 @@ package com.ironalloygames.ringofoil;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Color;
 import com.ironalloygames.ringofoil.component.Component;
 
 public class RobotSelectState extends GameState {
@@ -36,8 +37,10 @@ public class RobotSelectState extends GameState {
 				RG.currentState = editorState;
 				Gdx.input.setInputProcessor(RG.currentState);
 			} else {
-				RG.tr = new Tournament(selectedRobot);
-				RG.tr.nextMatch();
+				if (selectedRobot.getCost() <= ArenaState.ROBOT_MAX_COST) {
+					RG.tr = new Tournament(selectedRobot);
+					RG.tr.nextMatch();
+				}
 			}
 		}
 
@@ -62,7 +65,22 @@ public class RobotSelectState extends GameState {
 	public void renderUi() {
 		super.renderUi();
 
-		RG.am.getFont().drawWrapped(RG.batch, "Commands: Esc - Go back, Enter - Accept selection, Mouse Wheel/Arrow Keys - Scroll", -400, -420, 800);
+		if (selectedRobot != null) {
+			if (selectedRobot.getCost() > ArenaState.ROBOT_MAX_COST) {
+				RG.am.getFont().setColor(Color.RED);
+				if (editorState == null) {
+					RG.am.getFont().drawWrapped(RG.batch, "This robot is too expensive. Choose another to compete.", -400, -360, 800);
+				}
+			} else {
+				RG.am.getFont().setColor(Color.GREEN);
+			}
+
+			RG.am.getFont().drawWrapped(RG.batch, "Total Robot Cost: $" + (selectedRobot.getCost() * 10) + "/$" + (ArenaState.ROBOT_MAX_COST * 10), -400, -380, 800);
+
+			RG.am.getFont().setColor(Color.WHITE);
+		}
+
+		RG.am.getFont().draw(RG.batch, "Commands: Esc - Go back, Enter - Accept selection, Mouse Wheel/Arrow Keys - Scroll", -400, -420);
 
 		int y = 420;
 

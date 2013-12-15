@@ -37,6 +37,10 @@ public class Robot implements Serializable {
 		return components;
 	}
 
+	public int getCost() {
+		return rootComponent.getCost();
+	}
+
 	public Component getRootComponent() {
 		return rootComponent;
 	}

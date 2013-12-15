@@ -26,10 +26,14 @@ public class LargeMace extends Component {
 	}
 
 	@Override
+	protected int getUnitCost() {
+		return 35;
+	}
+
+	@Override
 	public void render(Vector2 position, float rotation, boolean flipped) {
 		super.render(position, rotation, flipped);
 
 		renderSized(position, rotation, flipped, "mace");
 	}
-
 }

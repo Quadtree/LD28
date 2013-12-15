@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Input.TextInputListener;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.ironalloygames.ringofoil.component.Arm;
 import com.ironalloygames.ringofoil.component.Attachment;
@@ -120,6 +121,8 @@ public class EditorState extends GameState {
 	@Override
 	public void renderUi() {
 		super.renderUi();
+		RG.am.getFont().setColor(.5f, .5f, 0, 1);
+
 		if (selectedComponent != null) {
 
 			String keyChar = "[None]";
@@ -135,6 +138,16 @@ public class EditorState extends GameState {
 		} else {
 			RG.am.getFont().drawWrapped(RG.batch, "Left click an item in the palette to select it. Click a part of the robot to select it.", -400, 420, 800);
 		}
+
+		if (robot.getCost() > ArenaState.ROBOT_MAX_COST) {
+			RG.am.getFont().setColor(Color.RED);
+		} else {
+			RG.am.getFont().setColor(Color.GREEN);
+		}
+
+		RG.am.getFont().drawWrapped(RG.batch, "Total Robot Cost: $" + (robot.getCost() * 10) + "/$" + (ArenaState.ROBOT_MAX_COST * 10), -400, -380, 800);
+
+		RG.am.getFont().setColor(.5f, .5f, 0, 1);
 
 		RG.am.getFont().drawWrapped(RG.batch, "Commands: Esc - Return to Main Menu, S - Save, L - Load", -400, -420, 800);
 	}

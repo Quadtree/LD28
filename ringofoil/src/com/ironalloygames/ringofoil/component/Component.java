@@ -62,6 +62,16 @@ public abstract class Component implements Serializable {
 		return commandKey;
 	}
 
+	public int getCost() {
+		int cost = getUnitCost();
+
+		for (Attachment att : children) {
+			cost += att.getChild().getCost();
+		}
+
+		return cost;
+	}
+
 	public float getHeavyDamageMultiplier() {
 		return 0.1f;
 	}
@@ -104,6 +114,10 @@ public abstract class Component implements Serializable {
 		}
 
 		return parent.getParent().getRelativePosition().add(parent.getChildRelativePosition()).cpy();
+	}
+
+	protected int getUnitCost() {
+		return 0;
 	}
 
 	public boolean isAttachmentPointConnected(AttachmentPoint point) {

@@ -22,6 +22,11 @@ public class Arm extends Component {
 	}
 
 	@Override
+	protected int getUnitCost() {
+		return 150;
+	}
+
+	@Override
 	public boolean isAttachmentPointValid(AttachmentPoint point) {
 		return true;
 	}
