@@ -31,6 +31,8 @@ public abstract class ComponentEntity extends Entity {
 
 	public boolean loose = false;
 
+	Body parentBody;
+
 	Joint parentConnector;
 
 	boolean punctured = false;
@@ -107,6 +109,8 @@ public abstract class ComponentEntity extends Entity {
 		jd.localAnchorB.y = localAnchorB.y;
 
 		child.setParentConnector(((ArenaState) RG.currentState).world.createJoint(jd));
+
+		child.parentBody = body;
 
 		children.add(child);
 	}
@@ -187,15 +191,16 @@ public abstract class ComponentEntity extends Entity {
 
 	protected void renderConnector() {
 		if (component.getParent() != null) {
-			Vector2 pt = component.getParent().getCenterPoint().scl(-1);
+			Vector2 pt = component.getParent().getCenterPoint();
 
 			if (flipped)
 				pt.x *= -1;
 
-			pt = body.getWorldPoint(pt);
+			if (parentConnector != null) {
+				pt = parentConnector.getBodyA().getWorldPoint(pt);
 
-			component.renderConnector(pt, body.getAngle());
-
+				component.renderConnector(pt, body.getAngle());
+			}
 		}
 	}
 

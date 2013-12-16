@@ -164,7 +164,7 @@ public abstract class Component implements Serializable {
 
 	public void renderConnector() {
 		if (parent != null) {
-			Vector2 pos = this.getRelativePosition().add(parent.getCenterPoint().scl(-1));
+			Vector2 pos = this.getParent().getParent().getRelativePosition().add(parent.getCenterPoint());
 
 			renderConnector(pos, 0);
 		}

@@ -48,27 +48,32 @@ public class Attachment implements Serializable {
 			throw new RuntimeException("Att pt " + point + "not fnd");
 		}
 
+		if (parent instanceof Structure && child instanceof Armor) {
+			System.out.println("TEXT");
+		}
+
 		Vector2 delta1 = delta.cpy().scl(parent.getBoundingBox().x / 2, parent.getBoundingBox().y / 2);
 
-		Vector2 delta2 = new Vector2(0, 0);
+		// Vector2 delta2 = new Vector2(0, 0);
 
-		if (child != null) {
-			delta2 = delta.cpy().scl(child.getBoundingBox().x / 2, child.getBoundingBox().y / 2);
-		}
+		// if (child != null) {
+		// delta2 = delta.cpy().nor().scl(child.getBoundingBox().x / 2,
+		// child.getBoundingBox().y / 2);
+		// }
 
-		Vector2 accum = new Vector2(-1000, -1000);
+		Vector2 accum; // = new Vector2(-1000, -1000);
 
-		if (delta1.len2() > delta2.len2()) {
+		// if (delta1.len2() > delta2.len2()) {
 
-			accum = delta1;
-			accum.sub(delta.cpy().scl(4 / 128f, 4 / 128f));
+		accum = delta1;
+		accum.add(delta.cpy().nor().scl(4 / 128f, 4 / 128f));
 
-		} else {
-
-			accum = delta2;
-			accum.add(delta.cpy().scl(4 / 128f, 4 / 128f));
-
-		}
+		// } else {
+		//
+		// accum = delta2;
+		// accum.add(delta.cpy().nor().scl(4 / 128f, 4 / 128f));
+		//
+		// }
 
 		return accum;
 	}
@@ -102,10 +107,10 @@ public class Attachment implements Serializable {
 
 		Vector2 accum = delta.cpy().scl(parent.getBoundingBox().x / 2, parent.getBoundingBox().y / 2);
 
-		accum.add(delta.cpy().scl(8 / 128f, 8 / 128f));
+		accum.add(delta.cpy().nor().scl(8 / 128f, 8 / 128f));
 
 		if (child != null) {
-			accum.add(delta.cpy().scl(child.getBoundingBox().x / 2, child.getBoundingBox().y / 2));
+			accum.add(delta.cpy().nor().scl(child.getBoundingBox().x / 2, child.getBoundingBox().y / 2));
 		}
 		return accum;
 	}
