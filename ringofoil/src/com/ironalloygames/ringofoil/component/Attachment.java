@@ -48,9 +48,9 @@ public class Attachment implements Serializable {
 			throw new RuntimeException("Att pt " + point + "not fnd");
 		}
 
-		if (parent instanceof Structure && child instanceof Armor) {
-			System.out.println("TEXT");
-		}
+		// if (parent instanceof Structure && child instanceof Armor) {
+		// System.out.println("TEXT");
+		// }
 
 		Vector2 delta1 = delta.cpy().scl(parent.getBoundingBox().x / 2, parent.getBoundingBox().y / 2);
 

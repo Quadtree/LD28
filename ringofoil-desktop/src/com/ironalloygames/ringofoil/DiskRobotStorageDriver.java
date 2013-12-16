@@ -12,6 +12,14 @@ public class DiskRobotStorageDriver extends RobotStorageDriver {
 
 	public DiskRobotStorageDriver() {
 		baseDir = "../ringofoil-android/assets/robots";
+
+		File dir = new File(baseDir);
+
+		if (!dir.exists()) {
+			baseDir = "robots";
+		}
+
+		System.out.println("Basedir is " + baseDir);
 	}
 
 	@Override
