@@ -56,15 +56,19 @@ public class Attachment implements Serializable {
 			delta2 = delta.cpy().scl(child.getBoundingBox().x / 2, child.getBoundingBox().y / 2);
 		}
 
-		Vector2 accum;
+		Vector2 accum = new Vector2(-1000, -1000);
 
-		if (delta2.len2() > delta1.len2() || child == null) {
+		if (delta1.len2() > delta2.len2()) {
+
 			accum = delta1;
-		} else {
-			accum = delta2;
-		}
+			accum.sub(delta.cpy().scl(4 / 128f, 4 / 128f));
 
-		accum.add(delta.cpy().scl(4 / 128f, 4 / 128f));
+		} else {
+
+			accum = delta2;
+			accum.add(delta.cpy().scl(4 / 128f, 4 / 128f));
+
+		}
 
 		return accum;
 	}

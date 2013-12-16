@@ -16,10 +16,10 @@ public class CPU extends Component {
 		return new CPUEntity(this, robotCenter, flipped);
 	}
 
-	@Override
-	public Vector2 getBoundingBox() {
-		return super.getBoundingBox().scl(0.85f);
-	}
+	/*
+	 * @Override public Vector2 getBoundingBox() { return
+	 * super.getBoundingBox().scl(0.85f); }
+	 */
 
 	@Override
 	public void render(Vector2 position, float rotation, boolean flipped) {

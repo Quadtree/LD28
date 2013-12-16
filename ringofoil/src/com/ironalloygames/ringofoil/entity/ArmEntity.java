@@ -59,7 +59,11 @@ public class ArmEntity extends ComponentEntity {
 
 	@Override
 	protected Body getBodyForChildConnection(AttachmentPoint ap) {
-		return rodBody;
+		if (ap == AttachmentPoint.ARM) {
+			return rodBody;
+		} else {
+			return body;
+		}
 	}
 
 	@Override

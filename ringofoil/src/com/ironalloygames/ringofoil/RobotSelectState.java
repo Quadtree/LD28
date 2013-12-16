@@ -52,7 +52,6 @@ public class RobotSelectState extends GameState {
 		if (selectedRobot != null) {
 			for (Component c : selectedRobot.getComponents()) {
 				c.render(c.getRelativePosition(), 0, false);
-				c.renderAttachmentPoints();
 				c.renderConnector();
 			}
 		}
@@ -68,13 +67,13 @@ public class RobotSelectState extends GameState {
 			if (selectedRobot.getCost() > ArenaState.ROBOT_MAX_COST) {
 				RG.am.getFont().setColor(Color.RED);
 				if (editorState == null) {
-					RG.am.getFont().drawWrapped(RG.batch, "This robot is too expensive. Choose another to compete.", -400, -360, 800);
+					RG.am.getFont().drawWrapped(RG.batch, "This robot is too expensive. Choose another to compete.", -400, -380, 800);
 				}
 			} else {
 				RG.am.getFont().setColor(Color.GREEN);
 			}
 
-			RG.am.getFont().drawWrapped(RG.batch, "Total Robot Cost: $" + (selectedRobot.getCost() * 10) + "/$" + (ArenaState.ROBOT_MAX_COST * 10), -400, -380, 800);
+			RG.am.getFont().drawWrapped(RG.batch, "Total Robot Cost: $" + (selectedRobot.getCost() * 10) + "/$" + (ArenaState.ROBOT_MAX_COST * 10), -400, -400, 800);
 
 			RG.am.getFont().setColor(Color.WHITE);
 		}
