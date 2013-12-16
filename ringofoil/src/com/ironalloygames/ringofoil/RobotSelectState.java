@@ -76,6 +76,8 @@ public class RobotSelectState extends GameState {
 			RG.am.getFont().drawWrapped(RG.batch, "Total Robot Cost: $" + (selectedRobot.getCost() * 10) + "/$" + (ArenaState.ROBOT_MAX_COST * 10), -400, -400, 800);
 
 			RG.am.getFont().setColor(Color.WHITE);
+		} else {
+			RG.am.getFont().drawWrapped(RG.batch, "Click on a robot name on the left to select it", -400, -380, 800);
 		}
 
 		RG.am.getFont().draw(RG.batch, "Commands: Esc - Go back, Enter - Accept selection", -400, -420);
